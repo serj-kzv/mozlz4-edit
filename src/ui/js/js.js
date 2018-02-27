@@ -1,14 +1,15 @@
 let engines = {};
-document.addEventListener("DOMContentLoaded", function (event) {
+
+// form
+let BrutusinForms = null;
+let bf = null;
+let container = null;
+
+document.addEventListener("DOMContentLoaded", event => {
     // buttons
     const selectBtn = document.querySelector('#selectMozlz4FileButton');
     const saveAsMozlz4Btn = document.querySelector('#saveAsMozlz4');
     const saveAsJSONBtn = document.querySelector('#saveAsJson');
-
-    // form
-    const BrutusinForms = brutusin["json-forms"];
-    const bf = BrutusinForms.create(schema);
-    const container = document.querySelector('#container');
 
     saveAsMozlz4Btn.addEventListener('click', function (event) {
         const enginesStr = JSON.stringify(engines);
@@ -16,13 +17,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     });
 
-    saveAsJSONBtn.addEventListener('click', function (event) {
-        const enginesJSONStr = JSON.stringify(engines, null, 4);
+    saveAsJSONBtn.addEventListener('click', event => {
+        const enginesJSONStr = JSON.stringify(bf.getData(), null, 4);
+
+        console.log(bf.getData());
 
         saveData(enginesJSONStr);
     });
 
-    selectBtn.addEventListener('change', function onButtonPress(event) {
+    selectBtn.addEventListener('change', event => {
         let file = event.target.files[0];
 
         readMozlz4File(file, function (text) {
@@ -35,7 +38,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 
     function createForm(schema, engines) {
+        BrutusinForms = brutusin["json-forms"];
+        bf = BrutusinForms.create(schema);
+        container = document.querySelector('#container');
         bf.render(container, engines);
+        console.log(bf.getData());
     }
 
     function saveData(content) {
