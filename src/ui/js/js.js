@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", event => {
     saveAsMozlz4Btn.addEventListener('click', function (event) {
         const enginesStr = JSON.stringify(engines);
 
-
+        console.log(require);
+        console.log(require.exports);
+        console.log(lz);
     });
 
     saveAsJSONBtn.addEventListener('click', event => {
@@ -42,7 +44,6 @@ document.addEventListener("DOMContentLoaded", event => {
         bf = BrutusinForms.create(schema);
         container = document.querySelector('#container');
         bf.render(container, engines);
-        console.log(bf.getData());
     }
 
     function saveData(content) {
