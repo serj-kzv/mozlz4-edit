@@ -1,4 +1,26 @@
-require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { var a = typeof require == "function" && require; if (!u && a) return a(o, !0); if (i) return i(o, !0); var f = new Error("Cannot find module '" + o + "'"); throw f.code = "MODULE_NOT_FOUND", f } var l = n[o] = { exports: {} }; t[o][0].call(l.exports, function (e) { var n = t[o][1][e]; return s(n ? n : e) }, l, l.exports, e, t, n, r) } return n[o].exports } var i = typeof require == "function" && require; for (var o = 0; o < r.length; o++)s(r[o]); return s })({
+require = (function e(t, n, r) {
+    function s(o, u) {
+        if (!n[o]) {
+            if (!t[o]) {
+                var a = typeof require == "function" && require;
+                if (!u && a) return a(o, !0);
+                if (i) return i(o, !0);
+                var f = new Error("Cannot find module '" + o + "'");
+                throw f.code = "MODULE_NOT_FOUND", f
+            }
+            var l = n[o] = {exports: {}};
+            t[o][0].call(l.exports, function (e) {
+                var n = t[o][1][e];
+                return s(n ? n : e)
+            }, l, l.exports, e, t, n, r)
+        }
+        return n[o].exports
+    }
+
+    var i = typeof require == "function" && require;
+    for (var o = 0; o < r.length; o++) s(r[o]);
+    return s
+})({
     "./utils": [function (require, module, exports) {
         /**
          * Javascript emulated bindings
@@ -36,9 +58,10 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
         exports.bindings = require('./binding')
 
-    }, { "./binding": 1, "xxhashjs": 10 }], 1: [function (require, module, exports) {
+    }, {"./binding": 1, "xxhashjs": 10}],
+    1: [function (require, module, exports) {
         /**
-            Javascript version of the key LZ4 C functions
+         Javascript version of the key LZ4 C functions
          */
         var uint32 = require('cuint').UINT32
 
@@ -51,7 +74,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
         };
 
         /**
-         * Decode a block. Assumptions: input contains all sequences of a 
+         * Decode a block. Assumptions: input contains all sequences of a
          * chunk, output is large enough to receive the decoded data.
          * If the output buffer is too small, an error will be thrown.
          * If the returned value is negative, an error occured at the returned offset.
@@ -285,12 +308,13 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             return dpos
         }
 
-    }, { "cuint": 7 }], 2: [function (require, module, exports) {
+    }, {"cuint": 7}],
+    2: [function (require, module, exports) {
         (function (Buffer) {
             var Decoder = require('./decoder_stream')
 
             /**
-                Decode an LZ4 stream
+             Decode an LZ4 stream
              */
             function LZ4_uncompress(input, options) {
                 var output = []
@@ -307,7 +331,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
             exports.LZ4_uncompress = LZ4_uncompress
         }).call(this, require("buffer").Buffer)
-    }, { "./decoder_stream": 3, "buffer": "buffer" }], 3: [function (require, module, exports) {
+    }, {"./decoder_stream": 3, "buffer": "buffer"}],
+    3: [function (require, module, exports) {
         (function (Buffer) {
             var Transform = require('stream').Transform
             var inherits = require('util').inherits
@@ -347,6 +372,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 this.dataBlockSize = 0
                 this.skippableSize = 0
             }
+
             inherits(Decoder, Transform)
 
             Decoder.prototype._transform = function (data, encoding, done) {
@@ -641,12 +667,13 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             module.exports = Decoder
 
         }).call(this, require("buffer").Buffer)
-    }, { "./binding": 1, "./static": 6, "buffer": "buffer", "stream": 33, "util": 36 }], 4: [function (require, module, exports) {
+    }, {"./binding": 1, "./static": 6, "buffer": "buffer", "stream": 33, "util": 36}],
+    4: [function (require, module, exports) {
         (function (Buffer) {
             var Encoder = require('./encoder_stream')
 
             /**
-                Encode an LZ4 stream
+             Encode an LZ4 stream
              */
             function LZ4_compress(input, options) {
                 var output = []
@@ -664,7 +691,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             exports.LZ4_compress = LZ4_compress
 
         }).call(this, require("buffer").Buffer)
-    }, { "./encoder_stream": 5, "buffer": "buffer" }], 5: [function (require, module, exports) {
+    }, {"./encoder_stream": 5, "buffer": "buffer"}],
+    5: [function (require, module, exports) {
         (function (Buffer) {
             var Transform = require('stream').Transform
             var inherits = require('util').inherits
@@ -722,7 +750,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 if (descriptor_bd < 0)
                     throw new Error('Invalid blockMaxSize: ' + o.blockMaxSize)
 
-                this.descriptor = { flg: descriptor_flg, bd: (descriptor_bd & 0x7) << 4 }
+                this.descriptor = {flg: descriptor_flg, bd: (descriptor_bd & 0x7) << 4}
 
                 // Data being processed
                 this.buffer = []
@@ -731,6 +759,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 this.first = true
                 this.checksum = null
             }
+
             inherits(Encoder, Transform)
 
             // Header = magic number + stream descriptor
@@ -895,7 +924,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             module.exports = Encoder
 
         }).call(this, require("buffer").Buffer)
-    }, { "./binding": 1, "./static": 6, "buffer": "buffer", "stream": 33, "util": 36 }], 6: [function (require, module, exports) {
+    }, {"./binding": 1, "./static": 6, "buffer": "buffer", "stream": 33, "util": 36}],
+    6: [function (require, module, exports) {
         (function (Buffer) {
             /**
              * LZ4 based compression and decompression
@@ -959,16 +989,18 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             exports.utils = require('./utils')
 
         }).call(this, require("buffer").Buffer)
-    }, { "./utils": "./utils", "buffer": "buffer" }], 7: [function (require, module, exports) {
+    }, {"./utils": "./utils", "buffer": "buffer"}],
+    7: [function (require, module, exports) {
         exports.UINT32 = require('./lib/uint32')
         exports.UINT64 = require('./lib/uint64')
-    }, { "./lib/uint32": 8, "./lib/uint64": 9 }], 8: [function (require, module, exports) {
+    }, {"./lib/uint32": 8, "./lib/uint64": 9}],
+    8: [function (require, module, exports) {
         /**
-            C-like unsigned 32 bits integers in Javascript
-            Copyright (C) 2013, Pierre Curto
-            MIT license
+         C-like unsigned 32 bits integers in Javascript
+         Copyright (C) 2013, Pierre Curto
+         MIT license
          */
-        ; (function (root) {
+        ;(function (root) {
 
             // Local cache for typical radices
             var radixPowerCache = {
@@ -985,11 +1017,11 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
 
             /**
-             *	Represents an unsigned 32 bits integer
+             *    Represents an unsigned 32 bits integer
              * @constructor
-             * @param {Number|String|Number} low bits     | integer as a string 		 | integer as a number
+             * @param {Number|String|Number} low bits     | integer as a string         | integer as a number
              * @param {Number|Number|Undefined} high bits | radix (optional, default=10)
-             * @return 
+             * @return
              */
             function UINT32(l, h) {
                 if (!(this instanceof UINT32))
@@ -1020,6 +1052,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
                 return this
             }
+
             UINT32.prototype.fromBits = fromBits
 
             /**
@@ -1034,6 +1067,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
                 return this
             }
+
             UINT32.prototype.fromNumber = fromNumber
 
             /**
@@ -1051,6 +1085,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
                 return this
             }
+
             UINT32.prototype.fromString = fromString
 
             /**
@@ -1429,13 +1464,14 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
         })(this)
 
-    }, {}], 9: [function (require, module, exports) {
+    }, {}],
+    9: [function (require, module, exports) {
         /**
-            C-like unsigned 64 bits integers in Javascript
-            Copyright (C) 2013, Pierre Curto
-            MIT license
+         C-like unsigned 64 bits integers in Javascript
+         Copyright (C) 2013, Pierre Curto
+         MIT license
          */
-        ; (function (root) {
+        ;(function (root) {
 
             // Local cache for typical radices
             var radixPowerCache = {
@@ -1450,7 +1486,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
 
             /**
-             *	Represents an unsigned 64 bits integer
+             *    Represents an unsigned 64 bits integer
              * @constructor
              * @param {Number} first low bits (8)
              * @param {Number} second low bits (8)
@@ -1460,9 +1496,9 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
              * @param {Number} low bits (32)
              * @param {Number} high bits (32)
              * or
-             * @param {String|Number} integer as a string 		 | integer as a number
+             * @param {String|Number} integer as a string         | integer as a number
              * @param {Number|Undefined} radix (optional, default=10)
-             * @return 
+             * @return
              */
             function UINT64(a00, a16, a32, a48) {
                 if (!(this instanceof UINT64))
@@ -1506,6 +1542,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
                 return this
             }
+
             UINT64.prototype.fromBits = fromBits
 
             /**
@@ -1522,6 +1559,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
                 return this
             }
+
             UINT64.prototype.fromNumber = fromNumber
 
             /**
@@ -1569,6 +1607,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
                 return this
             }
+
             UINT64.prototype.fromString = fromString
 
             /**
@@ -1806,7 +1845,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
 
             /**
-        
+
              * @method eq
              * @param {Object} other UINT64
              * @return {Boolean}
@@ -2079,15 +2118,16 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
         })(this)
 
-    }, {}], 10: [function (require, module, exports) {
+    }, {}],
+    10: [function (require, module, exports) {
         (function (Buffer) {
             /**
-                xxHash implementation in pure Javascript
-            
-                Copyright (C) 2013, Pierre Curto
-                MIT license
+             xxHash implementation in pure Javascript
+
+             Copyright (C) 2013, Pierre Curto
+             MIT license
              */
-            ; (function (root) {
+            ;(function (root) {
 
                 var UINT32 = require('cuint').UINT32
 
@@ -2145,10 +2185,10 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 var PRIME32_1plus2 = PRIME32_1.clone().add(PRIME32_2)
 
                 /**
-                * Convert string to proper UTF-8 array
-                * @param str Input string
-                * @returns {Uint8Array} UTF8 array is returned as uint8 array
-                */
+                 * Convert string to proper UTF-8 array
+                 * @param str Input string
+                 * @returns {Uint8Array} UTF8 array is returned as uint8 array
+                 */
                 function toUTF8Array(str) {
                     var utf8 = []
                     for (var i = 0, n = str.length; i < n; i++) {
@@ -2219,6 +2259,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
                     return this
                 }
+
                 XXH.prototype.init = init
 
                 /**
@@ -2480,12 +2521,14 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             })(this)
 
         }).call(this, require("buffer").Buffer)
-    }, { "buffer": "buffer", "cuint": 7 }], 11: [function (require, module, exports) {
+    }, {"buffer": "buffer", "cuint": 7}],
+    11: [function (require, module, exports) {
 
-    }, {}], 12: [function (require, module, exports) {
+    }, {}],
+    12: [function (require, module, exports) {
         var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
-        ; (function (exports) {
+        ;(function (exports) {
             'use strict';
 
             var Arr = (typeof Uint8Array !== 'undefined')
@@ -2608,7 +2651,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             exports.fromByteArray = uint8ToBase64
         }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-    }, {}], 13: [function (require, module, exports) {
+    }, {}],
+    13: [function (require, module, exports) {
         exports.read = function (buffer, offset, isLE, mLen, nBytes) {
             var e, m
             var eLen = nBytes * 8 - mLen - 1
@@ -2624,12 +2668,14 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             e = s & ((1 << (-nBits)) - 1)
             s >>= (-nBits)
             nBits += eLen
-            for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) { }
+            for (; nBits > 0; e = e * 256 + buffer[offset + i], i += d, nBits -= 8) {
+            }
 
             m = e & ((1 << (-nBits)) - 1)
             e >>= (-nBits)
             nBits += mLen
-            for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) { }
+            for (; nBits > 0; m = m * 256 + buffer[offset + i], i += d, nBits -= 8) {
+            }
 
             if (e === 0) {
                 e = 1 - eBias
@@ -2685,16 +2731,19 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 }
             }
 
-            for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) { }
+            for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {
+            }
 
             e = (e << mLen) | m
             eLen += mLen
-            for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) { }
+            for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {
+            }
 
             buffer[offset + i - d] |= s * 128
         }
 
-    }, {}], 14: [function (require, module, exports) {
+    }, {}],
+    14: [function (require, module, exports) {
 
         /**
          * isArray
@@ -2729,7 +2778,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             return !!val && '[object Array]' == str.call(val);
         };
 
-    }, {}], 15: [function (require, module, exports) {
+    }, {}],
+    15: [function (require, module, exports) {
         // Copyright Joyent, Inc. and other Node contributors.
         //
         // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2755,6 +2805,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             this._events = this._events || {};
             this._maxListeners = this._maxListeners || undefined;
         }
+
         module.exports = EventEmitter;
 
         // Backwards-compat with node 0.10.x
@@ -2844,13 +2895,13 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                         listener.listener : listener);
 
             if (!this._events[type])
-                // Optimize the case of one listener. Don't need the extra array object.
+            // Optimize the case of one listener. Don't need the extra array object.
                 this._events[type] = listener;
             else if (isObject(this._events[type]))
-                // If we've already got an array, just append.
+            // If we've already got an array, just append.
                 this._events[type].push(listener);
             else
-                // Adding the second element, need to change to array.
+            // Adding the second element, need to change to array.
                 this._events[type] = [this._events[type], listener];
 
             // Check for listener leak
@@ -3029,7 +3080,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             return arg === void 0;
         }
 
-    }, {}], 16: [function (require, module, exports) {
+    }, {}],
+    16: [function (require, module, exports) {
         if (typeof Object.create === 'function') {
             // implementation from standard node.js 'util' module
             module.exports = function inherits(ctor, superCtor) {
@@ -3047,14 +3099,16 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             // old school shim for old browsers
             module.exports = function inherits(ctor, superCtor) {
                 ctor.super_ = superCtor
-                var TempCtor = function () { }
+                var TempCtor = function () {
+                }
                 TempCtor.prototype = superCtor.prototype
                 ctor.prototype = new TempCtor()
                 ctor.prototype.constructor = ctor
             }
         }
 
-    }, {}], 17: [function (require, module, exports) {
+    }, {}],
+    17: [function (require, module, exports) {
         /**
          * Determine if an object is Buffer
          *
@@ -3073,12 +3127,14 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 ))
         }
 
-    }, {}], 18: [function (require, module, exports) {
+    }, {}],
+    18: [function (require, module, exports) {
         module.exports = Array.isArray || function (arr) {
             return Object.prototype.toString.call(arr) == '[object Array]';
         };
 
-    }, {}], 19: [function (require, module, exports) {
+    }, {}],
+    19: [function (require, module, exports) {
         // shim for using process in browser
 
         var process = module.exports = {};
@@ -3141,6 +3197,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             this.fun = fun;
             this.array = array;
         }
+
         Item.prototype.run = function () {
             this.fun.apply(null, this.array);
         };
@@ -3151,7 +3208,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
         process.version = ''; // empty string to avoid regexp issues
         process.versions = {};
 
-        function noop() { }
+        function noop() {
+        }
 
         process.on = noop;
         process.addListener = noop;
@@ -3165,16 +3223,22 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             throw new Error('process.binding is not supported');
         };
 
-        process.cwd = function () { return '/' };
+        process.cwd = function () {
+            return '/'
+        };
         process.chdir = function (dir) {
             throw new Error('process.chdir is not supported');
         };
-        process.umask = function () { return 0; };
+        process.umask = function () {
+            return 0;
+        };
 
-    }, {}], 20: [function (require, module, exports) {
+    }, {}],
+    20: [function (require, module, exports) {
         module.exports = require("./lib/_stream_duplex.js")
 
-    }, { "./lib/_stream_duplex.js": 21 }], 21: [function (require, module, exports) {
+    }, {"./lib/_stream_duplex.js": 21}],
+    21: [function (require, module, exports) {
         // a duplex stream is just a stream that is both readable and writable.
         // Since JS doesn't have multiple prototypal inheritance, this class
         // prototypally inherits from Readable, and then parasitically from
@@ -3196,7 +3260,6 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
         /*<replacement>*/
         var processNextTick = require('process-nextick-args');
         /*</replacement>*/
-
 
 
         /*<replacement>*/
@@ -3258,7 +3321,14 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
         }
 
-    }, { "./_stream_readable": 23, "./_stream_writable": 25, "core-util-is": 26, "inherits": 16, "process-nextick-args": 27 }], 22: [function (require, module, exports) {
+    }, {
+        "./_stream_readable": 23,
+        "./_stream_writable": 25,
+        "core-util-is": 26,
+        "inherits": 16,
+        "process-nextick-args": 27
+    }],
+    22: [function (require, module, exports) {
         // a passthrough stream.
         // basically just the most minimal sort of Transform stream.
         // Every written chunk gets output as-is.
@@ -3287,7 +3357,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             cb(null, chunk);
         };
 
-    }, { "./_stream_transform": 24, "core-util-is": 26, "inherits": 16 }], 23: [function (require, module, exports) {
+    }, {"./_stream_transform": 24, "core-util-is": 26, "inherits": 16}],
+    23: [function (require, module, exports) {
         (function (process) {
             'use strict';
 
@@ -3318,13 +3389,13 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             /*</replacement>*/
 
 
-
             /*<replacement>*/
             var Stream;
             (function () {
                 try {
                     Stream = require('st' + 'ream');
-                } catch (_) { } finally {
+                } catch (_) {
+                } finally {
                     if (!Stream)
                         Stream = require('events').EventEmitter;
                 }
@@ -3339,14 +3410,14 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             /*</replacement>*/
 
 
-
             /*<replacement>*/
             var debugUtil = require('util');
             var debug;
             if (debugUtil && debugUtil.debuglog) {
                 debug = debugUtil.debuglog('stream');
             } else {
-                debug = function () { };
+                debug = function () {
+                };
             }
             /*</replacement>*/
 
@@ -3538,6 +3609,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
             // Don't raise the hwm > 8MB
             var MAX_HWM = 0x800000;
+
             function computeNewHighWaterMark(n) {
                 if (n >= MAX_HWM) {
                     n = MAX_HWM;
@@ -3775,11 +3847,11 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             function maybeReadMore_(stream, state) {
                 var len = state.length;
                 while (!state.reading && !state.flowing && !state.ended &&
-                    state.length < state.highWaterMark) {
+                state.length < state.highWaterMark) {
                     debug('maybeReadMore read 0');
                     stream.read(0);
                     if (len === state.length)
-                        // didn't get any data, stop spinning.
+                    // didn't get any data, stop spinning.
                         break;
                     else
                         len = state.length;
@@ -3824,6 +3896,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                     src.once('end', endFn);
 
                 dest.on('unpipe', onunpipe);
+
                 function onunpipe(readable) {
                     debug('onunpipe');
                     if (readable === src) {
@@ -3844,6 +3917,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 dest.on('drain', ondrain);
 
                 var cleanedUp = false;
+
                 function cleanup() {
                     debug('cleanup');
                     // cleanup event handlers once the pipe is broken
@@ -3869,6 +3943,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 }
 
                 src.on('data', ondata);
+
                 function ondata(chunk) {
                     debug('ondata');
                     var ret = dest.write(chunk);
@@ -3896,6 +3971,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                     if (EElistenerCount(dest, 'error') === 0)
                         dest.emit('error', er);
                 }
+
                 // This is a brutally ugly hack to make sure that our error handler
                 // is attached before any userland ones.  NEVER DO THIS.
                 if (!dest._events || !dest._events.error)
@@ -3911,12 +3987,15 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                     dest.removeListener('finish', onfinish);
                     unpipe();
                 }
+
                 dest.once('close', onclose);
+
                 function onfinish() {
                     debug('onfinish');
                     dest.removeListener('close', onclose);
                     unpipe();
                 }
+
                 dest.once('finish', onfinish);
 
                 function unpipe() {
@@ -4268,7 +4347,19 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
 
         }).call(this, require('_process'))
-    }, { "./_stream_duplex": 21, "_process": 19, "buffer": "buffer", "core-util-is": 26, "events": 15, "inherits": 16, "isarray": 18, "process-nextick-args": 27, "string_decoder/": 34, "util": 11 }], 24: [function (require, module, exports) {
+    }, {
+        "./_stream_duplex": 21,
+        "_process": 19,
+        "buffer": "buffer",
+        "core-util-is": 26,
+        "events": 15,
+        "inherits": 16,
+        "isarray": 18,
+        "process-nextick-args": 27,
+        "string_decoder/": 34,
+        "util": 11
+    }],
+    24: [function (require, module, exports) {
         // a transform stream is a readable/writable stream where you do
         // something with the data.  Sometimes it's called a "filter",
         // but that's not a great name for it, since that implies a thing where
@@ -4467,7 +4558,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             return stream.push(null);
         }
 
-    }, { "./_stream_duplex": 21, "core-util-is": 26, "inherits": 16 }], 25: [function (require, module, exports) {
+    }, {"./_stream_duplex": 21, "core-util-is": 26, "inherits": 16}],
+    25: [function (require, module, exports) {
         // A bit simpler than readable streams.
         // Implement an async ._write(chunk, encoding, cb), and it'll handle all
         // the drain event emission and buffering.
@@ -4501,13 +4593,13 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
         /*</replacement>*/
 
 
-
         /*<replacement>*/
         var Stream;
         (function () {
             try {
                 Stream = require('st' + 'ream');
-            } catch (_) { } finally {
+            } catch (_) {
+            } finally {
                 if (!Stream)
                     Stream = require('events').EventEmitter;
             }
@@ -4518,7 +4610,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
         util.inherits(Writable, Stream);
 
-        function nop() { }
+        function nop() {
+        }
 
         function WriteReq(chunk, encoding, cb) {
             this.chunk = chunk;
@@ -4634,7 +4727,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                     }, '_writableState.buffer is deprecated. Use _writableState.getBuffer ' +
                         'instead.')
                 });
-            } catch (_) { }
+            } catch (_) {
+            }
         }());
 
 
@@ -4749,8 +4843,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             if (typeof encoding === 'string')
                 encoding = encoding.toLowerCase();
             if (!(['hex', 'utf8', 'utf-8', 'ascii', 'binary', 'base64',
-                'ucs2', 'ucs-2', 'utf16le', 'utf-16le', 'raw']
-                .indexOf((encoding + '').toLowerCase()) > -1))
+                    'ucs2', 'ucs-2', 'utf16le', 'utf-16le', 'raw']
+                    .indexOf((encoding + '').toLowerCase()) > -1))
                 throw new TypeError('Unknown encoding: ' + encoding);
             this._writableState.defaultEncoding = encoding;
         };
@@ -5000,7 +5094,16 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             state.ended = true;
         }
 
-    }, { "./_stream_duplex": 21, "buffer": "buffer", "core-util-is": 26, "events": 15, "inherits": 16, "process-nextick-args": 27, "util-deprecate": 28 }], 26: [function (require, module, exports) {
+    }, {
+        "./_stream_duplex": 21,
+        "buffer": "buffer",
+        "core-util-is": 26,
+        "events": 15,
+        "inherits": 16,
+        "process-nextick-args": 27,
+        "util-deprecate": 28
+    }],
+    26: [function (require, module, exports) {
         (function (Buffer) {
             // Copyright Joyent, Inc. and other Node contributors.
             //
@@ -5028,67 +5131,80 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             function isArray(ar) {
                 return Array.isArray(ar);
             }
+
             exports.isArray = isArray;
 
             function isBoolean(arg) {
                 return typeof arg === 'boolean';
             }
+
             exports.isBoolean = isBoolean;
 
             function isNull(arg) {
                 return arg === null;
             }
+
             exports.isNull = isNull;
 
             function isNullOrUndefined(arg) {
                 return arg == null;
             }
+
             exports.isNullOrUndefined = isNullOrUndefined;
 
             function isNumber(arg) {
                 return typeof arg === 'number';
             }
+
             exports.isNumber = isNumber;
 
             function isString(arg) {
                 return typeof arg === 'string';
             }
+
             exports.isString = isString;
 
             function isSymbol(arg) {
                 return typeof arg === 'symbol';
             }
+
             exports.isSymbol = isSymbol;
 
             function isUndefined(arg) {
                 return arg === void 0;
             }
+
             exports.isUndefined = isUndefined;
 
             function isRegExp(re) {
                 return isObject(re) && objectToString(re) === '[object RegExp]';
             }
+
             exports.isRegExp = isRegExp;
 
             function isObject(arg) {
                 return typeof arg === 'object' && arg !== null;
             }
+
             exports.isObject = isObject;
 
             function isDate(d) {
                 return isObject(d) && objectToString(d) === '[object Date]';
             }
+
             exports.isDate = isDate;
 
             function isError(e) {
                 return isObject(e) &&
                     (objectToString(e) === '[object Error]' || e instanceof Error);
             }
+
             exports.isError = isError;
 
             function isFunction(arg) {
                 return typeof arg === 'function';
             }
+
             exports.isFunction = isFunction;
 
             function isPrimitive(arg) {
@@ -5099,18 +5215,21 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                     typeof arg === 'symbol' ||  // ES6 symbol
                     typeof arg === 'undefined';
             }
+
             exports.isPrimitive = isPrimitive;
 
             function isBuffer(arg) {
                 return Buffer.isBuffer(arg);
             }
+
             exports.isBuffer = isBuffer;
 
             function objectToString(o) {
                 return Object.prototype.toString.call(o);
             }
-        }).call(this, { "isBuffer": require("../../../../insert-module-globals/node_modules/is-buffer/index.js") })
-    }, { "../../../../insert-module-globals/node_modules/is-buffer/index.js": 17 }], 27: [function (require, module, exports) {
+        }).call(this, {"isBuffer": require("../../../../insert-module-globals/node_modules/is-buffer/index.js")})
+    }, {"../../../../insert-module-globals/node_modules/is-buffer/index.js": 17}],
+    27: [function (require, module, exports) {
         (function (process) {
             'use strict';
             module.exports = nextTick;
@@ -5127,7 +5246,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
 
         }).call(this, require('_process'))
-    }, { "_process": 19 }], 28: [function (require, module, exports) {
+    }, {"_process": 19}],
+    28: [function (require, module, exports) {
         (function (global) {
 
             /**
@@ -5160,6 +5280,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 }
 
                 var warned = false;
+
                 function deprecated() {
                     if (!warned) {
                         if (config('throwDeprecation')) {
@@ -5198,14 +5319,17 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
 
         }).call(this, typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-    }, {}], 29: [function (require, module, exports) {
+    }, {}],
+    29: [function (require, module, exports) {
         module.exports = require("./lib/_stream_passthrough.js")
 
-    }, { "./lib/_stream_passthrough.js": 22 }], 30: [function (require, module, exports) {
+    }, {"./lib/_stream_passthrough.js": 22}],
+    30: [function (require, module, exports) {
         var Stream = (function () {
             try {
                 return require('st' + 'ream'); // hack to fix a circular dependency issue when used with browserify
-            } catch (_) { }
+            } catch (_) {
+            }
         }());
         exports = module.exports = require('./lib/_stream_readable.js');
         exports.Stream = Stream || exports;
@@ -5215,13 +5339,22 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
         exports.Transform = require('./lib/_stream_transform.js');
         exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-    }, { "./lib/_stream_duplex.js": 21, "./lib/_stream_passthrough.js": 22, "./lib/_stream_readable.js": 23, "./lib/_stream_transform.js": 24, "./lib/_stream_writable.js": 25 }], 31: [function (require, module, exports) {
+    }, {
+        "./lib/_stream_duplex.js": 21,
+        "./lib/_stream_passthrough.js": 22,
+        "./lib/_stream_readable.js": 23,
+        "./lib/_stream_transform.js": 24,
+        "./lib/_stream_writable.js": 25
+    }],
+    31: [function (require, module, exports) {
         module.exports = require("./lib/_stream_transform.js")
 
-    }, { "./lib/_stream_transform.js": 24 }], 32: [function (require, module, exports) {
+    }, {"./lib/_stream_transform.js": 24}],
+    32: [function (require, module, exports) {
         module.exports = require("./lib/_stream_writable.js")
 
-    }, { "./lib/_stream_writable.js": 25 }], 33: [function (require, module, exports) {
+    }, {"./lib/_stream_writable.js": 25}],
+    33: [function (require, module, exports) {
         // Copyright Joyent, Inc. and other Node contributors.
         //
         // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5257,7 +5390,6 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
         // Backwards-compat with node 0.4.x
         Stream.Stream = Stream;
-
 
 
         // old-style streams.  Note that the pipe method (the only relevant
@@ -5296,6 +5428,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
 
             var didOnEnd = false;
+
             function onend() {
                 if (didOnEnd) return;
                 didOnEnd = true;
@@ -5350,7 +5483,16 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             return dest;
         };
 
-    }, { "events": 15, "inherits": 16, "readable-stream/duplex.js": 20, "readable-stream/passthrough.js": 29, "readable-stream/readable.js": 30, "readable-stream/transform.js": 31, "readable-stream/writable.js": 32 }], 34: [function (require, module, exports) {
+    }, {
+        "events": 15,
+        "inherits": 16,
+        "readable-stream/duplex.js": 20,
+        "readable-stream/passthrough.js": 29,
+        "readable-stream/readable.js": 30,
+        "readable-stream/transform.js": 31,
+        "readable-stream/writable.js": 32
+    }],
+    34: [function (require, module, exports) {
         // Copyright Joyent, Inc. and other Node contributors.
         //
         // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5377,8 +5519,20 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
         var isBufferEncoding = Buffer.isEncoding
             || function (encoding) {
                 switch (encoding && encoding.toLowerCase()) {
-                    case 'hex': case 'utf8': case 'utf-8': case 'ascii': case 'binary': case 'base64': case 'ucs2': case 'ucs-2': case 'utf16le': case 'utf-16le': case 'raw': return true;
-                    default: return false;
+                    case 'hex':
+                    case 'utf8':
+                    case 'utf-8':
+                    case 'ascii':
+                    case 'binary':
+                    case 'base64':
+                    case 'ucs2':
+                    case 'ucs-2':
+                    case 'utf16le':
+                    case 'utf-16le':
+                    case 'raw':
+                        return true;
+                    default:
+                        return false;
                 }
             }
 
@@ -5573,14 +5727,16 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             this.charLength = this.charReceived ? 3 : 0;
         }
 
-    }, { "buffer": "buffer" }], 35: [function (require, module, exports) {
+    }, {"buffer": "buffer"}],
+    35: [function (require, module, exports) {
         module.exports = function isBuffer(arg) {
             return arg && typeof arg === 'object'
                 && typeof arg.copy === 'function'
                 && typeof arg.fill === 'function'
                 && typeof arg.readUInt8 === 'function';
         }
-    }, {}], 36: [function (require, module, exports) {
+    }, {}],
+    36: [function (require, module, exports) {
         (function (process, global) {
             // Copyright Joyent, Inc. and other Node contributors.
             //
@@ -5620,8 +5776,10 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                     if (x === '%%') return '%';
                     if (i >= len) return x;
                     switch (x) {
-                        case '%s': return String(args[i++]);
-                        case '%d': return Number(args[i++]);
+                        case '%s':
+                            return String(args[i++]);
+                        case '%d':
+                            return Number(args[i++]);
                         case '%j':
                             try {
                                 return JSON.stringify(args[i++]);
@@ -5659,6 +5817,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 }
 
                 var warned = false;
+
                 function deprecated() {
                     if (!warned) {
                         if (process.throwDeprecation) {
@@ -5691,7 +5850,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                             console.error('%s %d: %s', set, pid, msg);
                         };
                     } else {
-                        debugs[set] = function () { };
+                        debugs[set] = function () {
+                        };
                     }
                 }
                 return debugs[set];
@@ -5705,6 +5865,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
              * @param {Object} obj The object to print out.
              * @param {Object} opts Optional options object that alters the output.
              */
+
             /* legacy: obj, showHidden, depth, colors*/
             function inspect(obj, opts) {
                 // default options
@@ -5730,6 +5891,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 if (ctx.colors) ctx.stylize = stylizeWithColor;
                 return formatValue(ctx, obj, ctx.depth);
             }
+
             exports.inspect = inspect;
 
 
@@ -5951,7 +6113,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
 
             function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
                 var name, str, desc;
-                desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+                desc = Object.getOwnPropertyDescriptor(value, key) || {value: value[key]};
                 if (desc.get) {
                     if (desc.set) {
                         str = ctx.stylize('[Getter/Setter]', 'special');
@@ -6034,67 +6196,80 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             function isArray(ar) {
                 return Array.isArray(ar);
             }
+
             exports.isArray = isArray;
 
             function isBoolean(arg) {
                 return typeof arg === 'boolean';
             }
+
             exports.isBoolean = isBoolean;
 
             function isNull(arg) {
                 return arg === null;
             }
+
             exports.isNull = isNull;
 
             function isNullOrUndefined(arg) {
                 return arg == null;
             }
+
             exports.isNullOrUndefined = isNullOrUndefined;
 
             function isNumber(arg) {
                 return typeof arg === 'number';
             }
+
             exports.isNumber = isNumber;
 
             function isString(arg) {
                 return typeof arg === 'string';
             }
+
             exports.isString = isString;
 
             function isSymbol(arg) {
                 return typeof arg === 'symbol';
             }
+
             exports.isSymbol = isSymbol;
 
             function isUndefined(arg) {
                 return arg === void 0;
             }
+
             exports.isUndefined = isUndefined;
 
             function isRegExp(re) {
                 return isObject(re) && objectToString(re) === '[object RegExp]';
             }
+
             exports.isRegExp = isRegExp;
 
             function isObject(arg) {
                 return typeof arg === 'object' && arg !== null;
             }
+
             exports.isObject = isObject;
 
             function isDate(d) {
                 return isObject(d) && objectToString(d) === '[object Date]';
             }
+
             exports.isDate = isDate;
 
             function isError(e) {
                 return isObject(e) &&
                     (objectToString(e) === '[object Error]' || e instanceof Error);
             }
+
             exports.isError = isError;
 
             function isFunction(arg) {
                 return typeof arg === 'function';
             }
+
             exports.isFunction = isFunction;
 
             function isPrimitive(arg) {
@@ -6105,6 +6280,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                     typeof arg === 'symbol' ||  // ES6 symbol
                     typeof arg === 'undefined';
             }
+
             exports.isPrimitive = isPrimitive;
 
             exports.isBuffer = require('./support/isBuffer');
@@ -6126,8 +6302,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             function timestamp() {
                 var d = new Date();
                 var time = [pad(d.getHours()),
-                pad(d.getMinutes()),
-                pad(d.getSeconds())].join(':');
+                    pad(d.getMinutes()),
+                    pad(d.getSeconds())].join(':');
                 return [d.getDate(), months[d.getMonth()], time].join(' ');
             }
 
@@ -6170,7 +6346,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
 
         }).call(this, require('_process'), typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-    }, { "./support/isBuffer": 35, "_process": 19, "inherits": 16 }], "buffer": [function (require, module, exports) {
+    }, {"./support/isBuffer": 35, "_process": 19, "inherits": 16}],
+    "buffer": [function (require, module, exports) {
         (function (global) {
             /*!
              * The buffer module from node.js, for the browser.
@@ -6214,7 +6391,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
              *
              *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
              *     incorrect length in some situations.
-            
+
              * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
              * get the Object implementation, which is slower but behaves correctly.
              */
@@ -6223,10 +6400,14 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 : typedArraySupport()
 
             function typedArraySupport() {
-                function Bar() { }
+                function Bar() {
+                }
+
                 try {
                     var arr = new Uint8Array(1)
-                    arr.foo = function () { return 42 }
+                    arr.foo = function () {
+                        return 42
+                    }
                     arr.constructor = Bar
                     return arr.foo() === 42 && // typed array instances can be augmented
                         arr.constructor === Bar && // constructor can be set
@@ -6542,6 +6723,7 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                     }
                 }
             }
+
             Buffer.byteLength = byteLength
 
             // pre-set for values that may exist in the future
@@ -7718,7 +7900,8 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
             }
 
         }).call(this, typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-    }, { "base64-js": 12, "ieee754": 13, "is-array": 14 }], "lz4": [function (require, module, exports) {
+    }, {"base64-js": 12, "ieee754": 13, "is-array": 14}],
+    "lz4": [function (require, module, exports) {
         /**
          * LZ4 based compression and decompression
          * Copyright (c) 2014 Pierre Curto
@@ -7743,5 +7926,5 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
         module.exports.encodeBlock = bindings.compress
         module.exports.encodeBlockHC = bindings.compressHC
 
-    }, { "./decoder": 2, "./decoder_stream": 3, "./encoder": 4, "./encoder_stream": 5, "./static": 6 }]
+    }, {"./decoder": 2, "./decoder_stream": 3, "./encoder": 4, "./encoder_stream": 5, "./static": 6}]
 }, {}, ["lz4"]);

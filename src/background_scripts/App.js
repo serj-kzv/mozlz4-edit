@@ -10,7 +10,7 @@ class App {
                 console.log(CONFIG.getAPI().browser.browserAPI);
                 CONFIG.getAPI().browser.browserAPI.tabs.create({
                     url : 'ui/page.htm'
-                })
+                });
             }
         );
     }
