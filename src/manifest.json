@@ -1,0 +1,57 @@
+{
+  "manifest_version": 2,
+  "name": "mozlz4-edit",
+  "description": "",
+  "short_name": "mozlz4-edit",
+  "author": "",
+  "version": "1.0",
+  "homepage_url": "https://github.com/serj-kzv/mozlz4-edit",
+  "browser_action": {
+    "default_icon": "icons/save-whole.png",
+    "browser_style": true
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' blob: filesystem: chrome-extension-resource:; object-src 'self' blob: filesystem:",
+  "background": {
+    "scripts": [
+      "lib/mozlz4-archiver.js",
+      "common_scripts/Config.js",
+      "common_scripts/Util.js",
+      "background_scripts/App.js",
+      "background_scripts/Main.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "lib/mozlz4-archiver.js",
+        "common_scripts/Util.js",
+        "common_scripts/Config.js",
+        "background_scripts/App.js",
+        "content_scripts/Main.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "contextMenus",
+    "downloads",
+    "history",
+    "activeTab",
+    "tabs",
+    "notifications",
+    "<all_urls>",
+    "webRequest",
+    "webRequestBlocking",
+    "webNavigation",
+    "storage",
+    "unlimitedStorage",
+    "browsingData"
+  ],
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "option/option.htm"
+  }
+}
