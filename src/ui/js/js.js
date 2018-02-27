@@ -1,5 +1,4 @@
 let engines = {};
-
 document.addEventListener("DOMContentLoaded", function (event) {
     // buttons
     const selectBtn = document.querySelector('#selectMozlz4FileButton');
