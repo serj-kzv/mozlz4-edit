@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", event => {
             console.log(file);
 
             readMozlz4File(file, function (text) {
+                console.log(text);
                 engines = JSON.parse(text);
 
                 console.log(engines);

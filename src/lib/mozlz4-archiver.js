@@ -61,6 +61,7 @@ function readMozlz4File(file, onRead, onError) {
 
     reader.onload = function () {
         let input = new Uint8Array(reader.result);
+        console.log(input);
         let output;
         let uncompressedSize = input.length * 3;  // size estimate for uncompressed data!
 
@@ -102,7 +103,7 @@ function writeMozlz4File(content) {
     console.log(output);
 
     let mozlz4_magic = [109, 111, 122, 76, 122, 52, 48, 0];
-    let decomp_size = [0, 0, 0, 0];
+    let decomp_size = [0, 133, 103, 0];
 
     // moz header + bound
     mozlz4_magic.push(...decomp_size);
