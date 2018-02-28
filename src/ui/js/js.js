@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", event => {
 
     saveAsMozlz4Btn.addEventListener('click', function (event) {
         const enginesStr = JSON.stringify(engines);
+        const file = writeMozlz4File(enginesStr);
 
-        console.log(require);
-        console.log(require.exports);
-        console.log(lz);
+        console.log(file.length);
+        saveData(file, 'search.json.mozlz4');
     });
 
     saveAsJSONBtn.addEventListener('click', event => {
@@ -24,11 +24,12 @@ document.addEventListener("DOMContentLoaded", event => {
 
         console.log(bf.getData());
 
-        saveData(enginesJSONStr);
+        saveData(enginesJSONStr, 'search.json');
     });
 
     selectBtn.addEventListener('change', event => {
         let file = event.target.files[0];
+        console.log(file);
 
         readMozlz4File(file, function (text) {
             engines = JSON.parse(text);
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", event => {
         bf.render(container, engines);
     }
 
-    function saveData(content) {
+    function saveData(content, fileName) {
         const a = document.createElement('a');
 
         document.body.appendChild(a);
@@ -58,7 +59,7 @@ document.addEventListener("DOMContentLoaded", event => {
         const url = window.URL.createObjectURL(blob);
 
         a.href = url;
-        a.download = 'search.json';
+        a.download = fileName;
         a.click();
         window.URL.revokeObjectURL(url);
         a.remove();
