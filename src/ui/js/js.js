@@ -6,44 +6,73 @@ let bf = null;
 let container = null;
 
 document.addEventListener("DOMContentLoaded", event => {
-    // buttons
-    const selectBtn = document.querySelector('#selectMozlz4FileButton');
-    const saveAsMozlz4Btn = document.querySelector('#saveAsMozlz4');
-    const saveAsJSONBtn = document.querySelector('#saveAsJson');
+    document.querySelector('#saveAsMozlz4Btn')
+        .addEventListener('click', function (event) {
+            const enginesStr = JSON.stringify(engines);
+            const file = writeMozlz4File(enginesStr);
 
-    saveAsMozlz4Btn.addEventListener('click', function (event) {
-        const enginesStr = JSON.stringify(engines);
-        const file = writeMozlz4File(enginesStr);
-
-        console.log(file.length);
-        saveData(file, 'search.json.mozlz4');
-    });
-
-    saveAsJSONBtn.addEventListener('click', event => {
-        const enginesJSONStr = JSON.stringify(bf.getData(), null, 4);
-
-        console.log(bf.getData());
-
-        saveData(enginesJSONStr, 'search.json');
-    });
-
-    selectBtn.addEventListener('change', event => {
-        let file = event.target.files[0];
-        console.log(file);
-
-        readMozlz4File(file, function (text) {
-            engines = JSON.parse(text);
-
-            console.log(engines);
-
-            createForm(schema, engines);
+            saveData(file, 'search.json.mozlz4');
         });
-    });
+
+    document.querySelector('#saveAsJsonBtn')
+        .addEventListener('click', event => {
+            const enginesJSONStr = JSON.stringify(bf.getData(), null, 4);
+
+            console.log(bf.getData());
+
+            saveData(enginesJSONStr, 'search.json');
+        });
+
+    document.querySelector('#loadMozlz4FileBtn')
+        .addEventListener('change', event => {
+            let file = event.target.files[0];
+            console.log(file);
+
+            readMozlz4File(file, function (text) {
+                engines = JSON.parse(text);
+
+                console.log(engines);
+
+                createForm(schema, engines);
+
+                fillTxtResultField(JSON.stringify(engines, null, 4));
+            });
+        });
+    document.querySelector('#loadJSONFileBtn')
+        .addEventListener('change', event => {
+            let file = event.target.files[0];
+            console.log(file);
+
+            readFileAsTxt(file, text => {
+                engines = JSON.parse(text);
+
+                console.log(engines);
+
+                createForm(schema, engines);
+                fillTxtResultField(text);
+            });
+        });
+
+    function fillTxtResultField(txt) {
+        document.querySelector('#txtResult').innerHTML = txt;
+    }
+
+    function readFileAsTxt(file, callBackFunc) {
+        const fileReader = new FileReader();
+
+        fileReader.addEventListener('loadend', event => {
+            const fileTxt = event.target.result;
+
+            callBackFunc(fileTxt);
+        });
+
+        fileReader.readAsText(file);
+    }
 
     function createForm(schema, engines) {
         BrutusinForms = brutusin["json-forms"];
         bf = BrutusinForms.create(schema);
-        container = document.querySelector('#container');
+        container = document.querySelector('#list-container');
         bf.render(container, engines);
     }
 

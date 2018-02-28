@@ -30,10 +30,26 @@
 </head>
 
 <body>
-<input id="selectMozlz4FileButton" name="selectMozlz4FileButton" type="file" accept=".json.mozlz4">
-<button id="saveAsMozlz4">Save as mozlz4</button>
-<button id="saveAsJson">Save as JSON</button>
-<div class="container-fluid"></div>
+<label for="loadMozlz4FileBtn">
+    load mozlz4
+    <input id="loadMozlz4FileBtn" name="loadMozlz4FileBtn" type="file" accept=".json.mozlz4">
+</label>
+<label for="loadJSONFileBtn">
+    load JSON
+    <input id="loadJSONFileBtn" name="loadJSONFileBtn" type="file" accept=".json">
+</label>
+<button id="saveAsMozlz4Btn">Save as mozlz4</button>
+<button id="saveAsJsonBtn">Save as JSON</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <div id="list-container"></div>
+        </div>
+        <div class="col-sm-4">
+            <textarea wrap="soft" id="txtResult" style="width: 100%; height: 100vh;"></textarea>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>
