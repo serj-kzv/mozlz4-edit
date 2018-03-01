@@ -1,3 +1,0 @@
-[submodule "deps/lz4"]
-	path = deps/lz4
-	url = https://github.com/Cyan4973/lz4.git
