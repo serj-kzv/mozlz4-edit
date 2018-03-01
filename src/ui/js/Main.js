@@ -1,6 +1,3 @@
-var Buffer = require('buffer').Buffer
-var LZ4 = require('lz4')
-
 let engines = {};
 
 // form
@@ -9,39 +6,13 @@ let bf = null;
 let container = null;
 
 document.addEventListener("DOMContentLoaded", event => {
-
-    // Some data to be compressed
-    var data = 'Рус Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-    data += data
-
-    console.log(data);
-
-    // LZ4 can only work on Buffers
-    var input = new Buffer(data)
-    // Initialize the output buffer to its maximum length based on the input data
-    var output = new Buffer( LZ4.encodeBound(input.length) )
-
-    // block compression (no archive format)
-    var compressedSize = LZ4.encodeBlock(input, output)
-    // remove unnecessary bytes
-    output = output.slice(0, compressedSize)
-
-    console.log( "compressed data", output.slice(0, compressedSize) )
-
-    // block decompression (no archive format)
-    var uncompressed = new Buffer(input.length)
-    var uncompressedSize = LZ4.decodeBlock(output, uncompressed)
-    uncompressed = uncompressed.slice(0, uncompressedSize)
-
-    console.log( "uncompressed data", uncompressed )
-    console.log( "uncompressed data", new TextDecoder().decode(uncompressed) )
-
     document.querySelector('#saveAsMozlz4Btn')
         .addEventListener('click', function (event) {
             const enginesStr = JSON.stringify(engines);
-            const file = writeMozlz4File(enginesStr);
 
-            saveData(file, 'search.json.mozlz4');
+            new Mozlz4Wrapper().encode(enginesStr).then(file => {
+                saveData(file, 'search.json.mozlz4');
+            });
         });
 
     document.querySelector('#saveAsJsonBtn')
@@ -56,16 +27,10 @@ document.addEventListener("DOMContentLoaded", event => {
     document.querySelector('#loadMozlz4FileBtn')
         .addEventListener('change', event => {
             let file = event.target.files[0];
-            console.log(file);
 
-            readMozlz4File(file, function (text) {
-                console.log(text);
-                engines = JSON.parse(text);
-
-                console.log(engines);
-
+            new Mozlz4Wrapper().decode(file).then(txt => {
+                engines = JSON.parse(txt);
                 createForm(schema, engines);
-
                 fillTxtResultField(JSON.stringify(engines, null, 4));
             });
         });

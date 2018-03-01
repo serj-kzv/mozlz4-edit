@@ -13,7 +13,6 @@
   "content_security_policy": "script-src 'self' 'unsafe-eval' blob: filesystem: chrome-extension-resource:; object-src 'self' blob: filesystem:",
   "background": {
     "scripts": [
-      "lib/mozlz4-archiver.js",
       "common_scripts/Config.js",
       "common_scripts/Util.js",
       "background_scripts/App.js",
@@ -26,7 +25,6 @@
         "<all_urls>"
       ],
       "js": [
-        "lib/mozlz4-archiver.js",
         "common_scripts/Util.js",
         "common_scripts/Config.js",
         "background_scripts/App.js",
