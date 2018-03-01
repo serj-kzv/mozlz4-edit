@@ -1,4 +1,5 @@
-// const lz4 = require('../../lib/lz4.js');
+var Buffer = require('buffer').Buffer
+var LZ4 = require('lz4')
 
 let engines = {};
 
@@ -9,9 +10,31 @@ let container = null;
 
 document.addEventListener("DOMContentLoaded", event => {
 
-    console.log(LZ4);
+    // Some data to be compressed
+    var data = 'Рус Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+    data += data
 
+    console.log(data);
 
+    // LZ4 can only work on Buffers
+    var input = new Buffer(data)
+    // Initialize the output buffer to its maximum length based on the input data
+    var output = new Buffer( LZ4.encodeBound(input.length) )
+
+    // block compression (no archive format)
+    var compressedSize = LZ4.encodeBlock(input, output)
+    // remove unnecessary bytes
+    output = output.slice(0, compressedSize)
+
+    console.log( "compressed data", output.slice(0, compressedSize) )
+
+    // block decompression (no archive format)
+    var uncompressed = new Buffer(input.length)
+    var uncompressedSize = LZ4.decodeBlock(output, uncompressed)
+    uncompressed = uncompressed.slice(0, uncompressedSize)
+
+    console.log( "uncompressed data", uncompressed )
+    console.log( "uncompressed data", new TextDecoder().decode(uncompressed) )
 
     document.querySelector('#saveAsMozlz4Btn')
         .addEventListener('click', function (event) {
