@@ -11,6 +11,7 @@ const engineExample = {
     "_urls": [
         {
             "template": "https://www.example.com/search",
+            "rels": [],
             "resultDomain": "example.com",
             "params": [
                 {

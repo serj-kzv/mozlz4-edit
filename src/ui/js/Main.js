@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", event => {
 
             console.log(engines);
 
-            createForm(engines);
             setTxtResultField(engines);
         });
     document.querySelector('#loadJSONFileBtn')
@@ -42,14 +41,13 @@ document.addEventListener("DOMContentLoaded", event => {
             readFileAsTxt(file, text => {
                 engines = JSON.parse(text);
 
-                createForm(engines);
                 setTxtResultField(engines);
             });
         });
 
     document.querySelector('#openJSONInNewTabBtn')
         .addEventListener('click', event => {
-            const enginesJSONStr = JSON.stringify(bf.getData(), null, 4);
+            const enginesJSONStr = getTxtResultField();
             const blob = new Blob([enginesJSONStr], {
                 type: 'application/json'
             });
@@ -59,7 +57,7 @@ document.addEventListener("DOMContentLoaded", event => {
     document.querySelector('#addEngineExampleBtn')
         .addEventListener('click', event => {
             engines.engines.unshift(engineExample);
-            createForm(engines);
+            setTxtResultField(engines)
         });
 
 
@@ -83,10 +81,6 @@ document.addEventListener("DOMContentLoaded", event => {
         });
 
         fileReader.readAsText(file);
-    }
-
-    function createForm(engines) {
-
     }
 
     function clearForm(container) {
