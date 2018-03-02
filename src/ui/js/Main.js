@@ -59,6 +59,11 @@ document.addEventListener("DOMContentLoaded", event => {
             engines.engines.unshift(engineExample);
             setTxtResultField(engines)
         });
+    document.querySelector('#addEngineExampleGoogleUKBtn')
+        .addEventListener('click', event => {
+            engines.engines.unshift(engineExampleGoogleUK);
+            setTxtResultField(engines)
+        });
 
 
     function setTxtResultField(engines) {
