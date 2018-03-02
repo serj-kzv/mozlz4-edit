@@ -6,11 +6,10 @@ class Mozlz4Wrapper {
     }
 
     getMagicHeader() {
-        const magicHeaderWithBound = [];
+        let magicHeaderWithBound = [];
 
-        magicHeaderWithBound
-            .push(...this.MOZLZ4_MAGIC_HEADER)
-            .push(...this.DECOMP_SIZE);
+        magicHeaderWithBound.push(...this.MOZLZ4_MAGIC_HEADER);
+        magicHeaderWithBound.push(...this.DECOMP_SIZE);
 
         return Uint8Array.from(magicHeaderWithBound);
     }
@@ -25,40 +24,49 @@ class Mozlz4Wrapper {
         return mozOutput;
     }
 
-    async decode(file) {
+    decode(file) {
         const that = this;
 
-        return new Promise(resolve => new FileReader()
-            .addEventListener('loadend', event => {
-                const Buffer = require('buffer').Buffer;
-                const LZ4 = require('lz4');
+        return new Promise(resolve => {
+            const fileReader = new FileReader();
 
-                let output = that.sliceMozlz4Header(new Buffer(event.target.result));
-                let uncompressed = new Buffer(output.length * 255); // TODO: replace by proper formula
-                const uncompressedSize = LZ4.decodeBlock(output, uncompressed);
+            fileReader.addEventListener('loadend', event => {
+                let Buffer = require('buffer').Buffer;
+                let LZ4 = require('lz4');
 
-                uncompressed = uncompressed.slice(0, uncompressedSize);
+                let fileBlob = event.target.result;
+
+                fileBlob = that.sliceMozlz4Header(fileBlob);
+
+                let compressed = new Buffer(fileBlob);
+                let uncompressed = new Buffer(compressed.length * 255); // TODO: replace by proper formula
+                let uncompressedSize = LZ4.decodeBlock(compressed, uncompressed);
+
+                uncompressed = new Uint8Array(uncompressed.buffer.slice(0, uncompressedSize));
 
                 resolve(uncompressed);
-            }));
+            });
+            fileReader.readAsArrayBuffer(file);
+        });
     }
 
-    sliceMozlz4Header(file) {
-        return file.slice(this.MOZLZ4_MAGIC_HEADER_SIZE);
+    sliceMozlz4Header(fileBlob) {
+        const slicedFile = fileBlob.slice(this.MOZLZ4_MAGIC_HEADER_SIZE);
+
+        return slicedFile;
     }
 
-    async encode(data) {
+    encode(data) {
         const that = this;
 
         return new Promise(resolve => {
             const Buffer = require('buffer').Buffer;
             const LZ4 = require('lz4');
-
             let input = new Buffer(data);
             let output = new Buffer(LZ4.encodeBound(input.length));
             let compressedSize = LZ4.encodeBlock(input, output);
 
-            output = output.slice(0, compressedSize);
+            output = new Uint8Array(output.buffer.slice(0, compressedSize));
             output = that.addMozlz4Header(output);
 
             resolve(output);

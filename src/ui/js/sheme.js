@@ -4,9 +4,19 @@ const schema = {
         engines: {
             type: 'array',
             title: "Page number",
+            description: 'Page number',
             items: {
+                description: 'Add Page number',
                 type: 'object',
                 properties: {
+                    _name: {
+                        type: 'string',
+                        title: '_name'
+                    },
+                    _shortName: {
+                        type: 'string',
+                        title: '_shortName'
+                    },
                     description: {
                         type: 'string',
                         title: 'description'
@@ -23,17 +33,14 @@ const schema = {
                         type: 'string',
                         title: '_iconURL'
                     },
+                    _readOnly: {
+                        type: 'boolean',
+                        title: '_readOnly',
+                        default: 'false',
+                    },
                     _loadPath: {
                         type: 'string',
                         title: '_loadPath'
-                    },
-                    _name: {
-                        type: 'string',
-                        title: '_name'
-                    },
-                    _shortName: {
-                        type: 'string',
-                        title: '_shortName'
                     },
                     _metaData: {
                         type: 'object',
@@ -46,13 +53,24 @@ const schema = {
                     },
                     _urls: {
                         type: 'array',
-                        title : '_urls',
+                        title: '_urls',
                         items: {
+                            description: '_urls',
                             type: 'object',
                             properties: {
+                                template: {
+                                    type: 'string',
+                                    title: 'template',
+                                    description: 'template'
+                                },
+                                resultDomain: {
+                                    type: 'string',
+                                    title: 'resultDomain',
+                                    description: 'resultDomain'
+                                },
                                 params: {
                                     type: 'array',
-                                    title : 'params',
+                                    title: 'params',
                                     items: {
                                         type: 'object',
                                         properties: {
@@ -69,9 +87,8 @@ const schema = {
                                 },
                                 rels: {
                                     type: 'array',
-                                    title : 'rels',
-                                    items: {
-                                    }
+                                    title: 'rels',
+                                    items: {}
                                 }
                             }
                         }
@@ -79,12 +96,6 @@ const schema = {
                 }
             }
         },
-        visibleDefaultEngines : {
-            type : 'array',
-            title : 'visibleDefaultEngines'
-            // items : {
-            //     type : 'string'
-            // }
-        }
+        visibleDefaultEngines: {}
     }
 };
