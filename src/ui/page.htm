@@ -5,22 +5,6 @@
     <meta charset="UTF-8">
     <title>mozlz4-edit</title>
 
-    <!-- requirejs -->
-    <!--<script src="../lib/require.js"></script>-->
-
-    <!-- jquery -->
-    <script src="../lib/jquery/jquery-3.3.1.min.js"></script>
-
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-theme.min.css">
-    <script src="../lib/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- json-forms -->
-    <link rel="stylesheet" href='../lib/json-forms/brutusin-json-forms.css'/>
-    <script src="../lib/json-forms/brutusin-json-forms.js"></script>
-    <script src="../lib/json-forms/brutusin-json-forms-bootstrap.js"></script>
-
     <!-- mozlz4-archiver -->
     <script src="../lib/lz4/lz4.js"></script>
     <script src="../lib/Mozlz4Wrapper.js"></script>
@@ -40,16 +24,15 @@
     load JSON
     <input id="loadJSONFileBtn" name="loadJSONFileBtn" type="file" accept=".json">
 </label>
+<button id="addEngineExampleBtn">Add engine example</button>
 <button id="saveAsMozlz4Btn">Save as mozlz4</button>
 <button id="saveAsJsonBtn">Save as JSON</button>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-8">
-            <div id="list-container"></div>
-        </div>
-        <div class="col-sm-4">
-            <button id="openJSONInNewTab">Open in new tab</button>
-            <textarea wrap="soft" id="txtResult" style="width: 100%; height: 100vh;"></textarea>
+        <div class="col-sm-12">
+            <div style="width: 100%; overflow: scroll;">
+                <textarea wrap="soft" id="txtResult" style="width: 999999px; height: 100vh;"></textarea>
+            </div>
         </div>
     </div>
 </div>

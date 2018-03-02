@@ -1,14 +1,11 @@
-let engines = {};
-
-// form
-let BrutusinForms = null;
-let bf = null;
-let container = null;
+let engines = {
+    engines: []
+};
 
 document.addEventListener("DOMContentLoaded", event => {
     document.querySelector('#saveAsMozlz4Btn')
         .addEventListener('click', function (event) {
-            const enginesStr = JSON.stringify(engines, null, 4);
+            const enginesStr = getTxtResultField();
 
             new Mozlz4Wrapper().encode(enginesStr).then(file => {
                 saveData(file, 'search.json.mozlz4');
@@ -17,7 +14,7 @@ document.addEventListener("DOMContentLoaded", event => {
 
     document.querySelector('#saveAsJsonBtn')
         .addEventListener('click', event => {
-            const enginesJSONStr = JSON.stringify(bf.getData(), null, 4);
+            const enginesJSONStr = getTxtResultField();
 
             saveData(enginesJSONStr, 'search.json');
         });
@@ -32,8 +29,11 @@ document.addEventListener("DOMContentLoaded", event => {
             const txt = new TextDecoder().decode(file);
 
             engines = JSON.parse(txt);
-            createForm(schema, engines);
-            fillTxtResultField(JSON.stringify(engines, null, 4));
+
+            console.log(engines);
+
+            createForm(engines);
+            setTxtResultField(engines);
         });
     document.querySelector('#loadJSONFileBtn')
         .addEventListener('change', event => {
@@ -42,12 +42,12 @@ document.addEventListener("DOMContentLoaded", event => {
             readFileAsTxt(file, text => {
                 engines = JSON.parse(text);
 
-                createForm(schema, engines);
-                fillTxtResultField(text);
+                createForm(engines);
+                setTxtResultField(engines);
             });
         });
 
-    document.querySelector('#openJSONInNewTab')
+    document.querySelector('#openJSONInNewTabBtn')
         .addEventListener('click', event => {
             const enginesJSONStr = JSON.stringify(bf.getData(), null, 4);
             const blob = new Blob([enginesJSONStr], {
@@ -56,10 +56,21 @@ document.addEventListener("DOMContentLoaded", event => {
             const url = window.URL.createObjectURL(blob);
             window.open(url);
         });
+    document.querySelector('#addEngineExampleBtn')
+        .addEventListener('click', event => {
+            engines.engines.unshift(engineExample);
+            createForm(engines);
+        });
 
 
-    function fillTxtResultField(txt) {
-        document.querySelector('#txtResult').innerHTML = txt;
+    function setTxtResultField(engines) {
+        const txt = JSON.stringify(engines, null, 4);
+
+        document.querySelector('#txtResult').value = txt;
+    }
+
+    function getTxtResultField() {
+        return document.querySelector('#txtResult').value;
     }
 
     function readFileAsTxt(file, callBackFunc) {
@@ -74,12 +85,8 @@ document.addEventListener("DOMContentLoaded", event => {
         fileReader.readAsText(file);
     }
 
-    function createForm(schema, engines) {
-        BrutusinForms = brutusin["json-forms"];
-        bf = BrutusinForms.create(schema);
-        container = document.querySelector('#list-container');
-        clearForm(container);
-        bf.render(container, engines);
+    function createForm(engines) {
+
     }
 
     function clearForm(container) {
