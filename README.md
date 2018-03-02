@@ -1,19 +1,16 @@
 ##### What it's
 mozlz4 editor
 
+##### Description
+
+mozlz4 is lz4 format with Mozilla's magic header
+
 ##### TODO
-Use [Emscripten](http://kripken.github.io/emscripten-site/)
-to convert C++ lz4 lib to JS
+1. Use [Emscripten](http://kripken.github.io/emscripten-site/)
+to convert C++ lz4 lib to JS (asmjs)
+2. Replace estimate of uncompressed file size of lz4
+by proper formula
 
 ##### Links
-https://github.com/lz4/lz4  
-https://github.com/pierrec/node-lz4
-
-Чтобы собрать lz4
-https://github.com/nodejs/node-gyp#on-windows
-https://github.com/sass/node-sass/issues/2074#issuecomment-344813506
-
-скачать исходники, каталог lib
-установить npm install -g xxhash
-
-lz4 uncompress size https://stackoverflow.com/a/25751871
+1. Format description and lz4 lib list on [here](https://github.com/lz4/lz4)  
+2. lz4 archiver on js [here](https://github.com/pierrec/node-lz4)

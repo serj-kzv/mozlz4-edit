@@ -1,13 +1,13 @@
 {
   "manifest_version": 2,
   "name": "mozlz4-edit",
-  "description": "",
-  "short_name": "mozlz4-edit",
+  "description": "mozlz4-edit is simple mozlz4 file editor. You can open and save mozlz4 files.",
+  "short_name": "mozlz4-edit is mozlz4 file editor",
   "author": "",
   "version": "1.0",
   "homepage_url": "https://github.com/serj-kzv/mozlz4-edit",
   "browser_action": {
-    "default_icon": "icons/save-whole.png",
+    "default_icon": "icons/mozlz4-edit.png",
     "browser_style": true
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval' blob: filesystem: chrome-extension-resource:; object-src 'self' blob: filesystem:",
