@@ -12,5 +12,5 @@ to convert C++ lz4 lib to JS (asmjs)
 by proper formula
 
 ##### Links
-1. Format description and lz4 lib list on [here](https://github.com/lz4/lz4)  
-2. lz4 archiver on js [here](https://github.com/pierrec/node-lz4)
+1. Format description and lz4 lib list is [here](https://github.com/lz4/lz4)  
+2. lz4 archiver on js is [here](https://github.com/pierrec/node-lz4)
