@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", event => {
             const enginesStr = getTxtResultField();
 
             new Mozlz4Wrapper().encode(enginesStr).then(file => {
-                saveData(file, 'search.json.mozlz4');
+                saveData2(file, 'search.json.mozlz4');
             });
         });
 
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", event => {
         .addEventListener('click', event => {
             const enginesJSONStr = getTxtResultField();
 
-            saveData(enginesJSONStr, 'search.json');
+            saveData2(enginesJSONStr, 'search.json');
         });
 
     document.querySelector('#loadMozlz4FileBtn')
@@ -109,5 +109,15 @@ document.addEventListener("DOMContentLoaded", event => {
         a.click();
         window.URL.revokeObjectURL(url);
         a.remove();
+    }
+
+    function saveData2(content, fileName) {
+        const blob = new Blob([content], {
+            type: 'octet/stream'
+        });
+        blob.name = fileName;
+        const url = window.URL.createObjectURL(blob);
+
+        window.open(url, fileName);
     }
 });
