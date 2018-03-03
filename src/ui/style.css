@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+}
+
+#headerMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    height: 110px;
+    border-bottom: 2px solid black;
+}
+
+#txtResult {
+    width: 999999px;
+    height: 999999px;
+    border: none;
+}
+
+#txtResultWrapper {
+    width: 100%;
+    overflow: visible;
+    margin-top: 110px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.input-file-label, button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 1px 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 1px 1px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.input-file-label, button {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+.input-file-label:hover, button:hover {
+    background-color: #4CAF50;
+    color: white;
+}

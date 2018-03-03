@@ -25,8 +25,8 @@
         "<all_urls>"
       ],
       "js": [
-        "common_scripts/Util.js",
         "common_scripts/Config.js",
+        "common_scripts/Util.js",
         "background_scripts/App.js",
         "content_scripts/Main.js"
       ],
