@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "mozlz4-edit",
-  "description": "mozlz4-edit is simple mozlz4 file editor. You can open and save mozlz4 files.",
+  "description": "mozlz4-edit is a simple mozlz4 file editor. You can open, edit and save mozlz4 files.",
   "short_name": "mozlz4-edit is mozlz4 file editor",
   "author": "",
   "version": "1.2",
