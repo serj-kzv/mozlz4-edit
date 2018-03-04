@@ -1,8 +1,7 @@
 class App {
     constructor() {
-        this.engines = {
-            engines: []
-        };
+        this.engines = null;
+        this.codeMirror = null;
     }
 
     run() {
@@ -15,7 +14,15 @@ class App {
         });
     }
 
+    initEngines() {
+        this.engines = {
+            engines: []
+        };
+    }
+
     initListeners() {
+        this.initEngines();
+        this.initEditor();
         this.saveAsMozlz4Btn();
         this.saveAsJsonBtn();
         this.loadMozlz4FileBtn();
@@ -25,10 +32,24 @@ class App {
         this.addEngineExampleGoogleUKBtn();
     }
 
+    initEditor() {
+        const txtResult = document.querySelector('#txtResult');
+
+        this.codeMirror = CodeMirror.fromTextArea(txtResult, {
+            mode: "javascript",
+            theme: "liquibyte",
+            lineNumbers: true,
+            viewportMargin: Infinity,
+            maxHighlightLength: Infinity,
+            styleActiveLine: true,
+            matchBrackets: true
+        });
+    }
+
     saveAsMozlz4Btn() {
         document.querySelector('#saveAsMozlz4Btn')
-            .addEventListener('click', function (event) {
-                const enginesStr = App.getTxtResultField();
+            .addEventListener('click', event => {
+                const enginesStr = this.getTxtResultField(this.codeMirror);
 
                 new Mozlz4Wrapper().encode(enginesStr).then(file => {
                     Util.saveData2(file, 'search.json.mozlz4');
@@ -39,7 +60,7 @@ class App {
     saveAsJsonBtn() {
         document.querySelector('#saveAsJsonBtn')
             .addEventListener('click', event => {
-                const enginesJSONStr = App.getTxtResultField();
+                const enginesJSONStr = this.getTxtResultField(this.codeMirror);
 
                 Util.saveData2(enginesJSONStr, 'search.json');
             });
@@ -56,10 +77,7 @@ class App {
                 const txt = new TextDecoder().decode(file);
 
                 this.engines = JSON.parse(txt);
-
-                console.log(this.engines);
-
-                App.setTxtResultField(this.engines);
+                this.setTxtResultField(this.codeMirror, this.engines);
             });
     }
 
@@ -71,7 +89,7 @@ class App {
                 let file = event.target.files[0];
                 const txt = Util.readFileAsTxt(file).then(txt => {
                     that.engines = JSON.parse(txt);
-                    App.setTxtResultField(that.engines);
+                    this.setTxtResultField(this.codeMirror, that.engines);
                 });
             });
     }
@@ -79,7 +97,7 @@ class App {
     openJSONInNewTabBtn() {
         document.querySelector('#openJSONInNewTabBtn')
             .addEventListener('click', event => {
-                const json = App.getTxtResultField();
+                const json = this.getTxtResultField(this.codeMirror);
 
                 Util.openAsJson(json);
             });
@@ -88,26 +106,26 @@ class App {
     addEngineExampleBtn() {
         document.querySelector('#addEngineExampleBtn')
             .addEventListener('click', event => {
-                this.engines.engines.unshift(engineExample);
-                App.setTxtResultField(this.engines)
+                this.engines.engines.unshift(engineExamples.example);
+                this.setTxtResultField(this.codeMirror, this.engines);
             });
     }
 
     addEngineExampleGoogleUKBtn() {
         document.querySelector('#addEngineExampleGoogleUKBtn')
             .addEventListener('click', event => {
-                this.engines.engines.unshift(engineExampleGoogleUK);
-                App.setTxtResultField(this.engines)
+                this.engines.engines.unshift(engineExamples.googleUk);
+                this.setTxtResultField(this.codeMirror, this.engines);
             });
     }
 
-    static setTxtResultField(engines) {
+    setTxtResultField(codeMirror, engines) {
         const txt = JSON.stringify(engines, null, 4);
 
-        document.querySelector('#txtResult').value = txt;
+        codeMirror.setValue(txt);
     }
 
-    static getTxtResultField() {
-        return document.querySelector('#txtResult').value;
+    getTxtResultField(codeMirror) {
+        return codeMirror.getValue();
     }
 }
