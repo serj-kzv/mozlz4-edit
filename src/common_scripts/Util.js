@@ -17,7 +17,7 @@ class Util {
         });
     }
 
-    static saveData2(content, fileName) {
+    static saveData(content, fileName) {
         const a = document.createElement('a');
 
         document.body.appendChild(a);
@@ -37,7 +37,7 @@ class Util {
         // a.remove();
     }
 
-    static saveData(content, fileName) {
+    static saveData2(content, fileName) {
         const blob = new Blob([content], {
             type: 'octet/stream'
         });
