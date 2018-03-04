@@ -17,31 +17,36 @@ class Util {
         });
     }
 
-    static saveData(content, fileName) {
+    static saveData2(content, fileName) {
         const a = document.createElement('a');
 
         document.body.appendChild(a);
-        a.style = 'display: none';
+        // a.style = 'display: none';
 
         const blob = new Blob([content], {
             type: 'octet/stream'
         });
         const url = window.URL.createObjectURL(blob);
 
+        a.innerHTML = "TEST";
         a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
+        a.download = 'test';
+        // console.log(a);
+        // a.click();
+        // window.URL.revokeObjectURL(url);
+        // a.remove();
     }
 
-    static saveData2(content, fileName) {
+    static saveData(content, fileName) {
         const blob = new Blob([content], {
             type: 'octet/stream'
         });
         const url = window.URL.createObjectURL(blob);
-
-        window.open(url);
+        // blob.name = 'test';
+        CONFIG.getAPI().browser.browserAPI.tabs.create({
+            url: url
+        });
+        // window.URL.revokeObjectURL(url);
     }
 
     static openAsJson(json) {
@@ -49,7 +54,12 @@ class Util {
             type: 'application/json'
         });
         const url = window.URL.createObjectURL(blob);
-        window.open(url);
+
+        CONFIG.getAPI().browser.browserAPI.tabs.create({
+            url: url
+        });
+        // window.URL.revokeObjectURL(url);
+
     }
 }
 

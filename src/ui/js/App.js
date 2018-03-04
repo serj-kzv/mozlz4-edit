@@ -71,9 +71,8 @@ class App {
         document.querySelector('#loadMozlz4FileBtn')
             .addEventListener('change', async event => {
                 let file = event.target.files[0];
-                const mozlz4Wrapper = new Mozlz4Wrapper();
 
-                file = await mozlz4Wrapper.decode(file);
+                file = await new Mozlz4Wrapper().decode(file);
 
                 const txt = new TextDecoder().decode(file);
 
