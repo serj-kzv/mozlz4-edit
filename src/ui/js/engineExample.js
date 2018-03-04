@@ -1,4 +1,28 @@
 const engineExamples = {
+    shortExample: {
+        "_name": "shortExample",
+        "_shortName": "",
+        "description": "",
+        "queryCharset": "UTF-8",
+        "_readOnly": "false",
+        "__searchForm": "",
+        "_iconURL": "",
+        "_loadPath": "[other]/shortExample.xml",
+        "_metaData": {},
+        "_urls": [
+            {
+                "template": "https://www.shortExample.com/search",
+                "rels": [],
+                "resultDomain": "",
+                "params": [
+                    {
+                        "name": "q",
+                        "value": "{searchTerms}"
+                    }
+                ]
+            }
+        ]
+    },
     example: {
         "_name": "Example",
         "_shortName": "Example",

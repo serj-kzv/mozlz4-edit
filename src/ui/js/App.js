@@ -30,6 +30,8 @@ class App {
         this.openJSONInNewTabBtn();
         this.addEngineExampleBtn();
         this.addEngineExampleGoogleUKBtn();
+        this.addEngineShortExampleBtn();
+        this.initCreateEngineBtn();
     }
 
     initEditor() {
@@ -48,12 +50,11 @@ class App {
 
     saveAsMozlz4Btn() {
         document.querySelector('#saveAsMozlz4Btn')
-            .addEventListener('click', event => {
+            .addEventListener('click', async event => {
                 const enginesStr = this.getTxtResultField(this.codeMirror);
+                const file = await new Mozlz4Wrapper().encode(enginesStr);
 
-                new Mozlz4Wrapper().encode(enginesStr).then(file => {
-                    Util.saveData2(file, 'search.json.mozlz4');
-                });
+                Util.saveData2(file, 'search.json.mozlz4');
             });
     }
 
@@ -85,12 +86,12 @@ class App {
         const that = this;
 
         document.querySelector('#loadJSONFileBtn')
-            .addEventListener('change', event => {
+            .addEventListener('change', async event => {
                 let file = event.target.files[0];
-                const txt = Util.readFileAsTxt(file).then(txt => {
-                    that.engines = JSON.parse(txt);
-                    this.setTxtResultField(this.codeMirror, that.engines);
-                });
+                const txt = await Util.readFileAsTxt(file);
+
+                that.engines = JSON.parse(txt);
+                this.setTxtResultField(this.codeMirror, that.engines);
             });
     }
 
@@ -106,17 +107,34 @@ class App {
     addEngineExampleBtn() {
         document.querySelector('#addEngineExampleBtn')
             .addEventListener('click', event => {
-                this.engines.engines.unshift(engineExamples.example);
-                this.setTxtResultField(this.codeMirror, this.engines);
+                this.addEngine(engineExamples.example);
+            });
+    }
+
+    addEngineShortExampleBtn() {
+        document.querySelector('#addEngineShortExampleBtn')
+            .addEventListener('click', event => {
+                this.addEngine(engineExamples.shortExample);
             });
     }
 
     addEngineExampleGoogleUKBtn() {
         document.querySelector('#addEngineExampleGoogleUKBtn')
             .addEventListener('click', event => {
-                this.engines.engines.unshift(engineExamples.googleUk);
-                this.setTxtResultField(this.codeMirror, this.engines);
+                this.addEngine(engineExamples.googleUk);
             });
+    }
+
+    initCreateEngineBtn() {
+        document.querySelector('#createEngineBtn')
+            .addEventListener('click', event => {
+                alert('Does not work yet!');
+            });
+    }
+
+    addEngine(engine) {
+        this.engines.engines.unshift(engine);
+        this.setTxtResultField(this.codeMirror, this.engines);
     }
 
     setTxtResultField(codeMirror, engines) {
