@@ -28,13 +28,9 @@ class Mozlz4Wrapper {
     decode(file) {
         let Buffer = require('buffer').Buffer;
         let LZ4 = require('lz4');
-        console.log(file.length)
 
         const mozHeader = this.getMozFileHeader(file);
-        console.log(file.length)
         const decompSize = this.getMozFileDecompSize(file);
-        console.log(file.length)
-        console.log(decompSize)
 
         file = this.getMozFileBody(file);
         file = Buffer.from(file);

@@ -18,7 +18,7 @@ class Util {
     }
 
     // TODO: check memory leak https://stackoverflow.com/a/32216561
-    static saveData(content, fileName) {
+    static saveData2(content, fileName) {
         const a = document.createElement('a');
 
         document.body.appendChild(a);
@@ -37,8 +37,13 @@ class Util {
         a.remove();
     }
 
+    static saveData(content, fileName) {
+        const url = window.URL.createObjectURL(new Blob([content], {type: 'octet/stream'}));
+        const tab = CONFIG.getAPI().browser.browserAPI.tabs.create({url});
+    }
+
     // TODO: check memory leak https://stackoverflow.com/a/32216561
-    static openAsJson(json) {
+    static openAsJson2(json) {
         const a = document.createElement('a');
 
         document.body.appendChild(a);
@@ -56,6 +61,12 @@ class Util {
         a.click();
         window.URL.revokeObjectURL(url);
         a.remove();
+    }
+
+    static openAsJson(json) {
+        const url = window.URL.createObjectURL(new Blob([json], {type: 'application/json'}));
+
+        CONFIG.getAPI().browser.browserAPI.tabs.create({url});
     }
 
     static readArrayBufferOfFile(file) {
