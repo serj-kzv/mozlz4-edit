@@ -10,7 +10,7 @@
     "default_icon": "icons/mozlz4-edit.png",
     "browser_style": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval' blob: filesystem: chrome-extension-resource:; object-src 'self' blob: filesystem:",
+  "content_security_policy": "default-src data: blob: filesystem: mediastream:; script-src data: blob: filesystem: mediastream: 'unsafe-inline' 'unsafe-eval';",
   "background": {
     "scripts": [
       "common_scripts/Config.js",

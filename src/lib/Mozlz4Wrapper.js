@@ -25,51 +25,38 @@ class Mozlz4Wrapper {
     }
 
     decode(file) {
-        const that = this;
+        let Buffer = require('buffer').Buffer;
+        let LZ4 = require('lz4');
 
-        return new Promise(resolve => {
-            const fileReader = new FileReader();
+        file = this.sliceMozlz4Header(file);
+        file = Buffer.from(file);
 
-            fileReader.addEventListener('loadend', event => {
-                let Buffer = require('buffer').Buffer;
-                let LZ4 = require('lz4');
+        let uncompressed = new Buffer(file.length * 255); // TODO: replace by proper formula
+        let uncompressedSize = LZ4.decodeBlock(file, uncompressed);
 
-                let fileBlob = event.target.result;
+        uncompressed = new Uint8Array(uncompressed.buffer.slice(0, uncompressedSize));
 
-                fileBlob = that.sliceMozlz4Header(fileBlob);
-
-                let compressed = new Buffer(fileBlob);
-                let uncompressed = new Buffer(compressed.length * 255); // TODO: replace by proper formula
-                let uncompressedSize = LZ4.decodeBlock(compressed, uncompressed);
-
-                uncompressed = new Uint8Array(uncompressed.buffer.slice(0, uncompressedSize));
-
-                resolve(uncompressed);
-            });
-            fileReader.readAsArrayBuffer(file);
-        });
+        return uncompressed;
     }
 
-    sliceMozlz4Header(fileBlob) {
-        const slicedFile = fileBlob.slice(this.MOZLZ4_MAGIC_HEADER_SIZE);
-
-        return slicedFile;
+    sliceMozlz4Body(file) {
+        return file.slice(0, this.MOZLZ4_MAGIC_HEADER_SIZE);
     }
 
-    encode(data) {
-        const that = this;
+    sliceMozlz4Header(file) {
+        return file.slice(this.MOZLZ4_MAGIC_HEADER_SIZE);
+    }
 
-        return new Promise(resolve => {
-            const Buffer = require('buffer').Buffer;
-            const LZ4 = require('lz4');
-            let input = new Buffer(data);
-            let output = new Buffer(LZ4.encodeBound(input.length));
-            let compressedSize = LZ4.encodeBlock(input, output);
+    async encode(data) {
+        const Buffer = require('buffer').Buffer;
+        const LZ4 = require('lz4');
+        let input = new Buffer(data);
+        let output = new Buffer(LZ4.encodeBound(input.length));
+        let compressedSize = LZ4.encodeBlock(input, output);
 
-            output = new Uint8Array(output.buffer.slice(0, compressedSize));
-            output = that.addMozlz4Header(output);
+        output = new Uint8Array(output.buffer.slice(0, compressedSize));
+        output = this.addMozlz4Header(output);
 
-            resolve(output);
-        });
+        return output;
     }
 }
