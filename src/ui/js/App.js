@@ -71,11 +71,14 @@ class App {
                 let file = event.target.files[0];
 
                 file = await Util.readUint8ArrayOfFile(file);
-                file = new Mozlz4Wrapper().decode(file);
-                file = new TextDecoder().decode(file);
 
+                const result = new Mozlz4Wrapper().decode(file);
+
+                file = new TextDecoder().decode(result.file);
                 this.engines = JSON.parse(file);
                 this.setTxtResultField(this.codeMirror, this.engines);
+                this.setMozHeader(result.mozHeader);
+                this.setMozDecompSize(result.decompSize);
             });
     }
 
@@ -121,6 +124,14 @@ class App {
         const txt = JSON.stringify(engines, null, 4);
 
         codeMirror.setValue(txt);
+    }
+
+    setMozHeader(header) {
+        document.querySelector('#mozHeader').value = header;
+    }
+
+    setMozDecompSize(decompSize) {
+        document.querySelector('#mozDecompSize').value = decompSize;
     }
 
     getTxtResultField(codeMirror) {

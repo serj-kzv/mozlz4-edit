@@ -2,7 +2,8 @@ class Mozlz4Wrapper {
     constructor() {
         this.MOZLZ4_MAGIC_HEADER = [109, 111, 122, 76, 122, 52, 48, 0];
         this.DECOMP_SIZE = [0, 133, 103, 0];
-        this.MOZLZ4_MAGIC_HEADER_SIZE = 12;
+        this.MOZLZ4_MAGIC_HEADER_SIZE = 8;
+        this.MOZLZ4_MAGIC_DECOMP_SIZE_SIZE = 4;
     }
 
     getMagicHeader() {
@@ -27,24 +28,39 @@ class Mozlz4Wrapper {
     decode(file) {
         let Buffer = require('buffer').Buffer;
         let LZ4 = require('lz4');
+        console.log(file.length)
 
-        file = this.sliceMozlz4Header(file);
+        const mozHeader = this.getMozFileHeader(file);
+        console.log(file.length)
+        const decompSize = this.getMozFileDecompSize(file);
+        console.log(file.length)
+        console.log(decompSize)
+
+        file = this.getMozFileBody(file);
         file = Buffer.from(file);
 
-        let uncompressed = new Buffer(file.length * 255); // TODO: replace by proper formula
-        let uncompressedSize = LZ4.decodeBlock(file, uncompressed);
+        let uncompressedFile = new Buffer(file.length * 255); // TODO: replace by proper formula
+        let uncompressedSize = LZ4.decodeBlock(file, uncompressedFile);
 
-        uncompressed = new Uint8Array(uncompressed.buffer.slice(0, uncompressedSize));
+        uncompressedFile = new Uint8Array(uncompressedFile.buffer.slice(0, uncompressedSize));
 
-        return uncompressed;
+        return {
+            file: uncompressedFile,
+            mozHeader,
+            decompSize
+        };
     }
 
-    sliceMozlz4Body(file) {
+    getMozFileHeader(file) {
         return file.slice(0, this.MOZLZ4_MAGIC_HEADER_SIZE);
     }
 
-    sliceMozlz4Header(file) {
-        return file.slice(this.MOZLZ4_MAGIC_HEADER_SIZE);
+    getMozFileDecompSize(file) {
+        return file.slice(this.MOZLZ4_MAGIC_HEADER_SIZE, this.MOZLZ4_MAGIC_HEADER_SIZE + this.MOZLZ4_MAGIC_DECOMP_SIZE_SIZE);
+    }
+
+    getMozFileBody(file) {
+        return file.slice(this.MOZLZ4_MAGIC_HEADER_SIZE + this.MOZLZ4_MAGIC_DECOMP_SIZE_SIZE);
     }
 
     async encode(data) {
