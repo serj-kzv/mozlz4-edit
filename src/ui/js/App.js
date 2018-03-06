@@ -30,6 +30,7 @@ class App {
         this.openJSONInNewTabBtn();
         this.addEngineExampleBtn();
         this.addEngineExampleGoogleUKBtn();
+        this.initConvertMozLz4ToLz4Btn();
     }
 
     initEditor() {
@@ -50,7 +51,7 @@ class App {
         document.querySelector('#saveAsMozlz4Btn')
             .addEventListener('click', async event => {
                 const enginesStr = this.getTxtResultField(this.codeMirror);
-                const file = await new Mozlz4Wrapper().encode(enginesStr);
+                const file = new Mozlz4Wrapper().encodeMozLz4(enginesStr);
 
                 Util.saveData(file, 'search.json.mozlz4');
             });
@@ -70,13 +71,17 @@ class App {
             .addEventListener('change', async event => {
                 let file = event.target.files[0];
 
-                file = await Util.readUint8ArrayOfFile(file);
+                file = await Util.readFileAsUint8Array(file);
 
-                const result = new Mozlz4Wrapper().decode(file);
+                const result = new Mozlz4Wrapper().decodeMozLz4(file);
 
                 file = new TextDecoder().decode(result.file);
-                this.engines = JSON.parse(file);
-                this.setTxtResultField(this.codeMirror, this.engines);
+                try {
+                    this.engines = JSON.parse(file);
+                    this.setTxtResultField(this.codeMirror, this.engines);
+                } catch (jsonParseEx) {
+                    this.setTxtResultFieldTxt(this.codeMirror, file);
+                }
                 this.setMozHeader(result.mozHeader);
                 this.setMozDecompSize(result.decompSize);
             });
@@ -88,10 +93,14 @@ class App {
         document.querySelector('#loadJSONFileBtn')
             .addEventListener('change', async event => {
                 let file = event.target.files[0];
-                const txt = await Util.readFileAsTxt(file);
 
-                that.engines = JSON.parse(txt);
-                this.setTxtResultField(this.codeMirror, that.engines);
+                file = await Util.readFileAsTxt(file);
+                try {
+                    this.engines = JSON.parse(file);
+                    this.setTxtResultField(this.codeMirror, this.engines);
+                } catch (jsonParseEx) {
+                    this.setTxtResultFieldTxt(this.codeMirror, file);
+                }
             });
     }
 
@@ -107,17 +116,39 @@ class App {
     addEngineExampleBtn() {
         document.querySelector('#addEngineExampleBtn')
             .addEventListener('click', event => {
-                this.engines.engines.unshift(engineExamples.example);
-                this.setTxtResultField(this.codeMirror, this.engines);
+                this.addSearchEngine(engineExamples.example);
             });
     }
 
     addEngineExampleGoogleUKBtn() {
         document.querySelector('#addEngineExampleGoogleUKBtn')
             .addEventListener('click', event => {
-                this.engines.engines.unshift(engineExamples.googleUk);
-                this.setTxtResultField(this.codeMirror, this.engines);
+                this.addSearchEngine(engineExamples.googleUk);
             });
+    }
+
+    initConvertMozLz4ToLz4Btn() {
+        document.querySelector('#convertMozLz4ToLz4Btn')
+            .addEventListener('change', async event => {
+                let file = event.target.files[0];
+
+                file = await Util.readFileAsUint8Array(file);
+
+                const result = new Mozlz4Wrapper().convertMozLz4ToLz4(file);
+
+                console.log(result.file);
+                console.log(result.file);
+
+                Util.saveData(result.file, event.target.value + '.lz4');
+                // Util.saveAsDataWithLink(result.file, 'application/octet-stream', false, event.target.value + '.lz4');
+            });
+    }
+
+    addSearchEngine(engine) {
+        if (Util.isDefinedVar(this.engines.engines)) {
+            this.engines.engines.unshift(engine);
+            this.setTxtResultField(this.codeMirror, this.engines);
+        }
     }
 
     setTxtResultField(codeMirror, engines) {
@@ -126,12 +157,18 @@ class App {
         codeMirror.setValue(txt);
     }
 
+    setTxtResultFieldTxt(codeMirror, txt) {
+        codeMirror.setValue(txt);
+    }
+
     setMozHeader(header) {
         document.querySelector('#mozHeader').value = header;
+        document.querySelector('#mozHeaderTxt').value = new TextDecoder().decode(header);
     }
 
     setMozDecompSize(decompSize) {
         document.querySelector('#mozDecompSize').value = decompSize;
+        document.querySelector('#mozDecompSizeTxt').value = new TextDecoder().decode(decompSize);
     }
 
     getTxtResultField(codeMirror) {

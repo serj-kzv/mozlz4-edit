@@ -13,7 +13,7 @@
     <script src="../lib/lz4.js"></script>
 
     <!-- mozlz4 archiver -->
-    <script src="../lib/Mozlz4Wrapper.js"></script>
+    <script src="../lib/mozLz4/Mozlz4Wrapper.js"></script>
 
     <!-- codemirror -->
     <link rel="stylesheet" href="../lib/codemirror/codemirror.css">
@@ -45,13 +45,13 @@
     <div>
         <div>
             <b>Open:</b>
-            <label for="loadMozlz4FileBtn" class="input-file-label">
+            <label for="loadMozlz4FileBtn">
                 Load mozlz4
-                <input id="loadMozlz4FileBtn" name="loadMozlz4FileBtn" type="file" accept=".json.mozlz4">
+                <input id="loadMozlz4FileBtn" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4">
             </label>
-            <label for="loadJSONFileBtn" class="input-file-label">
+            <label for="loadJSONFileBtn">
                 Load JSON
-                <input id="loadJSONFileBtn" name="loadJSONFileBtn" type="file" accept=".json">
+                <input id="loadJSONFileBtn" type="file" accept=".json">
             </label>
         </div>
         <div>
@@ -61,15 +61,25 @@
             <button id="openJSONInNewTabBtn">Open in new tab</button>
         </div>
         <div>
-            <b>Example:</b>
+            <b>Convert:</b>
+            <label for="convertMozLz4ToLz4Btn">
+                Convert Mozilla's Lz4 to standart Lz4
+                <input id="convertMozLz4ToLz4Btn" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4">
+            </label>
+            <button id="convertLz4ToMozLz4Btn">Convert Lz4 to standart Mozilla's Lz4</button>
+        </div>
+        <div>
+            <b>Example (of search.json.mozlz4):</b>
             <button id="addEngineExampleBtn">Add engine example</button>
             <button id="addEngineExampleGoogleUKBtn">Add google engine of United Kingdom</button>
         </div>
         <div>
             <b>Header:</b>
-            <input type="text" id="mozHeader">
+            <input type="text" id="mozHeader" readonly="readonly">
+            <input type="text" id="mozHeaderTxt" readonly="readonly">
             <b>Decomp size:</b>
-            <input type="text" id="mozDecompSize">
+            <input type="text" id="mozDecompSize" readonly="readonly">
+            <input type="text" id="mozDecompSizeTxt" readonly="readonly">
         </div>
     </div>
 </div>
