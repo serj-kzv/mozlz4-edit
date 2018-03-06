@@ -37,7 +37,6 @@ class Util {
 
     static saveAsDataWithTab(content, type, isNewTab, fileName) {
         const url = window.URL.createObjectURL(new Blob([content], {type}));
-
         const popupWindow = window.open(
             url,
             '',
