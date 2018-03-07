@@ -9,6 +9,12 @@
     <script src="../common_scripts/Config.js"></script>
     <script src="../common_scripts/Util.js"></script>
 
+    <!--file utils-->
+    <script src="../common_scripts/FileUtil.js"></script>
+    <script src="../common_scripts/SaveTypeEnum.js"></script>
+    <script src="../common_scripts/SaveWithLinkFileUtil.js"></script>
+    <script src="../common_scripts/SaveWithTabFileUtil.js"></script>
+
     <!-- lz4 archiver -->
     <script src="../lib/lz4.js"></script>
 
@@ -60,7 +66,7 @@
             <button id="saveAsJsonBtn">Save as JSON</button>
             <button id="openJSONInNewTabBtn">Open in new tab</button>
         </div>
-        <div style="visibility: hidden; height: 0px;">
+        <div>
             <b>Convert:</b>
             <label for="convertMozLz4ToLz4Btn">
                 Convert Mozilla's Lz4 to standart Lz4

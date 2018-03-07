@@ -2,6 +2,24 @@ class App {
     constructor() {
         this.engines = null;
         this.codeMirror = null;
+        this.saveType = null;
+        this.FileUtil = null;
+
+        // fields
+        this.mozHeader = null;
+        this.mozHeaderTxt = null;
+        this.mozDecompSize = null;
+        this.mozDecompSizeTxt = null;
+
+        // buttons
+        this.saveAsMozlz4Btn = null;
+        this.saveAsJsonBtn = null;
+        this.loadMozlz4FileBtn = null;
+        this.loadJSONFileBtn = null;
+        this.openJSONInNewTabBtn = null;
+        this.addEngineExampleBtn = null;
+        this.addEngineExampleGoogleUKBtn = null;
+        this.convertMozLz4ToLz4Btn = null;
     }
 
     run() {
@@ -10,8 +28,28 @@ class App {
 
     runOnDOMloadend() {
         document.addEventListener("DOMContentLoaded", event => {
+            this.initFileUtil();
+            this.initUIElements();
             this.initListeners();
         });
+    }
+
+    initUIElements() {
+        // fields
+        this.mozHeader = document.querySelector('#mozHeader');
+        this.mozHeaderTxt = document.querySelector('#mozHeaderTxt');
+        this.mozDecompSize = document.querySelector('#mozDecompSize');
+        this.mozDecompSizeTxt = document.querySelector('#mozDecompSizeTxt');
+
+        // buttons
+        this.saveAsMozlz4Btn = document.querySelector('#saveAsMozlz4Btn');
+        this.saveAsJsonBtn = document.querySelector('#saveAsJsonBtn');
+        this.loadMozlz4FileBtn = document.querySelector('#loadMozlz4FileBtn');
+        this.loadJSONFileBtn = document.querySelector('#loadJSONFileBtn');
+        this.openJSONInNewTabBtn = document.querySelector('#openJSONInNewTabBtn');
+        this.addEngineExampleBtn = document.querySelector('#addEngineExampleBtn');
+        this.addEngineExampleGoogleUKBtn = document.querySelector('#addEngineExampleGoogleUKBtn');
+        this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
     }
 
     initEngines() {
@@ -20,16 +58,30 @@ class App {
         };
     }
 
+    initFileUtil() {
+        this.saveType = SaveTypeEnum.WITH_TAB;
+        switch (true) {
+            case this.saveType === SaveTypeEnum.WITH_LINK: {
+                this.FileUtil = SaveWithLinkFileUtil;
+                break;
+            }
+            case this.saveType === SaveTypeEnum.WITH_TAB: {
+                this.FileUtil = SaveWithTabFileUtil;
+                break;
+            }
+        }
+    }
+
     initListeners() {
         this.initEngines();
         this.initEditor();
-        this.saveAsMozlz4Btn();
-        this.saveAsJsonBtn();
-        this.loadMozlz4FileBtn();
-        this.loadJSONFileBtn();
-        this.openJSONInNewTabBtn();
-        this.addEngineExampleBtn();
-        this.addEngineExampleGoogleUKBtn();
+        this.initSaveAsMozlz4Btn();
+        this.initSaveAsJsonBtn();
+        this.initLoadMozlz4FileBtn();
+        this.initLoadJSONFileBtn();
+        this.initOpenJSONInNewTabBtn();
+        this.initAddEngineExampleBtn();
+        this.initAddEngineExampleGoogleUKBtn();
         this.initConvertMozLz4ToLz4Btn();
     }
 
@@ -47,31 +99,31 @@ class App {
         });
     }
 
-    saveAsMozlz4Btn() {
-        document.querySelector('#saveAsMozlz4Btn')
+    initSaveAsMozlz4Btn() {
+        this.saveAsMozlz4Btn
             .addEventListener('click', async event => {
                 const enginesStr = this.getTxtResultField(this.codeMirror);
                 const file = new Mozlz4Wrapper().encodeMozLz4(enginesStr);
 
-                Util.saveData(file, 'search.json.mozlz4');
+                this.FileUtil.saveData(file, 'search.json.mozlz4');
             });
     }
 
-    saveAsJsonBtn() {
-        document.querySelector('#saveAsJsonBtn')
+    initSaveAsJsonBtn() {
+        this.saveAsJsonBtn
             .addEventListener('click', event => {
                 const enginesJSONStr = this.getTxtResultField(this.codeMirror);
 
-                Util.saveData(enginesJSONStr, 'search.json');
+                this.FileUtil.saveData(enginesJSONStr, 'search.json');
             });
     }
 
-    loadMozlz4FileBtn() {
-        document.querySelector('#loadMozlz4FileBtn')
+    initLoadMozlz4FileBtn() {
+        this.loadMozlz4FileBtn
             .addEventListener('change', async event => {
                 let file = event.target.files[0];
 
-                file = await Util.readFileAsUint8Array(file);
+                file = await this.FileUtil.readFileAsUint8Array(file);
 
                 const result = new Mozlz4Wrapper().decodeMozLz4(file);
 
@@ -87,14 +139,14 @@ class App {
             });
     }
 
-    loadJSONFileBtn() {
+    initLoadJSONFileBtn() {
         const that = this;
 
-        document.querySelector('#loadJSONFileBtn')
+        this.loadJSONFileBtn
             .addEventListener('change', async event => {
                 let file = event.target.files[0];
 
-                file = await Util.readFileAsTxt(file);
+                file = await this.FileUtil.readFileAsTxt(file);
                 try {
                     this.engines = JSON.parse(file);
                     this.setTxtResultField(this.codeMirror, this.engines);
@@ -104,43 +156,39 @@ class App {
             });
     }
 
-    openJSONInNewTabBtn() {
-        document.querySelector('#openJSONInNewTabBtn')
+    initOpenJSONInNewTabBtn() {
+        this.openJSONInNewTabBtn
             .addEventListener('click', event => {
                 const json = this.getTxtResultField(this.codeMirror);
 
-                Util.openAsJson(json);
+                this.FileUtil.openAsJson(json);
             });
     }
 
-    addEngineExampleBtn() {
-        document.querySelector('#addEngineExampleBtn')
+    initAddEngineExampleBtn() {
+        this.addEngineExampleBtn
             .addEventListener('click', event => {
                 this.addSearchEngine(engineExamples.example);
             });
     }
 
-    addEngineExampleGoogleUKBtn() {
-        document.querySelector('#addEngineExampleGoogleUKBtn')
+    initAddEngineExampleGoogleUKBtn() {
+        this.addEngineExampleGoogleUKBtn
             .addEventListener('click', event => {
                 this.addSearchEngine(engineExamples.googleUk);
             });
     }
 
     initConvertMozLz4ToLz4Btn() {
-        document.querySelector('#convertMozLz4ToLz4Btn')
+        this.convertMozLz4ToLz4Btn
             .addEventListener('change', async event => {
                 let file = event.target.files[0];
 
-                file = await Util.readFileAsUint8Array(file);
+                file = await this.FileUtil.readFileAsUint8Array(file);
 
                 const result = new Mozlz4Wrapper().convertMozLz4ToLz4(file);
 
-                console.log(result.file);
-                console.log(result.file);
-
-                Util.saveData(result.file, event.target.value + '.lz4');
-                // Util.saveAsDataWithLink(result.file, 'application/octet-stream', false, event.target.value + '.lz4');
+                this.FileUtil.saveData(result.file, event.target.value + '.lz4');
             });
     }
 
@@ -162,13 +210,13 @@ class App {
     }
 
     setMozHeader(header) {
-        document.querySelector('#mozHeader').value = header;
-        document.querySelector('#mozHeaderTxt').value = new TextDecoder().decode(header);
+        this.mozHeader.value = header;
+        this.mozHeaderTxt.value = new TextDecoder().decode(header);
     }
 
     setMozDecompSize(decompSize) {
-        document.querySelector('#mozDecompSize').value = decompSize;
-        document.querySelector('#mozDecompSizeTxt').value = new TextDecoder().decode(decompSize);
+        this.mozDecompSize.value = decompSize;
+        this.mozDecompSizeTxt.value = new TextDecoder().decode(decompSize);
     }
 
     getTxtResultField(codeMirror) {

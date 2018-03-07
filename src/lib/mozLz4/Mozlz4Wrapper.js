@@ -81,7 +81,7 @@ class Mozlz4Wrapper {
     }
 
     convertMozLz4ToLz4(file) {
-        let result = this.decode(file);
+        let result = this.decodeMozLz4(file);
 
         result.file = this.encode(result.file);
 

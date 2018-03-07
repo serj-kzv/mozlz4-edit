@@ -8,14 +8,14 @@
   "homepage_url": "https://github.com/serj-kzv/mozlz4-edit",
   "applications": {
     "gecko": {
-      "strict_min_version": "60.0"
+      "strict_min_version": "58.0"
     }
   },
   "browser_action": {
     "default_icon": "icons/mozlz4-edit.png",
     "browser_style": true
   },
-  "content_security_policy": "default-src data: blob: filesystem: mediastream:; script-src data: blob: filesystem: mediastream: 'unsafe-inline' 'unsafe-eval';",
+  "content_security_policy": "default-src data: blob: filesystem: mediastream:; script-src 'self' data: blob: filesystem: chrome-extension-resource: mediastream: 'unsafe-inline' 'unsafe-eval'; object-src 'self' blob: filesystem:",
   "background": {
     "scripts": [
       "common_scripts/Config.js",
