@@ -223,9 +223,22 @@ class App {
 
     addSearchEngine(engine) {
         if (Util.isDefinedVar(this.engines.engines)) {
-            this.engines.engines.unshift(engine);
-            this.setTxtResultField(this.codeMirror, this.engines);
+            try {
+                this.updateDataSource();
+                this.engines.engines.unshift(engine);
+                this.updateEditor();
+            } catch (parseEx) {
+                alert('JSON is invalid');
+            }
         }
+    }
+
+    updateDataSource() {
+        this.engines = JSON.parse(this.getTxtResultField(this.codeMirror));
+    }
+
+    updateEditor() {
+        this.setTxtResultField(this.codeMirror, this.engines);
     }
 
     setTxtResultField(codeMirror, engines) {
