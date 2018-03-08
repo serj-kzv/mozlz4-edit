@@ -4,7 +4,7 @@
   "description": "mozlz4-edit is a simple mozlz4 file editor. You can open, edit and save mozlz4 files.",
   "short_name": "mozlz4-edit is a mozlz4 file editor",
   "author": "",
-  "version": "1.5",
+  "version": "1.6",
   "homepage_url": "https://github.com/serj-kzv/mozlz4-edit",
   "applications": {
     "gecko": {
