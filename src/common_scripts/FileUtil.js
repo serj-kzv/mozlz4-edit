@@ -55,7 +55,6 @@ class FileUtil {
     }
 
     static async saveBlobByUrl(url, fileName) {
-        console.log(url)
         let listener = null, deltaId = null;
 
         try {
@@ -66,8 +65,6 @@ class FileUtil {
                 const isInterrupted = delta.state && delta.state.current === 'interrupted';
 
                 if (isCurrent && (isCompleted || isInterrupted)) {
-                    console.log(deltaId)
-                    console.log('clear1')
                     CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
                     window.URL.revokeObjectURL(url);
                 }
@@ -80,7 +77,6 @@ class FileUtil {
                 filename: fileName
             });
         } catch (e) {
-            console.log('clear2')
             // clear memory by url if error is occured or downloading is canceled
             if (listener != null) {
                 CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
