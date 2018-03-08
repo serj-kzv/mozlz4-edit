@@ -48,6 +48,34 @@ class FileUtil {
         });
     }
 
+    static async saveAsDataWithAPI(content, type, isNewTab, fileName) {
+        const url = window.URL.createObjectURL(new Blob([content], {type}));
+
+        FileUtil.saveBlobByUrl(url, fileName);
+    }
+
+    static async saveBlobByUrl(url, fileName) {
+        console.log(url);
+
+        // clear memory by url if error is occured
+        const listener = downloadDelta => {
+            CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
+            window.URL.revokeObjectURL(url);
+        };
+
+        CONFIG.getAPI().browser.browserAPI.downloads.onChanged.addListener(listener);
+        try {
+            const result = await CONFIG.getAPI().browser.browserAPI.downloads.download({
+                url,
+                filename: fileName
+            });
+        } catch (e) {
+            // clear memory by url if error is occured
+            CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
+            window.URL.revokeObjectURL(url);
+        }
+    }
+
     static readFileAsArrayBuffer(file) {
         return new Promise(resolve => {
             const fileReader = new FileReader();

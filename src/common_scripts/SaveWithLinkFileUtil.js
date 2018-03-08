@@ -1,6 +1,6 @@
 class SaveWithLinkFileUtil extends FileUtil {
     static saveData(content, fileName) {
-        this.saveAsDataWithLink(content, 'application/octet-stream', false, fileName);
+        this.saveAsDataWithLink(content, 'octet/stream', false, fileName);
     }
 
     static openAsJson(content) {

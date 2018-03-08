@@ -28,7 +28,7 @@ class App {
 
     runOnDOMloadend() {
         document.addEventListener("DOMContentLoaded", event => {
-            this.initFileUtil(SaveTypeEnum.WITH_TAB);
+            this.initFileUtil(SaveTypeEnum.WITH_API);
             this.initUIElements();
             this.initListeners();
         });
@@ -67,6 +67,10 @@ class App {
             }
             case saveType === SaveTypeEnum.WITH_TAB: {
                 this.FileUtil = SaveWithTabFileUtil;
+                break;
+            }
+            case saveType === SaveTypeEnum.WITH_API: {
+                this.FileUtil = SaveWithAPIFileUtil;
                 break;
             }
         }
