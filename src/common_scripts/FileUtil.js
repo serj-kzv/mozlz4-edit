@@ -73,7 +73,7 @@ class FileUtil {
                 filename: fileName
             });
         } catch (e) {
-            // clear memory by url if error is occured
+            // clear memory by url if error is occured or downloading is canceled
             CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
             window.URL.revokeObjectURL(url);
         }
