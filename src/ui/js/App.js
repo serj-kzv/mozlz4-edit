@@ -18,6 +18,7 @@ class App {
         this.loadJSONFileBtn = null;
         this.openJSONInNewTabBtn = null;
         this.addEngineExampleBtn = null;
+        this.addEngineShortExampleBtn = null;
         this.addEngineExampleGoogleUKBtn = null;
         this.convertMozLz4ToLz4Btn = null;
     }
@@ -48,6 +49,7 @@ class App {
         this.loadJSONFileBtn = document.querySelector('#loadJSONFileBtn');
         this.openJSONInNewTabBtn = document.querySelector('#openJSONInNewTabBtn');
         this.addEngineExampleBtn = document.querySelector('#addEngineExampleBtn');
+        this.addEngineShortExampleBtn = document.querySelector('#addEngineShortExampleBtn');
         this.addEngineExampleGoogleUKBtn = document.querySelector('#addEngineExampleGoogleUKBtn');
         this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
     }
@@ -81,6 +83,7 @@ class App {
         this.initLoadJSONFileBtn();
         this.initOpenJSONInNewTabBtn();
         this.initAddEngineExampleBtn();
+        this.initAddEngineShortExampleBtn();
         this.initAddEngineExampleGoogleUKBtn();
         this.initConvertMozLz4ToLz4Btn();
     }
@@ -162,6 +165,13 @@ class App {
                 const json = this.getTxtResultField(this.codeMirror);
 
                 this.FileUtil.openAsJson(json);
+            });
+    }
+
+    initAddEngineShortExampleBtn() {
+        this.addEngineShortExampleBtn
+            .addEventListener('click', event => {
+                this.addSearchEngine(engineExamples.shortExample);
             });
     }
 

@@ -23,6 +23,25 @@ const engineExamples = {
             }
         ]
     },
+    shortExample: {
+        "_name": "GoogleRU",
+        "_shortName": "GoogleRU",
+        "description": "GoogleRU engine",
+        "queryCharset": "UTF-8",
+        "_readOnly": "false",
+        "__searchForm": "",
+        "_iconURL": "",
+        "_loadPath": "[other]/GoogleRU.xml",
+        "_metaData": {},
+        "_urls": [
+            {
+                "template": "https://www.google.ru/search?q={searchTerms}",
+                "rels": [],
+                "resultDomain": "",
+                "params": []
+            }
+        ]
+    },
     googleUk: {
         "_name": "GoogleUK",
         "_shortName": "GoogleUK",
