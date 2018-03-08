@@ -1,27 +1,32 @@
 class Mozlz4Wrapper {
     constructor() {
-        this.LZ4_HEADER = [24, 77, 34, 4];
-        this.MOZLZ4_MAGIC_HEADER = [109, 111, 122, 76, 122, 52, 48, 0];
-        this.DECOMP_SIZE = [0, 133, 103, 0];
+        // standard lz4 header (first bytes)
+        this.LZ4_HEADER = Uint8Array.from([24, 77, 34, 4]);
+
+        // [109, 111, 122, 76, 122, 52, 48, 0] is default Mozilla's magic header
+        // A text representation of this header is "mozLz40\0" (without quotes)
+        this.MOZLZ4_MAGIC_HEADER = Uint8Array.from([109, 111, 122, 76, 122, 52, 48, 0]);
+
+        // [254, 254, 254, 127] is max decopressed file size
+        // TODO: it's temporary value, replace this with DECOMP_SIZE computing
+        this.DECOMP_SIZE = Uint8Array.from([254, 254, 254, 127]);
     }
 
-    getMagicHeader() {
-        let magicHeaderWithBound = [];
+    static unshiftUint8ArrayToFile(file, uInt8Array) {
+        const output = new Uint8Array(uInt8Array.length + file.length);
 
-        magicHeaderWithBound.push(...this.MOZLZ4_MAGIC_HEADER);
-        magicHeaderWithBound.push(...this.DECOMP_SIZE);
+        output.set(uInt8Array);
+        output.set(file, uInt8Array.length);
 
-        return Uint8Array.from(magicHeaderWithBound);
+        return output;
     }
 
     addMozlz4Header(lz4File) {
-        const mozHeader = this.getMagicHeader();
-        const mozOutput = new Uint8Array(mozHeader.length + lz4File.length);
+        return Mozlz4Wrapper.unshiftUint8ArrayToFile(lz4File, this.MOZLZ4_MAGIC_HEADER);
+    }
 
-        mozOutput.set(mozHeader);
-        mozOutput.set(lz4File, mozHeader.length);
-
-        return mozOutput;
+    addDecompSize(lz4File) {
+        return Mozlz4Wrapper.unshiftUint8ArrayToFile(lz4File, this.DECOMP_SIZE);
     }
 
     decode(file) {
@@ -76,6 +81,8 @@ class Mozlz4Wrapper {
 
     encodeMozLz4(data) {
         let lz4 = this.encode(data);
+
+        lz4 = this.addDecompSize(lz4);
 
         return this.addMozlz4Header(lz4);
     }
