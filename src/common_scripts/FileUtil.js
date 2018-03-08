@@ -55,26 +55,37 @@ class FileUtil {
     }
 
     static async saveBlobByUrl(url, fileName) {
-        // clear memory by url if error is occured
-        const listener = delta => {
-            const isCompleted = delta.state && delta.state.current === 'complete';
-            const isInterrupted = delta.state && delta.state.current === 'interrupted';
+        console.log(url)
+        let listener = null, deltaId = null;
 
-            if (isCompleted || isInterrupted) {
-                CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
-                window.URL.revokeObjectURL(url);
-            }
-        };
-
-        CONFIG.getAPI().browser.browserAPI.downloads.onChanged.addListener(listener);
         try {
-            const result = await CONFIG.getAPI().browser.browserAPI.downloads.download({
+            // clear memory by url if error is occured or downloading is completed
+            listener = delta => {
+                const isCurrent = deltaId != null && delta.id === deltaId;
+                const isCompleted = delta.state && delta.state.current === 'complete';
+                const isInterrupted = delta.state && delta.state.current === 'interrupted';
+
+                if (isCurrent && (isCompleted || isInterrupted)) {
+                    console.log(deltaId)
+                    console.log('clear1')
+                    CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
+                    window.URL.revokeObjectURL(url);
+                }
+            };
+
+            CONFIG.getAPI().browser.browserAPI.downloads.onChanged.addListener(listener);
+
+            deltaId = await CONFIG.getAPI().browser.browserAPI.downloads.download({
                 url,
                 filename: fileName
             });
         } catch (e) {
+            console.log('clear2')
             // clear memory by url if error is occured or downloading is canceled
-            CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
+            if (listener != null) {
+                CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
+            }
+
             window.URL.revokeObjectURL(url);
         }
     }
