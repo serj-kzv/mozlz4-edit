@@ -55,12 +55,15 @@ class FileUtil {
     }
 
     static async saveBlobByUrl(url, fileName) {
-        console.log(url);
-
         // clear memory by url if error is occured
-        const listener = downloadDelta => {
-            CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
-            window.URL.revokeObjectURL(url);
+        const listener = delta => {
+            const isCompleted = delta.state && delta.state.current === 'complete';
+            const isInterrupted = delta.state && delta.state.current === 'interrupted';
+
+            if (isCompleted || isInterrupted) {
+                CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
+                window.URL.revokeObjectURL(url);
+            }
         };
 
         CONFIG.getAPI().browser.browserAPI.downloads.onChanged.addListener(listener);
