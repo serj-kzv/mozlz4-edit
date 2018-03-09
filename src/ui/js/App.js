@@ -20,6 +20,7 @@ class App {
         this.addEngineShortExampleBtn = null;
         this.addEngineExampleGoogleUKBtn = null;
         this.convertMozLz4ToLz4Btn = null;
+        this.radios = null;
     }
 
     run() {
@@ -51,6 +52,7 @@ class App {
         this.addEngineShortExampleBtn = document.querySelector('#addEngineShortExampleBtn');
         this.addEngineExampleGoogleUKBtn = document.querySelector('#addEngineExampleGoogleUKBtn');
         this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
+        this.radios = Array.from(document.querySelectorAll('input[type="radio"][name="saveType"]'));
     }
 
     initEngines() {
@@ -106,11 +108,9 @@ class App {
     }
 
     initSaveTypeRadio() {
-        const radios = Array.from(document.querySelectorAll('input[type="radio"][name="saveType"]'));
-
-        radios.forEach(radio => {
+        this.radios.forEach(radio => {
             radio.addEventListener('change', event => {
-                let saveType = Array.from(radios).find(radio => radio.checked).value;
+                let saveType = this.radios.find(radio => radio.checked).value;
 
                 saveType = SaveTypeEnum[`${saveType}`];
                 this.initFileUtil(saveType);
@@ -118,7 +118,7 @@ class App {
         });
 
         // set first radio as default
-        radios[0].checked = true;
+        this.radios[0].checked = true;
     }
 
     initSaveAsMozlz4Btn() {
@@ -166,6 +166,9 @@ class App {
 
         this.loadJSONFileBtn
             .addEventListener('change', async event => {
+                this.clearMozHeader();
+                this.clearMozDecompSize();
+
                 let file = event.target.files[0];
 
                 file = await this.FileUtil.readFileAsTxt(file);
@@ -251,14 +254,24 @@ class App {
         codeMirror.setValue(txt);
     }
 
-    setMozHeader(header) {
-        this.mozHeader.value = header;
-        this.mozHeaderTxt.value = new TextDecoder().decode(header);
+    setMozHeader(val) {
+        this.mozHeader.value = val;
+        this.mozHeaderTxt.value = new TextDecoder().decode(val);
     }
 
-    setMozDecompSize(decompSize) {
-        this.mozDecompSize.value = decompSize;
-        this.mozDecompSizeTxt.value = new TextDecoder().decode(decompSize);
+    clearMozHeader() {
+        this.mozHeader.value = '';
+        this.mozHeaderTxt.value = '';
+    }
+
+    clearMozDecompSize() {
+        this.mozDecompSize.value = '';
+        this.mozDecompSizeTxt.value = '';
+    }
+
+    setMozDecompSize(val) {
+        this.mozDecompSize.value = val;
+        this.mozDecompSizeTxt.value = new TextDecoder().decode(val);
     }
 
     getTxtResultField(codeMirror) {
