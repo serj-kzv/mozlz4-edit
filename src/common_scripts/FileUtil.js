@@ -58,7 +58,7 @@ class FileUtil {
         let listener = null, deltaId = null;
 
         try {
-            // clear memory by url if error is occured or downloading is completed
+            // clear memory by url if error is occurred or downloading is completed
             listener = delta => {
                 const isCurrent = deltaId != null && delta.id === deltaId;
                 const isCompleted = delta.state && delta.state.current === 'complete';
@@ -77,7 +77,7 @@ class FileUtil {
                 filename: fileName
             });
         } catch (e) {
-            // clear memory by url if error is occured or downloading is canceled
+            // clear memory by url if error is occurred or downloading is canceled
             if (listener != null) {
                 CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(listener);
             }
