@@ -29,7 +29,7 @@ class FileUtil {
         return new Uint8Array(await FileUtil.readFileAsArrayBuffer(file));
     }
 
-    static async saveAsData(content, fileName) {
+    static async saveAsData(content, type, isNewTab, fileName) {
         this.implementMethodErrMsg();
     }
 
