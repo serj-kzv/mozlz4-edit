@@ -1,9 +1,27 @@
 class SaveWithLinkFileUtil extends FileUtil {
-    static saveData(content, fileName) {
-        this.saveAsDataWithLink(content, 'octet/stream', false, fileName);
+    static async saveData(content, fileName) {
+        this.saveAsData(content, 'octet/stream', false, fileName);
     }
 
-    static openAsJson(content) {
-        this.saveAsDataWithLink(content, 'application/json', true, null);
+    static async openAsJson(content) {
+        this.saveAsData(content, 'application/json', true, null);
+    }
+
+    static async saveAsData(content, type, isNewTab, fileName) {
+        const a = document.createElement('a');
+
+        document.body.appendChild(a);
+        a.style = 'display: none';
+
+        const url = window.URL.createObjectURL(new Blob([content], {type}));
+
+        a.href = url;
+        a.target = isNewTab ? '_blank' : '_self';
+        if (fileName != null) {
+            a.download = fileName;
+        }
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
     }
 }
