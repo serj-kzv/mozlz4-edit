@@ -125,7 +125,7 @@ class App {
         this.saveAsMozlz4Btn
             .addEventListener('click', async event => {
                 const enginesStr = this.getTxtResultField(this.codeMirror);
-                const file = new Mozlz4Wrapper().encodeMozLz4(enginesStr);
+                const file = new Mozlz4Archiver().encodeMozLz4(enginesStr);
 
                 this.FileUtil.saveData(file, 'search.json.mozlz4');
             });
@@ -147,7 +147,7 @@ class App {
 
                 file = await this.FileUtil.readFileAsUint8Array(file);
 
-                const result = new Mozlz4Wrapper().decodeMozLz4(file);
+                const result = new Mozlz4Archiver().decodeMozLz4(file);
 
                 file = new TextDecoder().decode(result.file);
                 try {
@@ -218,7 +218,7 @@ class App {
 
                 file = await this.FileUtil.readFileAsUint8Array(file);
 
-                const result = new Mozlz4Wrapper().convertMozLz4ToLz4(file);
+                const result = new Mozlz4Archiver().convertMozLz4ToLz4(file);
 
                 this.FileUtil.saveData(result.file, event.target.value + '.lz4');
             });

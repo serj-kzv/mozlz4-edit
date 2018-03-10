@@ -1,4 +1,4 @@
-class Mozlz4Wrapper {
+class Mozlz4Archiver {
     constructor() {
         // standard lz4 header (first bytes)
         this.LZ4_HEADER = Uint8Array.from([24, 77, 34, 4]);
