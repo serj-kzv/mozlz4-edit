@@ -21,10 +21,10 @@ by proper formula
 ##### Links
 1. Format description and lz4 lib list is [here](https://github.com/lz4/lz4)  
 2. lz4 archiver on js is [here](https://github.com/pierrec/node-lz4)
-3. some node lib to work with mozlz4 is [here (node-mozlz4a)](https://github.com/piroor/node-mozlz4a) (I didn't use it)
+3. node-mozlz4a node.js lib to work with mozlz4 is [here](https://github.com/piroor/node-mozlz4a) (I didn't use it)
 4. mozlz4 format description is [here](https://dxr.mozilla.org/mozilla-central/rev/2535bad09d720e71a982f3f70dd6925f66ab8ec7/toolkit/components/lz4/lz4.js#54)
+5. A good article about lz4 is [LZ4 Data Compression](https://www.brutaldeluxe.fr/products/crossdevtools/lz4/index.html)
 
 ##### lz4 links
 1. https://github.com/lz4/lz4/issues/276#issuecomment-262789645
 2. https://github.com/lz4/lz4/wiki/lz4_Frame_format.md
-3. https://www.brutaldeluxe.fr/products/crossdevtools/lz4/index.html
