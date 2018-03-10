@@ -9,11 +9,6 @@ class SaveWithAPIFileUtil extends FileUtil {
 
     static async saveAsData(content, type, isNewTab, fileName) {
         const url = window.URL.createObjectURL(new Blob([content], {type}));
-
-        this.saveBlobByUrl(url, fileName);
-    }
-
-    static async saveBlobByUrl(url, fileName) {
         let changedListener = null, erasedListener = null, deltaId = null;
 
         try {
