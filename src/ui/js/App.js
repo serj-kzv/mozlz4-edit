@@ -75,6 +75,10 @@ class App {
                 this.FileUtil = SaveWithAPIFileUtil;
                 break;
             }
+            case saveType === SaveTypeEnum.WITH_FRAME_LINK: {
+                this.FileUtil = SaveWithFrameLinkFileUtil;
+                break;
+            }
         }
     }
 

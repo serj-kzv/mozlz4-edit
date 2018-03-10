@@ -22,11 +22,11 @@ class Mozlz4Archiver {
     }
 
     addMozlz4Header(lz4File) {
-        return Mozlz4Wrapper.unshiftUint8ArrayToFile(lz4File, this.MOZLZ4_MAGIC_HEADER);
+        return Mozlz4Archiver.unshiftUint8ArrayToFile(lz4File, this.MOZLZ4_MAGIC_HEADER);
     }
 
     addDecompSize(lz4File) {
-        return Mozlz4Wrapper.unshiftUint8ArrayToFile(lz4File, this.DECOMP_SIZE);
+        return Mozlz4Archiver.unshiftUint8ArrayToFile(lz4File, this.DECOMP_SIZE);
     }
 
     decode(file) {
