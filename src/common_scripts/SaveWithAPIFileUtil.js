@@ -4,12 +4,13 @@ class SaveWithAPIFileUtil extends FileUtil {
     }
 
     static async openAsJson(content) {
-        this.openAsData(content, 'application/json');
+        this.openAsData(content, 'application/json', null, null);
     }
 
-    static async openAsData(content, type) {
+    static async openAsData(content, type, isNewTab, filename) {
         const url = window.URL.createObjectURL(new Blob([content], {type}));
         let onRemovedListener = null, onReplacedListener = null, onUpdatedListener = null, currentTab = null;
+        let isLoaded = false;
 
         console.log(url);
 
@@ -21,6 +22,9 @@ class SaveWithAPIFileUtil extends FileUtil {
                 if (isCurrent) {
                     console.log('test1')
                     CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                    CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                    CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+
                     window.URL.revokeObjectURL(url);
                 }
             };
@@ -33,7 +37,10 @@ class SaveWithAPIFileUtil extends FileUtil {
                 if (isCurrent) {
                     console.log('test2')
 
+                    CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
                     CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                    CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+
                     window.URL.revokeObjectURL(url);
                 }
             };
@@ -41,16 +48,21 @@ class SaveWithAPIFileUtil extends FileUtil {
             // clear memory on tab content replaced
             onUpdatedListener = (tabId, changeInfo, tab) => {
                 const isCurrent = currentTab != null && currentTab.id === tabId;
-                const isCurrentUrl = currentTab.url === tab.url;
+                const isCurrentUrl = currentTab != null && currentTab.url === tab.url;
+                const isCompleted = currentTab != null && tab.status === 'complete';
 
                 console.log('---')
                 console.log(changeInfo.status)
                 console.log(tab.url);
                 console.log('---')
 
-
-                if (isCurrent && !isCurrentUrl) {
+                if (isCurrent && isCurrentUrl && isCompleted) {
+                    isLoaded = true;
+                }
+                if (isCurrent && !isCurrentUrl && isLoaded) {
                     console.log('test4')
+                    CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                    CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
                     CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
                     window.URL.revokeObjectURL(url);
                 }
