@@ -102,7 +102,7 @@ class SaveWithAPIFileUtil extends FileUtil {
                 const isCompleted = isCurrent && delta.state.current === 'complete';
                 const isInterrupted = isCurrent && delta.state.current === 'interrupted';
 
-                if (isCurrent && (isCompleted || isInterrupted)) {
+                if (isCompleted || isInterrupted) {
                     CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(changedListener);
                     CONFIG.getAPI().browser.browserAPI.downloads.onErased.removeListener(erasedListener);
                     window.URL.revokeObjectURL(url);
