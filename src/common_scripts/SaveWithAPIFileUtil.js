@@ -48,18 +48,18 @@ class SaveWithAPIFileUtil extends FileUtil {
             // clear memory on tab content replaced
             onUpdatedListener = (tabId, changeInfo, tab) => {
                 const isCurrent = currentTab != null && currentTab.id === tabId;
-                const isCurrentUrl = currentTab != null && currentTab.url === tab.url;
-                const isCompleted = currentTab != null && tab.status === 'complete';
+                const isCurrentUrl = isCurrent && url === tab.url;
+                const isCompleted = isCurrentUrl && tab.status === 'complete';
 
-                console.log('---')
-                console.log(changeInfo.status)
                 console.log(tab.url);
-                console.log('---')
+                console.log(isCompleted);
 
-                if (isCurrent && isCurrentUrl && isCompleted) {
+                // check if tab content loaded
+                if (!isLoaded && isCompleted) {
                     isLoaded = true;
                 }
-                if (isCurrent && !isCurrentUrl && isLoaded) {
+
+                if (!isCurrentUrl && isLoaded) {
                     console.log('test4')
                     CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
                     CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
@@ -99,8 +99,8 @@ class SaveWithAPIFileUtil extends FileUtil {
             // clear memory by url if error is occurred or downloading is completed
             changedListener = delta => {
                 const isCurrent = deltaId != null && delta.id === deltaId;
-                const isCompleted = delta.state && delta.state.current === 'complete';
-                const isInterrupted = delta.state && delta.state.current === 'interrupted';
+                const isCompleted = isCurrent && delta.state.current === 'complete';
+                const isInterrupted = isCurrent && delta.state.current === 'interrupted';
 
                 if (isCurrent && (isCompleted || isInterrupted)) {
                     CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(changedListener);
