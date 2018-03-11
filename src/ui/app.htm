@@ -11,11 +11,7 @@
 
     <!--file utils-->
     <script src="../common_scripts/FileUtil.js"></script>
-    <script src="../common_scripts/SaveTypeEnum.js"></script>
-    <script src="../common_scripts/SaveWithLinkFileUtil.js"></script>
-    <script src="../common_scripts/SaveWithTabFileUtil.js"></script>
     <script src="../common_scripts/SaveWithAPIFileUtil.js"></script>
-    <script src="../common_scripts/SaveWithFrameLinkFileUtil.js"></script>
 
     <!-- lz4 archiver -->
     <script src="../lib/lz4.js"></script>
@@ -66,12 +62,7 @@
             <b>Save:</b>
             <button id="saveAsMozlz4Btn">Save as mozlz4</button>
             <button id="saveAsJsonBtn">Save as JSON</button>
-            <button id="openJSONInNewTabBtn" style="visibility: hidden; height: 0px;">Open in new tab</button>
-            <b>Save type:</b>
-            <input type="radio" name="saveType" value="WITH_API"><span>with API</span>
-            <input type="radio" name="saveType" value="WITH_TAB"><span>with tab</span>
-            <input type="radio" name="saveType" value="WITH_LINK"><span>with link</span>
-            <input type="radio" name="saveType" value="WITH_FRAME_LINK"><span>with link in frame</span>
+            <button id="openJSONInNewTabBtn">Open in new tab</button>
         </div>
         <div style="visibility: hidden; height: 0px;">
             <b>Convert:</b>

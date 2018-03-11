@@ -2,7 +2,7 @@ class App {
     constructor() {
         this.engines = null;
         this.codeMirror = null;
-        this.FileUtil = null;
+        this.FileUtil = SaveWithAPIFileUtil;
 
         // fields
         this.mozHeader = null;
@@ -20,7 +20,6 @@ class App {
         this.addEngineShortExampleBtn = null;
         this.addEngineExampleGoogleUKBtn = null;
         this.convertMozLz4ToLz4Btn = null;
-        this.radios = null;
     }
 
     run() {
@@ -29,7 +28,6 @@ class App {
 
     runOnDOMloadend() {
         document.addEventListener("DOMContentLoaded", event => {
-            this.initFileUtil(SaveTypeEnum.WITH_API);
             this.initUIElements();
             this.initListeners();
         });
@@ -52,34 +50,12 @@ class App {
         this.addEngineShortExampleBtn = document.querySelector('#addEngineShortExampleBtn');
         this.addEngineExampleGoogleUKBtn = document.querySelector('#addEngineExampleGoogleUKBtn');
         this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
-        this.radios = Array.from(document.querySelectorAll('input[type="radio"][name="saveType"]'));
     }
 
     initEngines() {
         this.engines = {
             engines: []
         };
-    }
-
-    initFileUtil(saveType) {
-        switch (true) {
-            case saveType === SaveTypeEnum.WITH_LINK: {
-                this.FileUtil = SaveWithLinkFileUtil;
-                break;
-            }
-            case saveType === SaveTypeEnum.WITH_TAB: {
-                this.FileUtil = SaveWithTabFileUtil;
-                break;
-            }
-            case saveType === SaveTypeEnum.WITH_API: {
-                this.FileUtil = SaveWithAPIFileUtil;
-                break;
-            }
-            case saveType === SaveTypeEnum.WITH_FRAME_LINK: {
-                this.FileUtil = SaveWithFrameLinkFileUtil;
-                break;
-            }
-        }
     }
 
     initListeners() {
@@ -94,7 +70,6 @@ class App {
         this.initAddEngineShortExampleBtn();
         this.initAddEngineExampleGoogleUKBtn();
         this.initConvertMozLz4ToLz4Btn();
-        this.initSaveTypeRadio();
     }
 
     initEditor() {
@@ -109,20 +84,6 @@ class App {
             styleActiveLine: true,
             matchBrackets: true
         });
-    }
-
-    initSaveTypeRadio() {
-        this.radios.forEach(radio => {
-            radio.addEventListener('change', event => {
-                let saveType = this.radios.find(radio => radio.checked).value;
-
-                saveType = SaveTypeEnum[`${saveType}`];
-                this.initFileUtil(saveType);
-            });
-        });
-
-        // set first radio as default
-        this.radios[0].checked = true;
     }
 
     initSaveAsMozlz4Btn() {

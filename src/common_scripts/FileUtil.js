@@ -33,6 +33,10 @@ class FileUtil {
         this.implementMethodErrMsg();
     }
 
+    static async openAsData(content) {
+        this.implementMethodErrMsg();
+    }
+
     static async saveData(content, fileName) {
         this.implementMethodErrMsg();
     }

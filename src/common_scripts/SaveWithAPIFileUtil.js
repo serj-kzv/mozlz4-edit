@@ -4,7 +4,56 @@ class SaveWithAPIFileUtil extends FileUtil {
     }
 
     static async openAsJson(content) {
-        this.saveAsData(content, 'application/json', true, null);
+        this.openAsData(content, 'application/json');
+    }
+
+    static async openAsData(content, type) {
+        const url = window.URL.createObjectURL(new Blob([content], {type}));
+        let onRemovedListener = null, onReplacedListener = null, tab = null;
+
+        console.log(url);
+
+        try {
+            // clear memory on tab closed
+            onRemovedListener = (tabId, removeInfo) => {
+                const isCurrent = tab != null && tab.id === tabId;
+
+                if (isCurrent) {
+                    console.log('test1')
+                    CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                    window.URL.revokeObjectURL(url);
+                }
+            };
+
+            // clear memory on tab replaced
+            onReplacedListener = (addedTabId, removedTabId) => {
+                const isCurrent = tab != null && tab.id === removedTabId;
+
+                if (isCurrent) {
+                    console.log('test2')
+
+                    CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                    window.URL.revokeObjectURL(url);
+                }
+            };
+
+            CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.addListener(onRemovedListener);
+            CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.addListener(onReplacedListener);
+
+            tab = await CONFIG.getAPI().browser.browserAPI.tabs.create({url});
+        } catch (e) {
+            console.log('test3')
+
+
+            // clear memory on tab open event error
+            if (onRemovedListener != null) {
+                CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.addListener(onRemovedListener);
+            }
+            if (onReplacedListener != null) {
+                CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.addListener(onReplacedListener);
+            }
+            window.URL.revokeObjectURL(url);
+        }
     }
 
     static async saveAsData(content, type, isNewTab, fileName) {
@@ -24,8 +73,6 @@ class SaveWithAPIFileUtil extends FileUtil {
                 }
             };
 
-            CONFIG.getAPI().browser.browserAPI.downloads.onChanged.addListener(changedListener);
-
             // clear memory by url if downloading is erased
             erasedListener = downloadId => {
                 const isCurrent = deltaId != null && downloadId === deltaId;
@@ -36,6 +83,7 @@ class SaveWithAPIFileUtil extends FileUtil {
                 }
             };
 
+            CONFIG.getAPI().browser.browserAPI.downloads.onChanged.addListener(changedListener);
             CONFIG.getAPI().browser.browserAPI.downloads.onErased.addListener(erasedListener);
 
             deltaId = await CONFIG.getAPI().browser.browserAPI.downloads.download({
