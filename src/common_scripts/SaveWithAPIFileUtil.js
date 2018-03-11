@@ -11,16 +11,13 @@ class SaveWithAPIFileUtil extends FileUtil {
         const url = window.URL.createObjectURL(new Blob([content], {type}));
         let onRemovedListener = null, onReplacedListener = null, onUpdatedListener = null, currentTab = null;
         let isLoaded = false;
-
-        console.log(url);
-
+        
         try {
             // clear memory on tab closed
             onRemovedListener = (tabId, removeInfo) => {
                 const isCurrent = currentTab != null && currentTab.id === tabId;
 
                 if (isCurrent) {
-                    console.log('test1')
                     CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
                     CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
                     CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
@@ -32,11 +29,8 @@ class SaveWithAPIFileUtil extends FileUtil {
             // clear memory on tab replaced
             onReplacedListener = (addedTabId, removedTabId) => {
                 const isCurrent = currentTab != null && currentTab.id === removedTabId;
-                console.log('test2')
 
                 if (isCurrent) {
-                    console.log('test2')
-
                     CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
                     CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
                     CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
@@ -51,16 +45,12 @@ class SaveWithAPIFileUtil extends FileUtil {
                 const isCurrentUrl = isCurrent && url === tab.url;
                 const isCompleted = isCurrentUrl && tab.status === 'complete';
 
-                console.log(tab.url);
-                console.log(isCompleted);
-
-                // check if tab content loaded
+                // check if tab content is loaded
                 if (!isLoaded && isCompleted) {
                     isLoaded = true;
                 }
 
                 if (!isCurrentUrl && isLoaded) {
-                    console.log('test4')
                     CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
                     CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
                     CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
@@ -74,9 +64,6 @@ class SaveWithAPIFileUtil extends FileUtil {
 
             currentTab = await CONFIG.getAPI().browser.browserAPI.tabs.create({url});
         } catch (e) {
-            console.log('test3')
-
-
             // clear memory on tab open event error
             if (onRemovedListener != null) {
                 CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.addListener(onRemovedListener);
