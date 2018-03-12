@@ -9,51 +9,56 @@ class SaveWithAPIFileUtil extends FileUtil {
 
     static async openAsData(content, type, isNewTab, filename) {
         const url = window.URL.createObjectURL(new Blob([content], {type}));
-        let isLoaded = false, currentTab = null;
-        const
-            // clear memory on tab closed
-            onRemovedListener = (tabId, removeInfo) => {
-                const isCurrent = currentTab != null && currentTab.id === tabId;
+        let
+            isLoaded = false,
+            currentTab = null,
+            onRemovedListener = null,
+            onReplacedListener = null,
+            onUpdatedListener = null;
 
-                if (isCurrent) {
-                    browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                    browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                    browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
-                    window.URL.revokeObjectURL(url);
-                }
-            },
+        // clear memory on tab closed
+        onRemovedListener = (tabId, removeInfo) => {
+            const isCurrent = currentTab != null && currentTab.id === tabId;
 
-            // clear memory on tab replaced
-            onReplacedListener = (addedTabId, removedTabId) => {
-                const isCurrent = currentTab != null && currentTab.id === removedTabId;
+            if (isCurrent) {
+                browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+                window.URL.revokeObjectURL(url);
+            }
+        };
 
-                if (isCurrent) {
-                    browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                    browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                    browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
-                    window.URL.revokeObjectURL(url);
-                }
-            },
+        // clear memory on tab replaced
+        onReplacedListener = (addedTabId, removedTabId) => {
+            const isCurrent = currentTab != null && currentTab.id === removedTabId;
 
-            // clear memory on tab content replaced
-            onUpdatedListener = (tabId, changeInfo, tab) => {
-                const isCurrent = currentTab != null && currentTab.id === tabId;
-                const isCurrentUrl = isCurrent && url === tab.url;
-                const isCompleted = isCurrentUrl && tab.status === 'complete';
+            if (isCurrent) {
+                browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+                window.URL.revokeObjectURL(url);
+            }
+        };
 
-                // check if tab content was loaded
-                if (!isLoaded && isCompleted) {
-                    isLoaded = true;
-                }
+        // clear memory on tab content replaced
+        onUpdatedListener = (tabId, changeInfo, tab) => {
+            const isCurrent = currentTab != null && currentTab.id === tabId;
+            const isCurrentUrl = isCurrent && url === tab.url;
+            const isCompleted = isCurrentUrl && tab.status === 'complete';
 
-                // check if original tab content was replaced
-                if (!isCurrentUrl && isLoaded) {
-                    browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                    browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                    browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
-                    window.URL.revokeObjectURL(url);
-                }
-            };
+            // check if tab content was loaded
+            if (!isLoaded && isCompleted) {
+                isLoaded = true;
+            }
+
+            // check if original tab content was replaced
+            if (!isCurrentUrl && isLoaded) {
+                browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+                window.URL.revokeObjectURL(url);
+            }
+        };
 
         browserAPI.tabs.onRemoved.addListener(onRemovedListener);
         browserAPI.tabs.onReplaced.addListener(onReplacedListener);
@@ -76,31 +81,31 @@ class SaveWithAPIFileUtil extends FileUtil {
 
     static async saveAsData(content, type, isNewTab, filename) {
         const url = window.URL.createObjectURL(new Blob([content], {type}));
-        let deltaId = null;
-        const
-            // clear memory by url if error is occurred or downloading is completed
-            changedListener = delta => {
-                const isCurrent = deltaId != null && delta.id === deltaId;
-                const isCompleted = isCurrent && delta.state.current === 'complete';
-                const isInterrupted = isCurrent && delta.state.current === 'interrupted';
+        let deltaId = null, changedListener = null, erasedListener = null;
 
-                if (isCompleted || isInterrupted) {
-                    browserAPI.downloads.onChanged.removeListener(changedListener);
-                    browserAPI.downloads.onErased.removeListener(erasedListener);
-                    window.URL.revokeObjectURL(url);
-                }
-            },
+        // clear memory by url if error is occurred or downloading is completed
+        changedListener = delta => {
+            const isCurrent = deltaId != null && delta.id === deltaId;
+            const isCompleted = isCurrent && delta.state.current === 'complete';
+            const isInterrupted = isCurrent && delta.state.current === 'interrupted';
 
-            // clear memory by url if downloading is erased
-            erasedListener = downloadId => {
-                const isCurrent = deltaId != null && downloadId === deltaId;
+            if (isCompleted || isInterrupted) {
+                browserAPI.downloads.onChanged.removeListener(changedListener);
+                browserAPI.downloads.onErased.removeListener(erasedListener);
+                window.URL.revokeObjectURL(url);
+            }
+        };
 
-                if (isCurrent) {
-                    browserAPI.downloads.onChanged.removeListener(changedListener);
-                    browserAPI.downloads.onErased.removeListener(erasedListener);
-                    window.URL.revokeObjectURL(url);
-                }
-            };
+        // clear memory by url if downloading is erased
+        erasedListener = downloadId => {
+            const isCurrent = deltaId != null && downloadId === deltaId;
+
+            if (isCurrent) {
+                browserAPI.downloads.onChanged.removeListener(changedListener);
+                browserAPI.downloads.onErased.removeListener(erasedListener);
+                window.URL.revokeObjectURL(url);
+            }
+        };
 
         browserAPI.downloads.onChanged.addListener(changedListener);
         browserAPI.downloads.onErased.addListener(erasedListener);
