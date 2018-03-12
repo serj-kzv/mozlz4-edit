@@ -4,9 +4,9 @@ class App {
     }
 
     run() {
-        CONFIG.getAPI().browser.browserAPI.browserAction.onClicked.addListener(
+        browserAPI.browserAction.onClicked.addListener(
             async tab => {
-                CONFIG.getAPI().browser.browserAPI.tabs.create({
+                browserAPI.tabs.create({
                     url : 'ui/app.htm'
                 });
             }

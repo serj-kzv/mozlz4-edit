@@ -8,6 +8,6 @@ class App {
     run() {
         const that = this;
 
-        CONFIG.getAPI().browser.browserAPI.runtime.onMessage.addListener(that.onMessageListener);
+        browserAPI.runtime.onMessage.addListener(that.onMessageListener);
     }
 }

@@ -1,43 +1,39 @@
 class SaveWithAPIFileUtil extends FileUtil {
     static async saveData(content, fileName) {
-        this.saveAsData(content, 'octet/stream', false, fileName);
+        return this.saveAsData(content, 'octet/stream', false, fileName);
     }
 
     static async openAsJson(content) {
-        this.openAsData(content, 'application/json', null, null);
+        return this.openAsData(content, 'application/json', null, null);
     }
 
     static async openAsData(content, type, isNewTab, filename) {
         const url = window.URL.createObjectURL(new Blob([content], {type}));
-        let onRemovedListener = null, onReplacedListener = null, onUpdatedListener = null, currentTab = null;
-        let isLoaded = false;
-        
-        try {
+        let isLoaded = false, currentTab = null;
+        const
             // clear memory on tab closed
             onRemovedListener = (tabId, removeInfo) => {
                 const isCurrent = currentTab != null && currentTab.id === tabId;
 
                 if (isCurrent) {
-                    CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                    CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                    CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
-
+                    browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                    browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                    browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
                     window.URL.revokeObjectURL(url);
                 }
-            };
+            },
 
             // clear memory on tab replaced
             onReplacedListener = (addedTabId, removedTabId) => {
                 const isCurrent = currentTab != null && currentTab.id === removedTabId;
 
                 if (isCurrent) {
-                    CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                    CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                    CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
-
+                    browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                    browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                    browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
                     window.URL.revokeObjectURL(url);
                 }
-            };
+            },
 
             // clear memory on tab content replaced
             onUpdatedListener = (tabId, changeInfo, tab) => {
@@ -45,44 +41,43 @@ class SaveWithAPIFileUtil extends FileUtil {
                 const isCurrentUrl = isCurrent && url === tab.url;
                 const isCompleted = isCurrentUrl && tab.status === 'complete';
 
-                // check if tab content is loaded
+                // check if tab content was loaded
                 if (!isLoaded && isCompleted) {
                     isLoaded = true;
                 }
 
+                // check if original tab content was replaced
                 if (!isCurrentUrl && isLoaded) {
-                    CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                    CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                    CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+                    browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                    browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                    browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
                     window.URL.revokeObjectURL(url);
                 }
             };
 
-            CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.addListener(onRemovedListener);
-            CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.addListener(onReplacedListener);
-            CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.addListener(onUpdatedListener);
+        browserAPI.tabs.onRemoved.addListener(onRemovedListener);
+        browserAPI.tabs.onReplaced.addListener(onReplacedListener);
+        browserAPI.tabs.onUpdated.addListener(onUpdatedListener);
 
-            currentTab = await CONFIG.getAPI().browser.browserAPI.tabs.create({url});
+        try {
+            currentTab = await browserAPI.tabs.create({url});
+
+            return currentTab;
         } catch (e) {
             // clear memory on tab open event error
-            if (onRemovedListener != null) {
-                CONFIG.getAPI().browser.browserAPI.tabs.onRemoved.addListener(onRemovedListener);
-            }
-            if (onReplacedListener != null) {
-                CONFIG.getAPI().browser.browserAPI.tabs.onReplaced.addListener(onReplacedListener);
-            }
-            if (onUpdatedListener != null) {
-                CONFIG.getAPI().browser.browserAPI.tabs.onUpdated.addListener(onUpdatedListener);
-            }
+            browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+            browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+            browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
             window.URL.revokeObjectURL(url);
+
+            return false;
         }
     }
 
     static async saveAsData(content, type, isNewTab, filename) {
         const url = window.URL.createObjectURL(new Blob([content], {type}));
-        let changedListener = null, erasedListener = null, deltaId = null;
-
-        try {
+        let deltaId = null;
+        const
             // clear memory by url if error is occurred or downloading is completed
             changedListener = delta => {
                 const isCurrent = deltaId != null && delta.id === deltaId;
@@ -90,37 +85,37 @@ class SaveWithAPIFileUtil extends FileUtil {
                 const isInterrupted = isCurrent && delta.state.current === 'interrupted';
 
                 if (isCompleted || isInterrupted) {
-                    CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(changedListener);
-                    CONFIG.getAPI().browser.browserAPI.downloads.onErased.removeListener(erasedListener);
+                    browserAPI.downloads.onChanged.removeListener(changedListener);
+                    browserAPI.downloads.onErased.removeListener(erasedListener);
                     window.URL.revokeObjectURL(url);
                 }
-            };
+            },
 
             // clear memory by url if downloading is erased
             erasedListener = downloadId => {
                 const isCurrent = deltaId != null && downloadId === deltaId;
 
                 if (isCurrent) {
-                    CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(changedListener);
-                    CONFIG.getAPI().browser.browserAPI.downloads.onErased.removeListener(erasedListener);
+                    browserAPI.downloads.onChanged.removeListener(changedListener);
+                    browserAPI.downloads.onErased.removeListener(erasedListener);
                     window.URL.revokeObjectURL(url);
                 }
             };
 
-            CONFIG.getAPI().browser.browserAPI.downloads.onChanged.addListener(changedListener);
-            CONFIG.getAPI().browser.browserAPI.downloads.onErased.addListener(erasedListener);
+        browserAPI.downloads.onChanged.addListener(changedListener);
+        browserAPI.downloads.onErased.addListener(erasedListener);
 
-            deltaId = await CONFIG.getAPI().browser.browserAPI.downloads.download({url, filename});
+        try {
+            deltaId = await browserAPI.downloads.download({url, filename});
+
+            return deltaId;
         } catch (e) {
             // clear memory by url if error is occurred or downloading is canceled
-            if (changedListener != null) {
-                CONFIG.getAPI().browser.browserAPI.downloads.onChanged.removeListener(changedListener);
-            }
-            if (erasedListener != null) {
-                CONFIG.getAPI().browser.browserAPI.downloads.onErased.removeListener(erasedListener);
-            }
-
+            browserAPI.downloads.onChanged.removeListener(changedListener);
+            browserAPI.downloads.onErased.removeListener(erasedListener);
             window.URL.revokeObjectURL(url);
+
+            return false;
         }
     }
 }
