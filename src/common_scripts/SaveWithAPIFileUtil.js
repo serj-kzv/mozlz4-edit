@@ -45,12 +45,10 @@ class SaveWithAPIFileUtil extends FileUtil {
             const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
             if (isRunAndCurrent) {
+                // check if a original tab content was replaced
                 if (!isCompleted && tab.status === 'complete' && url === tab.url) {
                     isCompleted = true;
-                }
-
-                // check if a original tab content was replaced
-                if (isCompleted && url !== tab.url) {
+                } else if (url !== tab.url) {
                     browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
                     browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
                     browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
