@@ -10,17 +10,17 @@ class SaveWithAPIFileUtil extends FileUtil {
     static async openAsData(content, type, isNewTab, filename) {
         const url = window.URL.createObjectURL(new Blob([content], {type}));
         let
-            isLoaded = false,
+            isCompleted = false,
             currentTab = null,
             onRemovedListener = null,
             onReplacedListener = null,
             onUpdatedListener = null;
 
-        // clear memory on tab closed
+        // clear memory on tab closed event
         onRemovedListener = (tabId, removeInfo) => {
-            const isCurrent = currentTab != null && currentTab.id === tabId;
+            const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
-            if (isCurrent) {
+            if (isRunAndCurrent) {
                 browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
                 browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
                 browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
@@ -28,11 +28,11 @@ class SaveWithAPIFileUtil extends FileUtil {
             }
         };
 
-        // clear memory on tab replaced
+        // clear memory on tab replaced event
         onReplacedListener = (addedTabId, removedTabId) => {
-            const isCurrent = currentTab != null && currentTab.id === removedTabId;
+            const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
-            if (isCurrent) {
+            if (isRunAndCurrent) {
                 browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
                 browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
                 browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
@@ -40,23 +40,22 @@ class SaveWithAPIFileUtil extends FileUtil {
             }
         };
 
-        // clear memory on tab content replaced
+        // clear memory on a tab content was replaced
         onUpdatedListener = (tabId, changeInfo, tab) => {
-            const isCurrent = currentTab != null && currentTab.id === tabId;
-            const isCurrentUrl = isCurrent && url === tab.url;
-            const isCompleted = isCurrentUrl && tab.status === 'complete';
+            const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
-            // check if tab content was loaded
-            if (!isLoaded && isCompleted) {
-                isLoaded = true;
-            }
+            if (isRunAndCurrent) {
+                if (!isCompleted && tab.status === 'complete' && url === tab.url) {
+                    isCompleted = true;
+                }
 
-            // check if original tab content was replaced
-            if (!isCurrentUrl && isLoaded) {
-                browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
-                window.URL.revokeObjectURL(url);
+                // check if a original tab content was replaced
+                if (isCompleted && url !== tab.url) {
+                    browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
+                    browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
+                    browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+                    window.URL.revokeObjectURL(url);
+                }
             }
         };
 
@@ -85,22 +84,25 @@ class SaveWithAPIFileUtil extends FileUtil {
 
         // clear memory by url if error is occurred or downloading is completed
         changedListener = delta => {
-            const isCurrent = deltaId != null && delta.id === deltaId;
-            const isCompleted = isCurrent && delta.state.current === 'complete';
-            const isInterrupted = isCurrent && delta.state.current === 'interrupted';
+            const isRunAndCurrent = deltaId != null && delta.id === deltaId;
 
-            if (isCompleted || isInterrupted) {
-                browserAPI.downloads.onChanged.removeListener(changedListener);
-                browserAPI.downloads.onErased.removeListener(erasedListener);
-                window.URL.revokeObjectURL(url);
+            if (isRunAndCurrent) {
+                const isCompleted = delta.state.current === 'complete';
+                const isInterrupted = delta.state.current === 'interrupted';
+
+                if (isCompleted || isInterrupted) {
+                    browserAPI.downloads.onChanged.removeListener(changedListener);
+                    browserAPI.downloads.onErased.removeListener(erasedListener);
+                    window.URL.revokeObjectURL(url);
+                }
             }
         };
 
         // clear memory by url if downloading is erased
         erasedListener = downloadId => {
-            const isCurrent = deltaId != null && downloadId === deltaId;
+            const isRunAndCurrent = deltaId != null && downloadId === deltaId;
 
-            if (isCurrent) {
+            if (isRunAndCurrent) {
                 browserAPI.downloads.onChanged.removeListener(changedListener);
                 browserAPI.downloads.onErased.removeListener(erasedListener);
                 window.URL.revokeObjectURL(url);
