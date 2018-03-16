@@ -13,8 +13,7 @@ class App {
         // buttons
         this.saveAsMozlz4Btn = null;
         this.saveAsJsonBtn = null;
-        this.loadMozlz4FileBtn = null;
-        this.loadJSONFileBtn = null;
+        this.openFileBtn = null;
         this.openJSONInNewTabBtn = null;
         this.addEngineExampleBtn = null;
         this.addEngineShortExampleBtn = null;
@@ -43,8 +42,7 @@ class App {
         // buttons
         this.saveAsMozlz4Btn = document.querySelector('#saveAsMozlz4Btn');
         this.saveAsJsonBtn = document.querySelector('#saveAsJsonBtn');
-        this.loadMozlz4FileBtn = document.querySelector('#loadMozlz4FileBtn');
-        this.loadJSONFileBtn = document.querySelector('#loadJSONFileBtn');
+        this.openFileBtn = document.querySelector('#openFileBtn');
         this.openJSONInNewTabBtn = document.querySelector('#openJSONInNewTabBtn');
         this.addEngineExampleBtn = document.querySelector('#addEngineExampleBtn');
         this.addEngineShortExampleBtn = document.querySelector('#addEngineShortExampleBtn');
@@ -63,8 +61,7 @@ class App {
         this.initEditor();
         this.initSaveAsMozlz4Btn();
         this.initSaveAsJsonBtn();
-        this.initLoadMozlz4FileBtn();
-        this.initLoadJSONFileBtn();
+        this.initOpenFileBtn();
         this.initOpenJSONInNewTabBtn();
         this.initAddEngineExampleBtn();
         this.initAddEngineShortExampleBtn();
@@ -105,38 +102,27 @@ class App {
             });
     }
 
-    initLoadMozlz4FileBtn() {
-        this.loadMozlz4FileBtn
+    initOpenFileBtn() {
+        this.openFileBtn
             .addEventListener('change', async event => {
                 let file = event.target.files[0];
 
                 file = await this.FileUtil.readFileAsUint8Array(file);
 
-                const result = new Mozlz4Archiver().decodeMozLz4(file);
+                const mozlz4Archiver = new Mozlz4Archiver();
 
-                file = new TextDecoder().decode(result.file);
-                try {
-                    this.engines = JSON.parse(file);
-                    this.setTxtResultField(this.codeMirror, this.engines);
-                } catch (jsonParseEx) {
-                    this.setTxtResultFieldTxt(this.codeMirror, file);
+                if (mozlz4Archiver.isMozLz4File(file)) {
+                    const result = mozlz4Archiver.decodeMozLz4(file);
+
+                    this.setMozHeader(result.mozHeader);
+                    this.setMozDecompSize(result.decompSize);
+                    file = result.file;
+                } else {
+                    this.clearMozHeader();
+                    this.clearMozDecompSize();
                 }
-                this.setMozHeader(result.mozHeader);
-                this.setMozDecompSize(result.decompSize);
-            });
-    }
 
-    initLoadJSONFileBtn() {
-        const that = this;
-
-        this.loadJSONFileBtn
-            .addEventListener('change', async event => {
-                this.clearMozHeader();
-                this.clearMozDecompSize();
-
-                let file = event.target.files[0];
-
-                file = await this.FileUtil.readFileAsTxt(file);
+                file = new TextDecoder().decode(file);
                 try {
                     this.engines = JSON.parse(file);
                     this.setTxtResultField(this.codeMirror, this.engines);

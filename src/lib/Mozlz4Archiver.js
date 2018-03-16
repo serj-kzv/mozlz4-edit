@@ -94,4 +94,12 @@ class Mozlz4Archiver {
 
         return result;
     }
+
+    isMozLz4File(file) {
+        return Mozlz4Archiver.isEqual(this.getMozFileHeader(file), this.MOZLZ4_MAGIC_HEADER);
+    }
+
+    static isEqual(file1, file2) {
+        return file1.length === file2.length ? !file1.some((byte, index) => byte !== file2[index]) : false;
+    }
 }
