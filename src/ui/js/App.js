@@ -87,7 +87,7 @@ class App {
         this.saveAsMozlz4Btn
             .addEventListener('click', async event => {
                 const enginesStr = this.getTxtResultField(this.codeMirror);
-                const file = new Mozlz4Archiver().encodeMozLz4(enginesStr);
+                const file = new MozLz4Archiver().encodeMozLz4(enginesStr);
 
                 this.FileUtil.saveData(file, 'search.json.mozlz4');
             });
@@ -109,10 +109,17 @@ class App {
 
                 file = await this.FileUtil.readFileAsUint8Array(file);
 
-                const mozlz4Archiver = new Mozlz4Archiver();
+                const mozlz4Archiver = new MozLz4Archiver();
 
                 if (mozlz4Archiver.isMozLz4File(file)) {
                     const result = mozlz4Archiver.decodeMozLz4(file);
+
+                    this.setMozHeader(result.mozHeader);
+                    this.setMozDecompSize(result.decompSize);
+                    file = result.file;
+                } else if (mozlz4Archiver.isMozJSSCLz4(file)) {
+                    console.log('moz-jss')
+                    const result = mozlz4Archiver.decodeMozJSSCLz4(file);
 
                     this.setMozHeader(result.mozHeader);
                     this.setMozDecompSize(result.decompSize);
@@ -169,7 +176,7 @@ class App {
 
                 file = await this.FileUtil.readFileAsUint8Array(file);
 
-                const result = new Mozlz4Archiver().convertMozLz4ToLz4(file);
+                const result = new MozLz4Archiver().convertMozLz4ToLz4(file);
 
                 this.FileUtil.saveData(result.file, event.target.value + '.lz4');
             });
