@@ -41,12 +41,8 @@ class MozLz4Archiver {
         new MozLz4ArchiverCommandMozJSSLz4(),
         new MozLz4ArchiverCommandLz4(),
     ]) {
-        console.log('test')
-        console.log(commands)
         for (let i = 0; i < commands.length; i++) {
             const decoder = new MozLz4ArchiverImpl(file, commands[i]);
-
-            console.log(commands[i])
 
             if (decoder.isThisType()) {
                 return decoder.decode();

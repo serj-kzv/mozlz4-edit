@@ -106,20 +106,33 @@ class App {
     initOpenFileBtn() {
         this.openFileBtn
             .addEventListener('change', async event => {
-                let file = event.target.files[0];
+                this.setStatusLoading();
 
-                file = await this.FileUtil.readFileAsUint8Array(file);
-
-                const result = MozLz4Archiver.decompress(file);
-
-                this.setMozHeader(result.header);
-                this.setMozDecompSize(result.decompressSize);
-                file = new TextDecoder().decode(result.file);
                 try {
-                    this.engines = JSON.parse(file);
-                    this.setTxtResultField(this.codeMirror, this.engines);
-                } catch (jsonParseEx) {
-                    this.setTxtResultFieldTxt(this.codeMirror, file);
+                    let file = event.target.files[0];
+
+                    file = await this.FileUtil.readFileAsUint8Array(file);
+
+                    const result = MozLz4Archiver.decompress(file);
+
+                    if (result.header === '') {
+                        this.clearMozHeader();
+                        this.clearMozDecompSize();
+                        file = new TextDecoder().decode(result.file);
+                    } else {
+                        this.setMozHeader(result.header);
+                        this.setMozDecompSize(result.decompressSize);
+                        file = new TextDecoder().decode(result.file);
+                    }
+
+                    try {
+                        this.engines = JSON.parse(file);
+                        this.setTxtResultField(this.codeMirror, this.engines);
+                    } catch (jsonParseEx) {
+                        this.setTxtResultFieldTxt(this.codeMirror, file);
+                    }
+                } catch (e) {
+                    this.setStatusFail();
                 }
             });
     }
@@ -197,6 +210,14 @@ class App {
 
     setTxtResultFieldTxt(codeMirror, txt) {
         codeMirror.setValue(txt);
+    }
+
+    setStatusLoading() {
+        this.setTxtResultField(this.codeMirror, 'Loading...');
+    }
+
+    setStatusFail() {
+        this.setTxtResultField(this.codeMirror, 'Fail!');
     }
 
     setMozHeader(val) {
