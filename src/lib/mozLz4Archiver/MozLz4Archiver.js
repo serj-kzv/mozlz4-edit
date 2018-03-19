@@ -1,18 +1,4 @@
 class MozLz4Archiver {
-    constructor() {
-        this.HEADER = null;
-        this.DECOMPRESS_SIZE = null;
-    }
-
-    static unshiftUint8ArrayToFile(file, uInt8Array) {
-        const output = new Uint8Array(uInt8Array.length + file.length);
-
-        output.set(uInt8Array);
-        output.set(file, uInt8Array.length);
-
-        return output;
-    }
-
     decode(file) {
         let Buffer = require('buffer').Buffer;
         let LZ4 = require('lz4');
@@ -37,31 +23,71 @@ class MozLz4Archiver {
         return new Uint8Array(output.buffer.slice(0, compressedSize));
     }
 
-    isThisType(file) {
-        return this.isEqual(this.getHeader(file), this.HEADER);
-    }
-
     static isEqual(file1, file2) {
         return file1.length === file2.length ? !file1.some((byte, index) => byte !== file2[index]) : false;
     }
 
-    getHeader(file) {
+    static unshiftUint8ArrayToFile(file, uInt8Array) {
+        const output = new Uint8Array(uInt8Array.length + file.length);
+
+        output.set(uInt8Array);
+        output.set(file, uInt8Array.length);
+
+        return output;
+    }
+
+    static decompress(file, commands = [
+        new MozLz4ArchiverCommandMozLz4(),
+        new MozLz4ArchiverCommandMozJSSLz4(),
+        new MozLz4ArchiverCommandLz4(),
+    ]) {
+        console.log('test')
+        console.log(commands)
+        for (let i = 0; i < commands.length; i++) {
+            const decoder = new MozLz4ArchiverImpl(file, commands[i]);
+
+            console.log(commands[i])
+
+            if (decoder.isThisType()) {
+                const res = decoder.decode();
+                console.log(res)
+
+                return decoder.decode();
+            }
+        }
+
+        return {
+            file,
+            mozHeader: '',
+            decompSize: ''
+        };
+    }
+
+    static comress(file, command = new MozLz4ArchiverCommandLz4()) {
+        return new MozLz4ArchiverImpl(file).encode();
+    }
+
+    getHeader() {
         throw new Error('This method has to be implemented!');
     }
 
-    addDecompressSize(file) {
+    addDecompressSize() {
         throw new Error('This method has to be implemented!');
     }
 
-    addHeader(file) {
+    addHeader() {
         throw new Error('This method has to be implemented!');
     }
 
-    getDecompressSize(file) {
+    getDecompressSize() {
         throw new Error('This method has to be implemented!');
     }
 
-    getBody(file) {
+    getBody() {
+        throw new Error('This method has to be implemented!');
+    }
+
+    isThisType() {
         throw new Error('This method has to be implemented!');
     }
 }

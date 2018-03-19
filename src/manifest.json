@@ -76,9 +76,5 @@
     "tabHide",
     "theme",
     "topSites"
-  ],
-  "options_ui": {
-    "open_in_tab": true,
-    "page": "option/option.htm"
-  }
+  ]
 }

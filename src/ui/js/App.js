@@ -87,7 +87,7 @@ class App {
         this.saveAsMozlz4Btn
             .addEventListener('click', async event => {
                 const enginesStr = this.getTxtResultField(this.codeMirror);
-                const file = new MozLz4Archiver().encodeMozLz4(enginesStr);
+                const file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
 
                 this.FileUtil.saveData(file, 'search.json.mozlz4');
             });
@@ -109,27 +109,11 @@ class App {
 
                 file = await this.FileUtil.readFileAsUint8Array(file);
 
-                const mozlz4Archiver = new MozLz4Archiver();
+                const result = MozLz4Archiver.decompress(file);
 
-                if (mozlz4Archiver.isMozLz4File(file)) {
-                    const result = mozlz4Archiver.decodeMozLz4(file);
-
-                    this.setMozHeader(result.mozHeader);
-                    this.setMozDecompSize(result.decompSize);
-                    file = result.file;
-                } else if (mozlz4Archiver.isMozJSSCLz4(file)) {
-                    console.log('moz-jss')
-                    const result = mozlz4Archiver.decodeMozJSSCLz4(file);
-
-                    this.setMozHeader(result.mozHeader);
-                    this.setMozDecompSize(result.decompSize);
-                    file = result.file;
-                } else {
-                    this.clearMozHeader();
-                    this.clearMozDecompSize();
-                }
-
-                file = new TextDecoder().decode(file);
+                this.setMozHeader(result.mozHeader);
+                this.setMozDecompSize(result.decompSize);
+                file = new TextDecoder().decode(result.file);
                 try {
                     this.engines = JSON.parse(file);
                     this.setTxtResultField(this.codeMirror, this.engines);

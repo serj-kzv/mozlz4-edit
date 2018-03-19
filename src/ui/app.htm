@@ -17,7 +17,12 @@
     <script src="../lib/lz4.js"></script>
 
     <!-- mozlz4 archiver -->
+    <script src="../lib/mozLz4Archiver/command/MozLz4ArchiverCommand.js"></script>
+    <script src="../lib/mozLz4Archiver/command/MozLz4ArchiverCommandLz4.js"></script>
+    <script src="../lib/mozLz4Archiver/command/MozLz4ArchiverCommandMozJSSLz4.js"></script>
+    <script src="../lib/mozLz4Archiver/command/MozLz4ArchiverCommandMozLz4.js"></script>
     <script src="../lib/mozLz4Archiver/MozLz4Archiver.js"></script>
+    <script src="../lib/mozLz4Archiver/MozLz4ArchiverImpl.js"></script>
 
     <!-- codemirror -->
     <link rel="stylesheet" href="../lib/codemirror/codemirror.css">
@@ -38,54 +43,56 @@
 </head>
 
 <body>
-<div id="headerMenu">
-    <div>
-        <span>
-            <span>Warning!</span> You should not delete <b>default</b> search
-            engines if you edit a <b>search.json.mozlz4</b>!
-            In that case the Firefox will <b>reset</b> the search engine list to a default state!
-        </span>
+    <div id="headerMenu">
+        <div>
+            <span>
+                <span>Warning!</span> You should not delete
+                <b>default</b> search engines if you edit a
+                <b>search.json.mozlz4</b>! In that case the Firefox will
+                <b>reset</b> the search engine list to a default state!
+            </span>
+        </div>
+        <div>
+            <div>
+                <b>Open:</b>
+                <label for="openFileBtn">
+                    <input id="openFileBtn" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4,.json">
+                </label>
+            </div>
+            <div>
+                <b>Save:</b>
+                <button id="saveAsMozlz4Btn">Save as mozlz4</button>
+                <button id="saveAsJsonBtn">Save as JSON</button>
+                <button id="openJSONInNewTabBtn">Open in new tab</button>
+            </div>
+            <div style="visibility: hidden; height: 0px;">
+                <b>Convert:</b>
+                <label for="convertMozLz4ToLz4Btn">
+                    Convert Mozilla's Lz4 to standart Lz4
+                    <input id="convertMozLz4ToLz4Btn" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4,.json">
+                </label>
+                <button id="convertLz4ToMozLz4Btn">Convert Lz4 to standart Mozilla's Lz4</button>
+            </div>
+            <div>
+                <b>Example</b> (of
+                <u>search.json.mozlz4</u>):
+                <button id="addEngineShortExampleBtn">Add a short engine example</button>
+                <button id="addEngineExampleBtn">Add a engine example</button>
+                <button id="addEngineExampleGoogleUKBtn">Add a google engine of United Kingdom</button>
+            </div>
+            <div>
+                <b>Header:</b>
+                <input type="text" id="mozHeader" readonly="readonly">
+                <input type="text" id="mozHeaderTxt" readonly="readonly">
+                <b>Decomp size:</b>
+                <input type="text" id="mozDecompSize" readonly="readonly">
+                <input type="text" id="mozDecompSizeTxt" readonly="readonly">
+            </div>
+        </div>
     </div>
-    <div>
-        <div>
-            <b>Open:</b>
-            <label for="openFileBtn">
-                <input id="openFileBtn" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4,.json">
-            </label>
-        </div>
-        <div>
-            <b>Save:</b>
-            <button id="saveAsMozlz4Btn">Save as mozlz4</button>
-            <button id="saveAsJsonBtn">Save as JSON</button>
-            <button id="openJSONInNewTabBtn">Open in new tab</button>
-        </div>
-        <div style="visibility: hidden; height: 0px;">
-            <b>Convert:</b>
-            <label for="convertMozLz4ToLz4Btn">
-                Convert Mozilla's Lz4 to standart Lz4
-                <input id="convertMozLz4ToLz4Btn" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4,.json">
-            </label>
-            <button id="convertLz4ToMozLz4Btn">Convert Lz4 to standart Mozilla's Lz4</button>
-        </div>
-        <div>
-            <b>Example</b> (of <u>search.json.mozlz4</u>):
-            <button id="addEngineShortExampleBtn">Add a short engine example</button>
-            <button id="addEngineExampleBtn">Add a engine example</button>
-            <button id="addEngineExampleGoogleUKBtn">Add a google engine of United Kingdom</button>
-        </div>
-        <div>
-            <b>Header:</b>
-            <input type="text" id="mozHeader" readonly="readonly">
-            <input type="text" id="mozHeaderTxt" readonly="readonly">
-            <b>Decomp size:</b>
-            <input type="text" id="mozDecompSize" readonly="readonly">
-            <input type="text" id="mozDecompSizeTxt" readonly="readonly">
-        </div>
+    <div id="txtResultWrapper">
+        <textarea id="txtResult"></textarea>
     </div>
-</div>
-<div id="txtResultWrapper">
-    <textarea id="txtResult"></textarea>
-</div>
 </body>
 
 </html>
