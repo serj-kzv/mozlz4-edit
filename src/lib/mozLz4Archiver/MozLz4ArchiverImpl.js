@@ -31,11 +31,11 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     }
 
     addDecompressSize() {
-        return this.unshiftUint8ArrayToFile(this.file, this.DECOMPRESS_SIZE);
+        return MozLz4Archiver.unshiftUint8ArrayToFile(this.file, this.DECOMPRESS_SIZE);
     }
 
     addHeader() {
-        return this.unshiftUint8ArrayToFile(this.file, this.HEADER);
+        return MozLz4Archiver.unshiftUint8ArrayToFile(this.file, this.HEADER);
     }
 
     getHeader() {

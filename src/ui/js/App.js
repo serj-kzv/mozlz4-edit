@@ -86,9 +86,9 @@ class App {
     initSaveAsMozlz4Btn() {
         this.saveAsMozlz4Btn
             .addEventListener('click', async event => {
-                let file = this.getTxtResultField(this.codeMirror);
+                let engines = this.getTxtResultField(this.codeMirror);
 
-                file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
+                let file = MozLz4Archiver.compress(engines, new MozLz4ArchiverCommandMozLz4());
 
                 this.FileUtil.saveData(file, 'search.json.mozlz4');
             });
@@ -213,11 +213,11 @@ class App {
     }
 
     setStatusLoading() {
-        this.setTxtResultField(this.codeMirror, 'Loading...');
+        this.setTxtResultField(this.codeMirror, 'Loading... Wait.');
     }
 
     setStatusFail() {
-        this.setTxtResultField(this.codeMirror, 'Fail!');
+        this.setTxtResultField(this.codeMirror, 'Fail! Try again.');
     }
 
     setMozHeader(val) {
