@@ -8,17 +8,14 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     }
 
     decode() {
-        const mozHeader = this.getHeader(this.file);
-        const decompSize = this.getDecompressSize(this.file);
-
-        let file = this.getBody(this.file);
-
-        file = super.decode(this.file);
+        const header = this.getHeader(this.file);
+        const decompressSize = this.getDecompressSize(this.file);
+        const file = super.decode(this.getBody(this.file));
 
         return {
             file,
-            mozHeader,
-            decompSize
+            header,
+            decompressSize
         };
     }
 

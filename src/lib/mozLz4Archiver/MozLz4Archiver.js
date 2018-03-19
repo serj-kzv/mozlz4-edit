@@ -49,22 +49,19 @@ class MozLz4Archiver {
             console.log(commands[i])
 
             if (decoder.isThisType()) {
-                const res = decoder.decode();
-                console.log(res)
-
                 return decoder.decode();
             }
         }
 
         return {
             file,
-            mozHeader: '',
-            decompSize: ''
+            header: '',
+            decompressSize: ''
         };
     }
 
-    static comress(file, command = new MozLz4ArchiverCommandLz4()) {
-        return new MozLz4ArchiverImpl(file).encode();
+    static compress(file, command = new MozLz4ArchiverCommandLz4()) {
+        return new MozLz4ArchiverImpl(file, command).encode();
     }
 
     getHeader() {

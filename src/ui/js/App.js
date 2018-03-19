@@ -86,8 +86,9 @@ class App {
     initSaveAsMozlz4Btn() {
         this.saveAsMozlz4Btn
             .addEventListener('click', async event => {
-                const enginesStr = this.getTxtResultField(this.codeMirror);
-                const file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
+                let file = this.getTxtResultField(this.codeMirror);
+
+                file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
 
                 this.FileUtil.saveData(file, 'search.json.mozlz4');
             });
@@ -111,8 +112,8 @@ class App {
 
                 const result = MozLz4Archiver.decompress(file);
 
-                this.setMozHeader(result.mozHeader);
-                this.setMozDecompSize(result.decompSize);
+                this.setMozHeader(result.header);
+                this.setMozDecompSize(result.decompressSize);
                 file = new TextDecoder().decode(result.file);
                 try {
                     this.engines = JSON.parse(file);
@@ -160,7 +161,7 @@ class App {
 
                 file = await this.FileUtil.readFileAsUint8Array(file);
 
-                const result = new MozLz4Archiver().convertMozLz4ToLz4(file);
+                const result = new MozLz4Archiver().convert(file);
 
                 this.FileUtil.saveData(result.file, event.target.value + '.lz4');
             });
@@ -173,8 +174,10 @@ class App {
                 this.engines.engines.unshift(engine);
                 this.updateEditor();
             } catch (parseEx) {
-                alert('JSON is invalid');
+                alert('JSON is invalid!');
             }
+        } else {
+            alert('Engines is not defined correctly!')
         }
     }
 
