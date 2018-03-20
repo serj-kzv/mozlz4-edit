@@ -20,6 +20,7 @@ class App {
         this.addEngineShortExampleBtn = null;
         this.addEngineExampleGoogleUKBtn = null;
         this.convertMozLz4ToLz4Btn = null;
+        this.addEngineTestBtn = null;
     }
 
     run() {
@@ -50,6 +51,7 @@ class App {
         this.addEngineShortExampleBtn = document.querySelector('#addEngineShortExampleBtn');
         this.addEngineExampleGoogleUKBtn = document.querySelector('#addEngineExampleGoogleUKBtn');
         this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
+        this.addEngineTestBtn = document.querySelector('#addEngineTestBtn');
     }
 
     initEngines() {
@@ -69,6 +71,7 @@ class App {
         this.initAddEngineShortExampleBtn();
         this.initAddEngineExampleGoogleUKBtn();
         this.initConvertMozLz4ToLz4Btn();
+        this.initAddEngineTestBtn();
     }
 
     initEditor() {
@@ -83,6 +86,23 @@ class App {
             styleActiveLine: true,
             matchBrackets: true
         });
+    }
+
+    initAddEngineTestBtn() {
+        this.addEngineTestBtn
+            .addEventListener('click', event => {
+                const engines = [];
+
+                for (let i = 0; i < 999; i++) {
+                    const engine = Object.assign({}, engineExamples.googleUk);
+
+                    engine._name = `GoogleTest${i}`;
+                    engine._loadPath = `[other]/GoogleTest${i}.xml`;
+                    engine._urls[0].template = 'https://www.google' + i + '.test/search?q={searchTerms}';
+                    engines.push(engine);
+                }
+                this.addSearchEngines(engines);
+            });
     }
 
     initSaveAsMozlz4Btn() {
@@ -115,8 +135,6 @@ class App {
                 try {
                     let file = event.target.files[0];
 
-                    console.log(file)
-
                     this.setFileInfo(file);
 
                     file = await this.FileUtil.readFileAsUint8Array(file);
@@ -128,8 +146,6 @@ class App {
                     }
 
                     const fileTxt = new TextDecoder().decode(file.file);
-
-                    console.log(fileTxt.length)
 
                     try {
                         this.engines = JSON.parse(fileTxt);
@@ -191,6 +207,20 @@ class App {
             try {
                 this.updateDataSource();
                 this.engines.engines.unshift(engine);
+                this.updateEditor();
+            } catch (parseEx) {
+                alert('JSON is invalid!');
+            }
+        } else {
+            alert('Engines is not defined correctly!')
+        }
+    }
+
+    addSearchEngines(engines) {
+        if (Util.isDefinedVar(this.engines.engines)) {
+            try {
+                this.updateDataSource();
+                this.engines.engines.unshift(...engines);
                 this.updateEditor();
             } catch (parseEx) {
                 alert('JSON is invalid!');
