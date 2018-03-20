@@ -20,22 +20,22 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     }
 
     encode() {
-        let lz4 = super.encode(this.file);
+        let file = super.encode(this.file);
 
-        lz4 = this.addDecompressSize(lz4);
+        file = this.addDecompressSize(file);
 
-        return this.addHeader(lz4);
+        return this.addHeader(file);
     }
 
     convert() {
     }
 
-    addDecompressSize() {
-        return MozLz4Archiver.unshiftUint8ArrayToFile(this.file, this.DECOMPRESS_SIZE);
+    addDecompressSize(file) {
+        return MozLz4Archiver.unshiftUint8ArrayToFile(file, this.DECOMPRESS_SIZE);
     }
 
-    addHeader() {
-        return MozLz4Archiver.unshiftUint8ArrayToFile(this.file, this.HEADER);
+    addHeader(file) {
+        return MozLz4Archiver.unshiftUint8ArrayToFile(file, this.HEADER);
     }
 
     getHeader() {

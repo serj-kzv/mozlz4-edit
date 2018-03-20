@@ -57,14 +57,7 @@ class MozLz4Archiver {
     }
 
     static compress(file, command = new MozLz4ArchiverCommandLz4()) {
-        console.log(file)
-        console.log(command)
-        const compressor = new MozLz4ArchiverImpl(file, command);
-        console.log(compressor)
-
-        let res = compressor.encode();
-
-        return res;
+        return new MozLz4ArchiverImpl(file, command).encode();
     }
 
     getHeader() {

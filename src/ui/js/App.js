@@ -9,6 +9,7 @@ class App {
         this.mozHeaderTxt = null;
         this.mozDecompSize = null;
         this.mozDecompSizeTxt = null;
+        this.fileInfo = null;
 
         // buttons
         this.saveAsMozlz4Btn = null;
@@ -38,6 +39,7 @@ class App {
         this.mozHeaderTxt = document.querySelector('#mozHeaderTxt');
         this.mozDecompSize = document.querySelector('#mozDecompSize');
         this.mozDecompSizeTxt = document.querySelector('#mozDecompSizeTxt');
+        this.fileInfo = document.querySelector('#fileInfo');
 
         // buttons
         this.saveAsMozlz4Btn = document.querySelector('#saveAsMozlz4Btn');
@@ -86,11 +88,11 @@ class App {
     initSaveAsMozlz4Btn() {
         this.saveAsMozlz4Btn
             .addEventListener('click', async event => {
-                let engines = this.getTxtResultField(this.codeMirror);
+                let file = this.getTxtResultField(this.codeMirror);
 
-                let file = MozLz4Archiver.compress(engines, new MozLz4ArchiverCommandMozLz4());
+                file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
 
-                this.FileUtil.saveData(file, 'search.json.mozlz4');
+                this.FileUtil.saveData(file, this.getFileInfo().name);
             });
     }
 
@@ -107,29 +109,33 @@ class App {
         this.openFileBtn
             .addEventListener('change', async event => {
                 this.setStatusLoading();
+                this.clearMozHeader();
+                this.clearMozDecompSize();
 
                 try {
                     let file = event.target.files[0];
 
+                    console.log(file)
+
+                    this.setFileInfo(file);
+
                     file = await this.FileUtil.readFileAsUint8Array(file);
+                    file = MozLz4Archiver.decompress(file);
 
-                    const result = MozLz4Archiver.decompress(file);
-
-                    if (result.header === '') {
-                        this.clearMozHeader();
-                        this.clearMozDecompSize();
-                        file = new TextDecoder().decode(result.file);
-                    } else {
-                        this.setMozHeader(result.header);
-                        this.setMozDecompSize(result.decompressSize);
-                        file = new TextDecoder().decode(result.file);
+                    if (file.header !== '') {
+                        this.setMozHeader(file.header);
+                        this.setMozDecompSize(file.decompressSize);
                     }
 
+                    const fileTxt = new TextDecoder().decode(file.file);
+
+                    console.log(fileTxt.length)
+
                     try {
-                        this.engines = JSON.parse(file);
+                        this.engines = JSON.parse(fileTxt);
                         this.setTxtResultField(this.codeMirror, this.engines);
                     } catch (jsonParseEx) {
-                        this.setTxtResultFieldTxt(this.codeMirror, file);
+                        this.setTxtResultFieldTxt(this.codeMirror, fileTxt);
                     }
                 } catch (e) {
                     this.setStatusFail();
@@ -220,6 +226,16 @@ class App {
         this.setTxtResultField(this.codeMirror, 'Fail! Try again.');
     }
 
+    setFileInfo(file) {
+        this.fileInfo.value = file.name;
+    }
+
+    getFileInfo() {
+        return {
+            name: this.fileInfo.value
+        };
+    }
+
     setMozHeader(val) {
         this.mozHeader.value = val;
         this.mozHeaderTxt.value = new TextDecoder().decode(val);
@@ -237,7 +253,7 @@ class App {
 
     setMozDecompSize(val) {
         this.mozDecompSize.value = val;
-        this.mozDecompSizeTxt.value = new TextDecoder().decode(val);
+        this.mozDecompSizeTxt.value = val.reduce((accumulator, currentValue) => accumulator * ++currentValue);
     }
 
     getTxtResultField(codeMirror) {
