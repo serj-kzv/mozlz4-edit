@@ -15,7 +15,6 @@
     "default_icon": "icons/mozlz4-edit.png",
     "browser_style": true
   },
-  "content_security_policy": "default-src data: blob: filesystem: mediastream:; script-src 'self' data: blob: filesystem: chrome-extension-resource: mediastream: 'unsafe-inline' 'unsafe-eval'; object-src 'self' blob: filesystem:",
   "background": {
     "scripts": [
       "common_scripts/Config.js",
@@ -39,42 +38,15 @@
     }
   ],
   "permissions": [
-    "contextMenus",
     "downloads",
-    "history",
+    "downloads.open",
     "activeTab",
     "tabs",
-    "notifications",
     "<all_urls>",
     "webRequest",
     "webRequestBlocking",
     "webNavigation",
     "storage",
-    "unlimitedStorage",
-    "browsingData",
-    "alarms",
-    "background",
-    "bookmarks",
-    "browserSettings",
-    "contentSettings",
-    "contextualIdentities",
-    "cookies",
-    "debugger",
-    "downloads.open",
-    "find",
-    "geolocation",
-    "identity",
-    "idle",
-    "management",
-    "menus",
-    "nativeMessaging",
-    "pageCapture",
-    "pkcs11",
-    "privacy",
-    "proxy",
-    "sessions",
-    "tabHide",
-    "theme",
-    "topSites"
+    "unlimitedStorage"
   ]
 }
