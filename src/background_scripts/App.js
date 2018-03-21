@@ -1,19 +1,15 @@
 class App {
-    constructor() {
-    }
-
     run() {
         this.initAddonBtn();
     }
 
     initAddonBtn() {
-        browserAPI.browserAction.onClicked.addListener(
+        browser.browserAction.onClicked.addListener(
             async tab => {
-                browserAPI.tabs.create({
-                    url: 'ui/app.htm'
+                browser.tabs.create({
+                    url: 'app/app.htm'
                 });
             }
         );
     }
-
 }

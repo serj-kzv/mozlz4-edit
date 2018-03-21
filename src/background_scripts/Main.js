@@ -1,12 +1,7 @@
 class Main {
-
-    constructor() {
-    }
-
-    main() {
+    static main() {
         new App().run();
     }
-
 }
 
-new Main().main();
+Main.main();

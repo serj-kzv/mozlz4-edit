@@ -1,5 +1,6 @@
 class App {
     constructor() {
+        this.engineExamples = null;
         this.engines = null;
         this.codeMirror = null;
         this.FileUtil = SaveWithAPIFileUtil;
@@ -23,15 +24,22 @@ class App {
         this.addEngineTestBtn = null;
     }
 
-    run() {
+    async run() {
         this.runOnDOMloadend();
     }
 
     runOnDOMloadend() {
-        document.addEventListener("DOMContentLoaded", event => {
+        document.addEventListener("DOMContentLoaded", async event => {
+            await this.initEngineExamples();
             this.initUIElements();
             this.initListeners();
         });
+    }
+
+    async initEngineExamples() {
+        const url = browser.runtime.getURL('app/resources/engines.json');
+
+        return this.engineExamples = await (await fetch(url)).json();
     }
 
     initUIElements() {
@@ -94,7 +102,7 @@ class App {
                 const engines = [];
 
                 for (let i = 0; i < 999; i++) {
-                    const engine = Object.assign({}, engineExamples.googleUk);
+                    const engine = Object.assign({}, this.engineExamples.googleUk);
 
                     engine._name = `GoogleTest${i}`;
                     engine._loadPath = `[other]/GoogleTest${i}.xml`;
@@ -171,21 +179,21 @@ class App {
     initAddEngineShortExampleBtn() {
         this.addEngineShortExampleBtn
             .addEventListener('click', event => {
-                this.addSearchEngine(engineExamples.shortExample);
+                this.addSearchEngine(this.engineExamples.shortExample);
             });
     }
 
     initAddEngineExampleBtn() {
         this.addEngineExampleBtn
             .addEventListener('click', event => {
-                this.addSearchEngine(engineExamples.example);
+                this.addSearchEngine(this.engineExamples.example);
             });
     }
 
     initAddEngineExampleGoogleUKBtn() {
         this.addEngineExampleGoogleUKBtn
             .addEventListener('click', event => {
-                this.addSearchEngine(engineExamples.googleUk);
+                this.addSearchEngine(this.engineExamples.googleUk);
             });
     }
 
@@ -203,7 +211,7 @@ class App {
     }
 
     addSearchEngine(engine) {
-        if (Util.isDefinedVar(this.engines.engines)) {
+        if (typeof this.engines.engines !== 'undefined') {
             try {
                 this.updateDataSource();
                 this.engines.engines.unshift(engine);
@@ -217,7 +225,7 @@ class App {
     }
 
     addSearchEngines(engines) {
-        if (Util.isDefinedVar(this.engines.engines)) {
+        if (typeof this.engines.engines !== 'undefined') {
             try {
                 this.updateDataSource();
                 this.engines.engines.unshift(...engines);

@@ -1,52 +1,24 @@
 {
   "manifest_version": 2,
   "name": "mozlz4-edit",
-  "description": "mozlz4-edit is a simple mozlz4 file editor. You can open, edit and save mozlz4 files. In other words, you can add search engine to Mozilla Firefox manually by editing search.json.mozlz4 file",
+  "description": "mozlz4-edit is a simple mozlz4 file editor. You can open, edit and save mozlz4 files. In other words, you can add search engines to Mozilla Firefox manually by editing search.json.mozlz4 file",
   "short_name": "mozlz4-edit is a mozlz4 file editor",
-  "author": "",
-  "version": "1.13",
+  "author": "serj-kzv",
+  "version": "1.14",
   "homepage_url": "https://github.com/serj-kzv/mozlz4-edit",
-  "applications": {
-    "gecko": {
-      "strict_min_version": "58.0"
-    }
-  },
   "browser_action": {
     "default_icon": "icons/mozlz4-edit.png",
     "browser_style": true
   },
   "background": {
     "scripts": [
-      "common_scripts/Config.js",
-      "common_scripts/Util.js",
       "background_scripts/App.js",
       "background_scripts/Main.js"
     ]
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "common_scripts/Config.js",
-        "common_scripts/Util.js",
-        "background_scripts/App.js",
-        "content_scripts/Main.js"
-      ],
-      "run_at": "document_start"
-    }
-  ],
   "permissions": [
     "downloads",
-    "downloads.open",
-    "activeTab",
     "tabs",
-    "<all_urls>",
-    "webRequest",
-    "webRequestBlocking",
-    "webNavigation",
-    "storage",
-    "unlimitedStorage"
+    "<all_urls>"
   ]
 }

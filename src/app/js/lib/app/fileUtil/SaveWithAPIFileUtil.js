@@ -21,9 +21,9 @@ class SaveWithAPIFileUtil extends FileUtil {
             const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
             if (isRunAndCurrent) {
-                browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+                browser.tabs.onRemoved.removeListener(onRemovedListener);
+                browser.tabs.onReplaced.removeListener(onReplacedListener);
+                browser.tabs.onUpdated.removeListener(onUpdatedListener);
                 window.URL.revokeObjectURL(url);
             }
         };
@@ -33,9 +33,9 @@ class SaveWithAPIFileUtil extends FileUtil {
             const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
             if (isRunAndCurrent) {
-                browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+                browser.tabs.onRemoved.removeListener(onRemovedListener);
+                browser.tabs.onReplaced.removeListener(onReplacedListener);
+                browser.tabs.onUpdated.removeListener(onUpdatedListener);
                 window.URL.revokeObjectURL(url);
             }
         };
@@ -49,27 +49,27 @@ class SaveWithAPIFileUtil extends FileUtil {
                 if (!isCompleted && tab.status === 'complete' && url === tab.url) {
                     isCompleted = true;
                 } else if (url !== tab.url) {
-                    browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-                    browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-                    browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+                    browser.tabs.onRemoved.removeListener(onRemovedListener);
+                    browser.tabs.onReplaced.removeListener(onReplacedListener);
+                    browser.tabs.onUpdated.removeListener(onUpdatedListener);
                     window.URL.revokeObjectURL(url);
                 }
             }
         };
 
-        browserAPI.tabs.onRemoved.addListener(onRemovedListener);
-        browserAPI.tabs.onReplaced.addListener(onReplacedListener);
-        browserAPI.tabs.onUpdated.addListener(onUpdatedListener);
+        browser.tabs.onRemoved.addListener(onRemovedListener);
+        browser.tabs.onReplaced.addListener(onReplacedListener);
+        browser.tabs.onUpdated.addListener(onUpdatedListener);
 
         try {
-            currentTab = await browserAPI.tabs.create({url});
+            currentTab = await browser.tabs.create({url});
 
             return currentTab;
         } catch (e) {
             // clear memory on tab open event error
-            browserAPI.tabs.onRemoved.removeListener(onRemovedListener);
-            browserAPI.tabs.onReplaced.removeListener(onReplacedListener);
-            browserAPI.tabs.onUpdated.removeListener(onUpdatedListener);
+            browser.tabs.onRemoved.removeListener(onRemovedListener);
+            browser.tabs.onReplaced.removeListener(onReplacedListener);
+            browser.tabs.onUpdated.removeListener(onUpdatedListener);
             window.URL.revokeObjectURL(url);
 
             return false;
@@ -89,8 +89,8 @@ class SaveWithAPIFileUtil extends FileUtil {
                 const isInterrupted = delta.state.current === 'interrupted';
 
                 if (isCompleted || isInterrupted) {
-                    browserAPI.downloads.onChanged.removeListener(changedListener);
-                    browserAPI.downloads.onErased.removeListener(erasedListener);
+                    browser.downloads.onChanged.removeListener(changedListener);
+                    browser.downloads.onErased.removeListener(erasedListener);
                     window.URL.revokeObjectURL(url);
                 }
             }
@@ -101,23 +101,23 @@ class SaveWithAPIFileUtil extends FileUtil {
             const isRunAndCurrent = deltaId != null && downloadId === deltaId;
 
             if (isRunAndCurrent) {
-                browserAPI.downloads.onChanged.removeListener(changedListener);
-                browserAPI.downloads.onErased.removeListener(erasedListener);
+                browser.downloads.onChanged.removeListener(changedListener);
+                browser.downloads.onErased.removeListener(erasedListener);
                 window.URL.revokeObjectURL(url);
             }
         };
 
-        browserAPI.downloads.onChanged.addListener(changedListener);
-        browserAPI.downloads.onErased.addListener(erasedListener);
+        browser.downloads.onChanged.addListener(changedListener);
+        browser.downloads.onErased.addListener(erasedListener);
 
         try {
-            deltaId = await browserAPI.downloads.download({url, filename});
+            deltaId = await browser.downloads.download({url, filename});
 
             return deltaId;
         } catch (e) {
             // clear memory by url if error is occurred or downloading is canceled
-            browserAPI.downloads.onChanged.removeListener(changedListener);
-            browserAPI.downloads.onErased.removeListener(erasedListener);
+            browser.downloads.onChanged.removeListener(changedListener);
+            browser.downloads.onErased.removeListener(erasedListener);
             window.URL.revokeObjectURL(url);
 
             return false;

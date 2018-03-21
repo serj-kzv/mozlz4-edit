@@ -1,1 +1,0 @@
-const browserAPI = [browser, chrome].find(api => typeof api !== 'undefined');
