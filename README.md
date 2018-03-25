@@ -28,3 +28,8 @@ by proper formula
 ##### lz4 links
 1. https://github.com/lz4/lz4/issues/276#issuecomment-262789645
 2. https://github.com/lz4/lz4/wiki/lz4_Frame_format.md
+
+#### moz specific lz4
+1. https://hg.mozilla.org/mozilla-central/file/a9a24a28013b/toolkit/mozapps/extensions/AddonManagerStartup.cpp
+2. https://hg.mozilla.org/mozilla-central/rev/a9a24a28013b
+3. https://raw.githubusercontent.com/mozilla/gecko-dev/40e8eb46609dcb8780764774ec550afff1eed3a5/toolkit/mozapps/extensions/AddonManagerStartup.cpp
