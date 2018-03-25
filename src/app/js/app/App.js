@@ -150,10 +150,16 @@ class App {
 
                     if (file.header !== '') {
                         this.setMozHeader(file.header);
+                    }
+
+                    if (file.decompressSize !== '') {
                         this.setMozDecompSize(file.decompressSize);
                     }
 
                     const fileTxt = new TextDecoder().decode(file.file);
+
+                    console.log(file);
+                    console.log(fileTxt);
 
                     try {
                         this.engines = JSON.parse(fileTxt);
@@ -162,6 +168,7 @@ class App {
                         this.setTxtResultFieldTxt(this.codeMirror, fileTxt);
                     }
                 } catch (e) {
+                    console.error(e);
                     this.setStatusFail();
                 }
             });
@@ -291,7 +298,7 @@ class App {
 
     setMozDecompSize(val) {
         this.mozDecompSize.value = val;
-        this.mozDecompSizeTxt.value = val.reduce((accumulator, currentValue) => accumulator * ++currentValue);
+        // this.mozDecompSizeTxt.value = val.reduce((accumulator, currentValue) => accumulator * ++currentValue);
     }
 
     getTxtResultField(codeMirror) {

@@ -39,6 +39,8 @@ class MozLz4Archiver {
     static decompress(file, commands = [
         new MozLz4ArchiverCommandMozLz4(),
         new MozLz4ArchiverCommandMozJSSLz4(),
+        new MozLz4ArchiverCommandLz4ToolsLow(),
+        new MozLz4ArchiverCommandLz4ToolsHigh(),
         new MozLz4ArchiverCommandLz4(),
     ]) {
         for (let i = 0; i < commands.length; i++) {

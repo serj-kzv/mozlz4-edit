@@ -5,6 +5,8 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
         this.TYPE_NAME = command.TYPE_NAME;
         this.HEADER = command.HEADER;
         this.DECOMPRESS_SIZE = command.DECOMPRESS_SIZE;
+        this.TRUNCATE_HEADER = command.TRUNCATE_HEADER;
+        this.TRUNCATE_DECOMPRESS_SIZE = command.TRUNCATE_DECOMPRESS_SIZE;
     }
 
     decode() {
@@ -47,7 +49,13 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     }
 
     getBody() {
-        return this.file.slice(this.HEADER.length + this.DECOMPRESS_SIZE.length);
+        if (this.TRUNCATE_HEADER && this.TRUNCATE_DECOMPRESS_SIZE) {
+            return this.file.slice(this.HEADER.length + this.DECOMPRESS_SIZE.length);
+        } else if (this.TRUNCATE_HEADER) {
+            return this.file.slice(this.HEADER.length);
+        } else {
+            return this.file;
+        }
     }
 
     isThisType() {
