@@ -158,9 +158,6 @@ class App {
 
                     const fileTxt = new TextDecoder().decode(file.file);
 
-                    console.log(file);
-                    console.log(fileTxt);
-
                     try {
                         this.engines = JSON.parse(fileTxt);
                         this.setTxtResultField(this.codeMirror, this.engines);
