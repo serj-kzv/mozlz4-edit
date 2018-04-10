@@ -34,12 +34,17 @@
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
+    <!--modal plugin-->
+    <link rel="stylesheet" href="js/lib/app/modal/modalPlugin.css">
+    <script src="js/lib/app/modal/modalPlugin.js"></script>
+
     <!-- app -->
     <script src="js/app/App.js"></script>
     <script src="js/app/Main.js"></script>
 </head>
 
 <body>
+<button id="myBtn">Open Modal</button>
 <div id="headerMenu">
     <div>
             <span>
@@ -51,17 +56,16 @@
     </div>
     <div class="left">
         <div>
-            <b>Open:</b>
-            <label for="openFileBtn">
+            <label for="openFileBtn" class="file-label">
+                Open file
                 <input id="openFileBtn" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4,.json">
             </label>
-        </div>
-        <div>
-            <b>Save:</b>
             <button id="saveAsMozlz4Btn">Save as mozlz4</button>
             <button id="saveAsJsonBtn">Save as JSON</button>
             <button id="openJSONInNewTabBtn">Open in new tab</button>
         </div>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
     </div>
     <div class="right">
         <div>
@@ -71,11 +75,13 @@
         <div>
             <b>Header:</b>
             <input type="text" id="mozHeader" readonly="readonly">
+            <b>Name:</b>
             <input type="text" id="mozHeaderTxt" readonly="readonly">
         </div>
         <div>
-            <b>Decompssed size:</b>
+            <b>Size header:</b>
             <input type="text" id="mozDecompSize" readonly="readonly">
+            <b>Size:</b>
             <input type="text" id="mozDecompSizeTxt" readonly="readonly">
         </div>
     </div>
@@ -101,6 +107,94 @@
 <div id="txtResultWrapper">
     <textarea id="txtResult"></textarea>
 </div>
+
+<!-- modal -->
+<!-- The Modal -->
+<div id="myModal" class="modal-hidden">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="modal-cls-btn">&times;</span>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+        <p>Some text in the Modal..</p>
+    </div>
+
+</div>
+
 </body>
 
 </html>

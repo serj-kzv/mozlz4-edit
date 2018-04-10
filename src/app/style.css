@@ -4,6 +4,13 @@
     outline: none;
     border: none;
     border-radius: 0;
+
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 11px;
 }
 
 html, body {
@@ -18,5 +25,40 @@ html, body {
 .left, .right {
     display: inline-block;
     vertical-align: top;
-    width: 45%;
+    width: calc(50% - 10px);
+    height: 100%;
+    border: 1px solid black;
+    padding: 2px;
+}
+
+.left > div,
+.right > div {
+    padding-bottom: 2px;
+}
+
+input[type="text"] {
+    border-bottom: 1px solid black;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+button,
+.file-label {
+    height: 20px;
+    background: white;
+    border: 1px solid black;
+    padding: 3px;
+}
+
+button:hover,
+.file-label:hover {
+    background: black;
+    color: white;
+    cursor: pointer;
+}
+
+.file-label {
+    margin-right: 3px;
 }
