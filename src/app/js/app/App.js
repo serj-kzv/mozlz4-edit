@@ -80,8 +80,11 @@ class App {
         this.initAddEngineExampleGoogleUKBtn();
         this.initConvertMozLz4ToLz4Btn();
         this.initAddEngineTestBtn();
+        this.initEngineListModal();
+    }
 
-        modalPlugin('myBtn', 'myModal')
+    initEngineListModal() {
+        new ModalPlugin('myBtn', 'myModal');
     }
 
     initEditor() {
