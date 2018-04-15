@@ -10,7 +10,6 @@ class MozLz4Archiver {
 
         uncompressedFile = uncompressedFile.buffer.slice(0, uncompressedSize);
         uncompressedFile = new Uint8Array(uncompressedFile);
-        uncompressedFile = MozLz4Archiver.removeLastZeros(uncompressedFile);
 
         return uncompressedFile;
     }

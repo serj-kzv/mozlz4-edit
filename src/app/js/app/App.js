@@ -305,6 +305,8 @@ class App {
 
     setMozDecompSize(val) {
         this.mozDecompSize.value = val;
+        // this.mozDecompSizeTxt.value = new Uint32Array(val);
+        this.mozDecompSizeTxt.value = val.reduce((accumulator, currentValue) => accumulator + new Uint8Array([currentValue]));
         // this.mozDecompSizeTxt.value = val.reduce((accumulator, currentValue) => accumulator * ++currentValue);
     }
 

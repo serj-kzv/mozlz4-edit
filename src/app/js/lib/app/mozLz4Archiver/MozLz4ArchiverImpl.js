@@ -7,12 +7,17 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
         this.DECOMPRESS_SIZE = command.DECOMPRESS_SIZE;
         this.TRUNCATE_HEADER = command.TRUNCATE_HEADER;
         this.TRUNCATE_DECOMPRESS_SIZE = command.TRUNCATE_DECOMPRESS_SIZE;
+        this.TRUNCATE_SIZE_MANUALLY = command.TRUNCATE_SIZE_MANUALLY;
     }
 
     decode() {
         const header = this.getHeader(this.file);
         const decompressSize = this.getDecompressSize(this.file);
-        const file = super.decode(this.getBody(this.file));
+        let file = super.decode(this.getBody(this.file));
+
+        if (this.TRUNCATE_SIZE_MANUALLY) {
+            file = MozLz4Archiver.removeLastZeros(file);
+        }
 
         return {
             file,
