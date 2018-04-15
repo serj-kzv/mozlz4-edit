@@ -13,10 +13,13 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     decode() {
         const header = this.getHeader(this.file);
         const decompressSize = this.getDecompressSize(this.file);
-        let file = super.decode(this.getBody(this.file));
+        let file = null;
 
         if (this.TRUNCATE_SIZE_MANUALLY) {
+            file = super.decode(this.getBody(this.file), false);
             file = MozLz4Archiver.removeLastZeros(file);
+        } else {
+            file = super.decode(this.getBody(this.file));
         }
 
         return {

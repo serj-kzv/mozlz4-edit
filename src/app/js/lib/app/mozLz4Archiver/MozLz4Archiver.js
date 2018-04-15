@@ -1,5 +1,5 @@
 class MozLz4Archiver {
-    decode(file) {
+    decode(file, truncateSize = true) {
         let Buffer = require('buffer').Buffer;
         let LZ4 = require('lz4');
 
@@ -8,8 +8,13 @@ class MozLz4Archiver {
         let uncompressedFile = new Buffer(file.length * 255); // TODO: replace by proper formula
         let uncompressedSize = LZ4.decodeBlock(file, uncompressedFile);
 
-        uncompressedFile = uncompressedFile.buffer.slice(0, uncompressedSize);
+        if (truncateSize) {
+            uncompressedFile = uncompressedFile.buffer.slice(0, uncompressedSize);
+        }
         uncompressedFile = new Uint8Array(uncompressedFile);
+
+        console.log(uncompressedSize);
+        console.log(uncompressedFile);
 
         return uncompressedFile;
     }
