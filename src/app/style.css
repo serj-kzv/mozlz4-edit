@@ -46,7 +46,9 @@ input[type="file"] {
 
 button,
 .file-label {
-    height: 20px;
+    height: 21px;
+    min-height: 21px;
+    max-height: 21px;
     background: white;
     border: 1px solid black;
     padding: 3px;
@@ -61,4 +63,18 @@ button:hover,
 
 .file-label {
     margin-right: 3px;
+}
+
+#tabContainer {
+    margin-top: 10px;
+}
+
+#tabContainer .TabPlugin-tab {
+    border: 1px solid black;
+    padding: 3px;
+    font-size: 20px;
+}
+
+.tabContainer-content {
+    margin-top: 20px;
 }

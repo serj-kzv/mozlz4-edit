@@ -81,10 +81,15 @@ class App {
         this.initConvertMozLz4ToLz4Btn();
         this.initAddEngineTestBtn();
         this.initEngineListModal();
+        this.initEngineListTabs();
     }
 
     initEngineListModal() {
         new ModalPlugin('myBtn', 'myModal');
+    }
+
+    initEngineListTabs() {
+        new TabPlugin('#tabContainer');
     }
 
     initEditor() {

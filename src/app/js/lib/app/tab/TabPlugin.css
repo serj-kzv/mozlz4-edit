@@ -1,0 +1,18 @@
+.TabPlugin-tab {
+    cursor: pointer;
+}
+
+.TabPlugin-tab-shown {
+    background: antiquewhite;
+}
+
+.TabPlugin-tab.TabPlugin-tab-default {
+}
+
+.TabPlugin-tab-content {
+    display: none;
+}
+
+.TabPlugin-tab-content.TabPlugin-tab-content-shown {
+    display: block;
+}
