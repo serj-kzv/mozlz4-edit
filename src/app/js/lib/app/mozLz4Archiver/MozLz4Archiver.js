@@ -88,6 +88,20 @@ class MozLz4Archiver {
         return new MozLz4ArchiverImpl(file, command).encode();
     }
 
+    static uInt8sToUInt32s(uInt8s) {
+        const uInt32s = [];
+
+        for (let i = 0; i + 3 < uInt8s.length; i += 4) {
+            uInt32s.push([uInt8s[i + 3] << 24 | uInt8s[i + 2] << 16 | uInt8s[i + 1] << 8 | uInt8s[i]]);
+        }
+
+        return new Uint32Array(uInt32s);
+    }
+
+    static uInt32sToUInt8s(uInt32s) {
+        return new Uint8Array([uInt32s, uInt32s >> 8, uInt32s >> 16, uInt32s >> 24]);
+    }
+
     getHeader() {
         throw new Error('This method has to be implemented!');
     }
