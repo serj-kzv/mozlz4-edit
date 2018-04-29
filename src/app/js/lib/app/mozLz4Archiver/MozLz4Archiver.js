@@ -1,20 +1,24 @@
 class MozLz4Archiver {
-    decode(file, truncateSize = true) {
+    decode(file, useSizeHeader = {use: false, size: null}, truncateSize = true) {
         let Buffer = require('buffer').Buffer;
         let LZ4 = require('lz4');
 
         file = Buffer.from(file);
 
-        let uncompressedFile = new Buffer(file.length * 255); // TODO: replace by proper formula
+        let uncompressedFile = null;
+
+        if (useSizeHeader.use) {
+            uncompressedFile = new Buffer(useSizeHeader.size);
+        } else {
+            uncompressedFile = new Buffer(file.length * 255); // TODO: replace by proper formula
+        }
+
         let uncompressedSize = LZ4.decodeBlock(file, uncompressedFile);
 
         if (truncateSize) {
             uncompressedFile = uncompressedFile.buffer.slice(0, uncompressedSize);
         }
         uncompressedFile = new Uint8Array(uncompressedFile);
-
-        console.log(uncompressedSize);
-        console.log(uncompressedFile);
 
         return uncompressedFile;
     }
@@ -102,8 +106,8 @@ class MozLz4Archiver {
         return new Uint8Array([uInt32s, uInt32s >> 8, uInt32s >> 16, uInt32s >> 24]);
     }
 
-    static sizeHeaderToDecompSize(headerSize) {
-        return MozLz4Archiver.uInt8sToUInt32s(headerSize);
+    static sizeHeaderToDecompSize(sizeHeader) {
+        return MozLz4Archiver.uInt8sToUInt32s(sizeHeader)[0];
     }
 
     getHeader() {

@@ -162,7 +162,7 @@ class App {
                     }
 
                     if (file.decompressSizeHeader !== '') {
-                        this.setMozDecompSize(file.decompressSizeHeader);
+                        this.setMozDecompSize(file.decompressSizeHeader, file.decompressSize);
                     }
 
                     const fileTxt = new TextDecoder().decode(file.file);
@@ -302,10 +302,9 @@ class App {
         this.mozDecompSizeTxt.value = '';
     }
 
-    setMozDecompSize(val) {
-        this.mozDecompSize.value = val;
-        this.mozDecompSizeTxt.value = MozLz4Archiver.sizeHeaderToDecompSize(val);
-        MozLz4Archiver.uInt32sToUInt8s(34619);
+    setMozDecompSize(decompressSizeHeader, decompressSize) {
+        this.mozDecompSize.value = decompressSizeHeader;
+        this.mozDecompSizeTxt.value = decompressSize;
     }
 
     getTxtResultField(codeMirror) {
