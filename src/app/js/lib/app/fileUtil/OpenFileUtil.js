@@ -1,4 +1,4 @@
-class OpenFileUtil extends FileUtil {
+class OpenFileUtil {
     static async openAsJson(content) {
         return this.openAsData(content, 'application/json', null, null);
     }

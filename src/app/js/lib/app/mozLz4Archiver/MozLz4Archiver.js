@@ -80,7 +80,7 @@ class MozLz4Archiver {
         return {
             file,
             header: '',
-            decompressSize: ''
+            decompressSizeHeader: ''
         };
     }
 
@@ -102,6 +102,10 @@ class MozLz4Archiver {
         return new Uint8Array([uInt32s, uInt32s >> 8, uInt32s >> 16, uInt32s >> 24]);
     }
 
+    static sizeHeaderToDecompSize(headerSize) {
+        return MozLz4Archiver.uInt8sToUInt32s(headerSize);
+    }
+
     getHeader() {
         throw new Error('This method has to be implemented!');
     }
@@ -114,7 +118,7 @@ class MozLz4Archiver {
         throw new Error('This method has to be implemented!');
     }
 
-    getDecompressSize() {
+    getDecompressSizeHeader() {
         throw new Error('This method has to be implemented!');
     }
 

@@ -7,7 +7,11 @@
 
     <!--file utils-->
     <script src="js/lib/app/fileUtil/FileUtil.js"></script>
-    <script src="js/lib/app/fileUtil/SaveWithAPIFileUtil.js"></script>
+    <script src="js/lib/app/fileUtil/OpenFileUtil.js"></script>
+    <script src="js/lib/app/fileUtil/SaveFileUtil.js"></script>
+
+    <!--SearchEngineUtil-->
+    <script src="js/lib/app/SearchEngineUtil.js"></script>
 
     <!-- lz4 archiver -->
     <script src="js/lib/external/lz4.js"></script>
@@ -47,14 +51,14 @@
 
 <body>
 <div id="headerMenu">
-    <div>
-            <span>
-                <span>Warning!</span> You should not delete
-                <b>default</b> search engines if you edit a
-                <b>search.json.mozlz4</b>! In that case the Firefox will
-                <b>reset</b> the search engine list to a default state!
-            </span>
-    </div>
+    <!--<div>-->
+    <!--<span>-->
+    <!--<span>Warning!</span> You should not delete-->
+    <!--<b>default</b> search engines if you edit a-->
+    <!--<b>search.json.mozlz4</b>! In that case the Firefox will-->
+    <!--<b>reset</b> the search engine list to a default state!-->
+    <!--</span>-->
+    <!--</div>-->
     <div class="left">
         <div>
             <label for="openFileBtn" class="file-label">

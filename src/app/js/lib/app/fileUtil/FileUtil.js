@@ -29,26 +29,6 @@ class FileUtil {
         return new Uint8Array(await FileUtil.readFileAsArrayBuffer(file));
     }
 
-    static async saveAsData(content, type, isNewTab, fileName) {
-        this.implementMethodErrMsg();
-    }
-
-    static async openAsData(content) {
-        this.implementMethodErrMsg();
-    }
-
-    static async saveData(content, fileName) {
-        this.implementMethodErrMsg();
-    }
-
-    static async openAsJson(content) {
-        this.implementMethodErrMsg();
-    }
-
-    static implementMethodErrMsg() {
-        throw new Error('The method has to be implemented!');
-    }
-
     static unshiftUint8ArrayToFile(file, uInt8Array) {
         const output = new Uint8Array(uInt8Array.length + file.length);
 

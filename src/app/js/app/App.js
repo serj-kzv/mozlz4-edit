@@ -3,7 +3,6 @@ class App {
         this.engineExamples = null;
         this.engines = null;
         this.codeMirror = null;
-        this.FileUtil = SaveWithAPIFileUtil;
 
         // fields
         this.mozHeader = null;
@@ -130,7 +129,7 @@ class App {
 
                 file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
 
-                this.FileUtil.saveData(file, this.getFileInfo().name);
+                SaveFileUtil.saveData(file, this.getFileInfo().name);
             });
     }
 
@@ -139,7 +138,7 @@ class App {
             .addEventListener('click', event => {
                 const enginesJSONStr = this.getTxtResultField(this.codeMirror);
 
-                this.FileUtil.saveData(enginesJSONStr, 'search.json');
+                SaveFileUtil.saveData(enginesJSONStr, 'search.json');
             });
     }
 
@@ -155,15 +154,15 @@ class App {
 
                     this.setFileInfo(file);
 
-                    file = await this.FileUtil.readFileAsUint8Array(file);
+                    file = await FileUtil.readFileAsUint8Array(file);
                     file = MozLz4Archiver.decompress(file);
 
                     if (file.header !== '') {
                         this.setMozHeader(file.header);
                     }
 
-                    if (file.decompressSize !== '') {
-                        this.setMozDecompSize(file.decompressSize);
+                    if (file.decompressSizeHeader !== '') {
+                        this.setMozDecompSize(file.decompressSizeHeader);
                     }
 
                     const fileTxt = new TextDecoder().decode(file.file);
@@ -186,7 +185,7 @@ class App {
             .addEventListener('click', event => {
                 const json = this.getTxtResultField(this.codeMirror);
 
-                this.FileUtil.openAsJson(json);
+                OpenFileUtil.openAsJson(json);
             });
     }
 
@@ -216,11 +215,11 @@ class App {
             .addEventListener('change', async event => {
                 let file = event.target.files[0];
 
-                file = await this.FileUtil.readFileAsUint8Array(file);
+                file = await FileUtil.readFileAsUint8Array(file);
 
                 const result = new MozLz4Archiver().convert(file);
 
-                this.FileUtil.saveData(result.file, event.target.value + '.lz4');
+                SaveFileUtil.saveData(result.file, event.target.value + '.lz4');
             });
     }
 
@@ -305,13 +304,8 @@ class App {
 
     setMozDecompSize(val) {
         this.mozDecompSize.value = val;
-        // this.mozDecompSizeTxt.value = new Uint32Array(val);
-        this.mozDecompSizeTxt.value = val.reduce((accumulator, currentValue) => accumulator + new Uint8Array([currentValue]));
-
-        this.mozDecompSizeTxt.value = MozLz4Archiver.uInt8sToUInt32s(val);
+        this.mozDecompSizeTxt.value = MozLz4Archiver.sizeHeaderToDecompSize(val);
         MozLz4Archiver.uInt32sToUInt8s(34619);
-
-        // this.mozDecompSizeTxt.value = val.reduce((accumulator, currentValue) => accumulator * ++currentValue);
     }
 
     getTxtResultField(codeMirror) {

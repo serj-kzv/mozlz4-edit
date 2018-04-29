@@ -22,13 +22,35 @@ html, body {
     height: auto;
 }
 
+#headerMenu {
+    background: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 46px;
+    width: 100%;
+    display: block;
+    z-index: 5;
+}
+
+#txtResultWrapper {
+    margin-top: 45px;
+}
+
 .left, .right {
     display: inline-block;
     vertical-align: top;
     width: calc(50% - 10px);
     height: 100%;
-    border: 1px solid black;
-    padding: 2px;
+}
+
+.left {
+    border-right: 1px solid black;
+    background: aliceblue;
+}
+
+.right {
+    background: #ffffaa;
 }
 
 .left > div,

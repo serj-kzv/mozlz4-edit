@@ -12,7 +12,7 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
 
     decode() {
         const header = this.getHeader(this.file);
-        const decompressSize = this.getDecompressSize(this.file);
+        const decompressSizeHeader = this.getDecompressSizeHeader(this.file);
         let file = null;
 
         if (this.TRUNCATE_SIZE_MANUALLY) {
@@ -25,14 +25,15 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
         return {
             file,
             header,
-            decompressSize
+            decompressSizeHeader
         };
     }
 
     encode() {
+        const decompressSizeHeader = MozLz4Archiver.uInt32sToUInt8s(this.file.length);
         let file = super.encode(this.file);
 
-        file = this.addDecompressSize(file);
+        file = this.addDecompressSize(file, decompressSizeHeader);
 
         return this.addHeader(file);
     }
@@ -40,8 +41,8 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     convert() {
     }
 
-    addDecompressSize(file) {
-        return MozLz4Archiver.unshiftUint8ArrayToFile(file, this.DECOMPRESS_SIZE);
+    addDecompressSize(file, decompressSizeHeader) {
+        return MozLz4Archiver.unshiftUint8ArrayToFile(file, decompressSizeHeader);
     }
 
     addHeader(file) {
@@ -52,15 +53,17 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
         return this.file.slice(0, this.HEADER.length);
     }
 
-    getDecompressSize() {
+    getDecompressSizeHeader() {
         return this.file.slice(this.HEADER.length, this.HEADER.length + this.DECOMPRESS_SIZE.length);
     }
 
     getBody() {
-        if (this.TRUNCATE_HEADER && this.TRUNCATE_DECOMPRESS_SIZE) {
-            return this.file.slice(this.HEADER.length + this.DECOMPRESS_SIZE.length);
-        } else if (this.TRUNCATE_HEADER) {
-            return this.file.slice(this.HEADER.length);
+        if (this.TRUNCATE_HEADER) {
+            if (this.TRUNCATE_DECOMPRESS_SIZE) {
+                return this.file.slice(this.HEADER.length + this.DECOMPRESS_SIZE.length);
+            } else {
+                return this.file.slice(this.HEADER.length);
+            }
         } else {
             return this.file;
         }

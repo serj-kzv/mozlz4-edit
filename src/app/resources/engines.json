@@ -1,4 +1,22 @@
 {
+  "types": {
+    "google": [
+      {
+        "name": "GoogleUS",
+        "url": "https://www.google.us/search?q={searchTerms}"
+      },
+      {
+        "name": "GoogleRU",
+        "url": "https://www.google.ru/search?q={searchTerms}"
+      }
+    ],
+    "yandex": [
+      {
+        "name": "Yandex",
+        "url": "https://yandex.com/search/?text={searchTerms}"
+      }
+    ]
+  },
   "example": {
     "_name": "Example",
     "_shortName": "Example",
