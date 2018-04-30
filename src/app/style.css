@@ -27,7 +27,7 @@ html, body {
     position: fixed;
     top: 0;
     left: 0;
-    height: 46px;
+    height: 60px;
     width: 100%;
     display: block;
     z-index: 5;
@@ -60,6 +60,7 @@ html, body {
 
 input[type="text"] {
     border-bottom: 1px solid black;
+    line-height: 16px;
 }
 
 input[type="file"] {
@@ -100,4 +101,25 @@ button:hover,
 
 .tabContainer-content {
     margin-top: 20px;
+}
+
+.engine-add-block {
+    margin-bottom: 10px;
+}
+
+.engine-add-block input {
+    width: 100%;
+}
+
+.engine-add-block input,
+.engine-add-block button {
+
+}
+
+.engine-add-block-line {
+    height: 25px;
+}
+
+.open-icon-label {
+
 }

@@ -118,29 +118,7 @@
             </div>
         </div>
 
-        <div id="tabContainer">
-            <div>
-                <span class="TabPlugin-tab TabPlugin-tab-default" data-target-tab-content-id="exampleTab">
-                    Example
-                </span>
-                <span class="TabPlugin-tab" data-target-tab-content-id="googleTab">Google</span>
-                <span class="TabPlugin-tab" data-target-tab-content-id="yandexTab">Yandex</span>
-                <span class="TabPlugin-tab" data-target-tab-content-id="testTab">Test</span>
-            </div>
-            <div class="tabContainer-content">
-                <div class="TabPlugin-tab-content" id="exampleTab">
-                    <button id="addEngineExampleBtn">Add a engine example</button>
-                </div>
-                <div class="TabPlugin-tab-content" id="googleTab">
-                    <button id="addEngineShortExampleBtn">Add a short engine example</button>
-                    <button id="addEngineExampleGoogleUKBtn">Add a google engine of United Kingdom</button>
-                </div>
-                <div class="TabPlugin-tab-content" id="yandexTab">yandexTab</div>
-                <div class="TabPlugin-tab-content" id="testTab">
-                    <button id="addEngineTestBtn" data-engine-type="" data-engine-name="">Test. Long adding of 999 test engines</button>
-                </div>
-            </div>
-        </div>
+        <div id="tabContainer"></div>
 
     </div>
 
@@ -158,8 +136,34 @@
         {#types}
             <div class="TabPlugin-tab-content" id="tab-content-{name}">
                 {#engines typename=name}
-                    <div>
-                        <button class="add-engine-btn" data-engine-type="{typename}" data-engine-name="{name}">{name}</button>
+                    <div class="engine-add-block">
+                        <div class="engine-add-block-line">
+                            <button class="add-engine-btn" data-engine-type="{typename}" data-engine-name="{name}">{name}</button>
+                        </div>
+                        <div class="engine-add-block-line">
+                            <input type="text" value="{name}">
+                        </div>
+                        <div class="engine-add-block-line">
+                            <input type="text" value="{url}">
+                        </div>
+                        <div class="engine-add-block-line">
+                            <input id="icon{name}Input" type="text" value="{icon}">
+                        </div>
+                        <div class="engine-add-block-line">
+                            <label for="openIcon{name}Btn" class="file-label open-icon-label">
+                                Choose icon
+                                <input id="openIcon{name}Btn" type="file" accept=".png,.icon">
+                            </label>
+                        </div>
+                        <div class="engine-add-param">
+                                {#params}
+                                    <select name="{param}">
+                                        {#values}
+                                            <option value="{$idx}">{.}</option>
+                                        {/values}
+                                    </select>
+                                {/params}
+                        </div>
                     </div>
                 {/engines}
             </div>

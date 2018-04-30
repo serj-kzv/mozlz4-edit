@@ -10,7 +10,9 @@
           "params": [
             {
               "param": "q",
-              "value": "{searchTerms}"
+              "values": [
+                "{searchTerms}"
+              ]
             },
             {
               "name": "lang",

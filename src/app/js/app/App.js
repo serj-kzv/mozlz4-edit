@@ -17,11 +17,7 @@ class App {
         this.saveAsJsonBtn = null;
         this.openFileBtn = null;
         this.openJSONInNewTabBtn = null;
-        this.addEngineExampleBtn = null;
-        this.addEngineShortExampleBtn = null;
-        this.addEngineExampleGoogleUKBtn = null;
         this.convertMozLz4ToLz4Btn = null;
-        this.addEngineTestBtn = null;
     }
 
     async run() {
@@ -72,11 +68,7 @@ class App {
         this.saveAsJsonBtn = document.querySelector('#saveAsJsonBtn');
         this.openFileBtn = document.querySelector('#openFileBtn');
         this.openJSONInNewTabBtn = document.querySelector('#openJSONInNewTabBtn');
-        this.addEngineExampleBtn = document.querySelector('#addEngineExampleBtn');
-        this.addEngineShortExampleBtn = document.querySelector('#addEngineShortExampleBtn');
-        this.addEngineExampleGoogleUKBtn = document.querySelector('#addEngineExampleGoogleUKBtn');
         this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
-        this.addEngineTestBtn = document.querySelector('#addEngineTestBtn');
     }
 
     initEngines() {
@@ -92,11 +84,7 @@ class App {
         this.initSaveAsJsonBtn();
         this.initOpenFileBtn();
         this.initOpenJSONInNewTabBtn();
-        this.initAddEngineExampleBtn();
-        this.initAddEngineShortExampleBtn();
-        this.initAddEngineExampleGoogleUKBtn();
         this.initConvertMozLz4ToLz4Btn();
-        this.initAddEngineTestBtn();
         this.initEngineListModal();
         this.initEngineListTabs();
     }
@@ -121,23 +109,6 @@ class App {
             styleActiveLine: true,
             matchBrackets: true
         });
-    }
-
-    initAddEngineTestBtn() {
-        this.addEngineTestBtn
-            .addEventListener('click', event => {
-                const engines = [];
-
-                for (let i = 0; i < 999; i++) {
-                    const engine = Object.assign({}, this.engineExamples.googleUk);
-
-                    engine._name = `GoogleTest${i}`;
-                    engine._loadPath = `[other]/GoogleTest${i}.xml`;
-                    engine._urls[0].template = 'https://www.google' + i + '.test/search?q={searchTerms}';
-                    engines.push(engine);
-                }
-                this.addSearchEngines(engines);
-            });
     }
 
     initSaveAsMozlz4Btn() {
@@ -204,27 +175,6 @@ class App {
                 const json = this.getTxtResultField(this.codeMirror);
 
                 OpenFileUtil.openAsJson(json);
-            });
-    }
-
-    initAddEngineShortExampleBtn() {
-        this.addEngineShortExampleBtn
-            .addEventListener('click', event => {
-                this.addSearchEngine(this.engineExamples.shortExample);
-            });
-    }
-
-    initAddEngineExampleBtn() {
-        this.addEngineExampleBtn
-            .addEventListener('click', event => {
-                this.addSearchEngine(this.engineExamples.example);
-            });
-    }
-
-    initAddEngineExampleGoogleUKBtn() {
-        this.addEngineExampleGoogleUKBtn
-            .addEventListener('click', event => {
-                this.addSearchEngine(this.engineExamples.googleUk);
             });
     }
 
