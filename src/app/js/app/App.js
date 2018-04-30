@@ -288,14 +288,18 @@ class App {
                 const nameInput = document.querySelector(`#${prefix}name${postfix}`);
                 const urlInput = document.querySelector(`#${prefix}url${postfix}`);
                 const iconInput = document.querySelector(`#${prefix}icon${postfix}`);
+                const params = Array.from(document.querySelectorAll(`[id^=${prefix}params${postfix}]`))
+                    .map(select => `${select.name}=${select.options[select.selectedIndex].value}`);
                 const engine = SearchEngineUtil.createEngine({
                     name: nameInput.value,
                     url: urlInput.value,
                     icon: iconInput.value,
+                    params
                 });
 
 
                 console.log(engine);
+                console.log(params);
                 this.addSearchEngine(engine);
             });
         });

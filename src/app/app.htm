@@ -135,21 +135,21 @@
     <div class="tabContainer-content">
         {#types}
             <div class="TabPlugin-tab-content" id="tab-content-{name}">
-                {#engines typename=name}
+                {#engines typeName=name}
                     <div class="engine-add-block">
                         <div class="engine-add-block-line">
-                            <button class="add-engine-btn" data-engine-type="{typename}" data-engine-name="{name}">
+                            <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
                                 {name}
                             </button>
                         </div>
                         <div class="engine-add-block-line">
-                            <input id="engine-add-name-input-{typename}-{name}" type="text" value="{name}">
+                            <input id="engine-add-name-input-{typeName}-{name}" type="text" value="{name}">
                         </div>
                         <div class="engine-add-block-line">
-                            <input id="engine-add-url-input-{typename}-{name}" type="text" value="{url}">
+                            <input id="engine-add-url-input-{typeName}-{name}" type="text" value="{url}">
                         </div>
                         <div class="engine-add-block-line">
-                            <input id="engine-add-icon-input-{typename}-{name}" type="text" value="{icon}">
+                            <input id="engine-add-icon-input-{typeName}-{name}" type="text" value="{icon}">
                         </div>
                         <div class="engine-add-block-line">
                             <label for="openIcon{name}Btn" class="file-label open-icon-label">
@@ -158,9 +158,9 @@
                             </label>
                         </div>
                         <div class="engine-add-block-line">
-                            {#params}
-                                <label for="engine-add-params-input-{typename}-{name}-{$idx}">{name}</label>
-                                <select id="engine-add-params-input-{typename}-{name}-{$idx}" name="{param}">
+                            {#params engineName=name}
+                                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}">{name}</label>
+                                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}" name="{param}">
                                     {#values}
                                         <option value="{.}">{.}</option>
                                     {/values}

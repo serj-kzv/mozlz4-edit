@@ -15,6 +15,14 @@
                 "ru",
                 "en"
               ]
+            },
+            {
+              "name": "country",
+              "param": "ct",
+              "values": [
+                "us",
+                "uk"
+              ]
             }
           ]
         },
