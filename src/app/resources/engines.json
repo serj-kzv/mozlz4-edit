@@ -2,17 +2,29 @@
   "types": {
     "google": [
       {
-        "name": "GoogleUS",
-        "url": "https://www.google.us/search?q={searchTerms}"
-      },
-      {
-        "name": "GoogleRU",
-        "url": "https://www.google.ru/search?q={searchTerms}"
+        "name": "Google",
+        "icon": "",
+        "url": "https://www.google.com/search?",
+        "params": [
+          {
+            "param": "q",
+            "value": "{searchTerms}"
+          },
+          {
+            "name": "lang",
+            "param": "hl",
+            "values": [
+              "ru",
+              "en"
+            ]
+          }
+        ]
       }
     ],
     "yandex": [
       {
         "name": "Yandex",
+        "icon": "",
         "url": "https://yandex.com/search/?text={searchTerms}"
       }
     ]

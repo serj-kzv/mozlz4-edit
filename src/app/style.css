@@ -68,6 +68,7 @@ input[type="file"] {
 
 button,
 .file-label {
+    color: black;
     height: 21px;
     min-height: 21px;
     max-height: 21px;

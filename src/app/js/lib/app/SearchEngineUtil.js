@@ -4,7 +4,11 @@ class SearchEngineUtil {
     }
 
     static createEngine(tmpl) {
-        const name = tmpl.name, url = tmpl.url;
+        const
+            name = tmpl.name,
+            params = tmpl.params === undefined ? '' : tmpl.params.join('&'),
+            url = tmpl.url `${tmpl.url}${params}`,
+            icon = tmpl.icon;
 
         return {
             _name: `${name}`,
@@ -13,7 +17,7 @@ class SearchEngineUtil {
             queryCharset: 'UTF-8',
             _readOnly: 'false',
             __searchForm: '',
-            _iconURL: '',
+            _iconURL: `${icon}`,
             _loadPath: `[other]/${name}.xml`,
             _metaData: {},
             _urls: [
