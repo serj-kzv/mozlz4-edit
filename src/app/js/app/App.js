@@ -3,6 +3,7 @@ class App {
         this.engineExamples = null;
         this.engines = null;
         this.codeMirror = null;
+        this.tabContainer = null;
 
         // fields
         this.mozHeader = null;
@@ -29,21 +30,25 @@ class App {
 
     runOnDOMloadend() {
         document.addEventListener("DOMContentLoaded", async event => {
-            this.test();
             await this.initEngineExamples();
             this.initUIElements();
+            this.drawSearchEngineTabs();
             this.initListeners();
         });
     }
 
-    test() {
-        console.log(dust)
-        var src = document.getElementById('hello').textContent;
-        var compiled = dust.compile(src);
-        var tmpl = dust.loadSource(compiled);
-        dust.render(tmpl, { world: "Betelgeuse" }, function(err, out) { console.log(out) });
+    drawSearchEngineTabs() {
+        const
+            src = document.querySelector('#tab-list-tmpl').textContent,
+            compiled = dust.compile(src),
+            tmpl = dust.loadSource(compiled);
 
+        console.log(this.engineExamples);
 
+        dust.render(tmpl, {types: this.engineExamples.types}, (err, out) => {
+            console.log(out)
+            this.tabContainer.innerHTML = out;
+        });
     }
 
     async initEngineExamples() {
@@ -53,6 +58,8 @@ class App {
     }
 
     initUIElements() {
+        this.tabContainer = document.querySelector('#tabContainer');
+
         // fields
         this.mozHeader = document.querySelector('#mozHeader');
         this.mozHeaderTxt = document.querySelector('#mozHeaderTxt');

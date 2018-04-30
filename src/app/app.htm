@@ -142,35 +142,24 @@
             </div>
         </div>
 
-        <script type="text/dust" id="hello">
-        <div id="tabContainer2">
-            <div>
-                {world}
-            </div>
-            <div></div>
-        </div>
-
-
-        </script>
-
     </div>
 
 </div>
 
-<!--templates-->
-
-<!--tab template-->
-<div id="tabTmpl" style="display: none">
-    <span id="tabNameTmpl"></span>
-    <div id="tabContentTmpl"></div>
-</div>
-
-<!--engine template-->
-<div id="engineTmpl" style="display: none">
-    <input type="text" id="engineTmplName">
-    <input type="text" id="engineTmplIcon">
-    <input type="text" id="engineTmplUrl">
-</div>
+<script type="text/dust" id="tab-list-tmpl">
+    <div>
+        {#types}
+            <span class="TabPlugin-tab TabPlugin-tab-default {@first}TabPlugin-tab-default{/first}" data-target-tab-content-id="tab-content-{name}">
+                {name}
+            </span>
+        {/types}
+    </div>
+    <div class="tabContainer-content">
+        {#types}
+            <div class="TabPlugin-tab-content" id="tab-content-{name}">{name}</div>
+        {/types}
+    </div>
+</script>
 
 </body>
 
