@@ -137,7 +137,7 @@
                 </div>
                 <div class="TabPlugin-tab-content" id="yandexTab">yandexTab</div>
                 <div class="TabPlugin-tab-content" id="testTab">
-                    <button id="addEngineTestBtn">Test. Long adding of 999 test engines</button>
+                    <button id="addEngineTestBtn" data-engine-type="" data-engine-name="">Test. Long adding of 999 test engines</button>
                 </div>
             </div>
         </div>
@@ -156,7 +156,13 @@
     </div>
     <div class="tabContainer-content">
         {#types}
-            <div class="TabPlugin-tab-content" id="tab-content-{name}">{name}</div>
+            <div class="TabPlugin-tab-content" id="tab-content-{name}">
+                {#engines typename=name}
+                    <div>
+                        <button class="add-engine-btn" data-engine-type="{typename}" data-engine-name="{name}">{name}</button>
+                    </div>
+                {/engines}
+            </div>
         {/types}
     </div>
 </script>
