@@ -18,6 +18,7 @@ class App {
         this.openFileBtn = null;
         this.openJSONInNewTabBtn = null;
         this.convertMozLz4ToLz4Btn = null;
+        this.addEngineBtns = null;
     }
 
     async run() {
@@ -28,7 +29,6 @@ class App {
         document.addEventListener("DOMContentLoaded", async event => {
             await this.initEngineExamples();
             this.initUIElements();
-            this.drawSearchEngineTabs();
             this.initListeners();
         });
     }
@@ -39,10 +39,7 @@ class App {
             compiled = dust.compile(src),
             tmpl = dust.loadSource(compiled);
 
-        console.log(this.engineExamples);
-
         dust.render(tmpl, {types: this.engineExamples.types}, (err, out) => {
-            console.log(out)
             this.tabContainer.innerHTML = out;
         });
     }
@@ -69,6 +66,8 @@ class App {
         this.openFileBtn = document.querySelector('#openFileBtn');
         this.openJSONInNewTabBtn = document.querySelector('#openJSONInNewTabBtn');
         this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
+        this.drawSearchEngineTabs();
+        this.addEngineBtns = Array.from(document.querySelectorAll('.add-engine-btn'));
     }
 
     initEngines() {
@@ -115,9 +114,11 @@ class App {
     initSaveAsMozlz4Btn() {
         this.saveAsMozlz4Btn
             .addEventListener('click', async event => {
-                let file = this.getTxtResultField(this.codeMirror);
+                let file = this.codeMirror.getValue();
 
                 file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
+
+                console.log(file);
 
                 SaveFileUtil.saveData(file, this.getFileInfo().name);
             });
@@ -126,7 +127,7 @@ class App {
     initSaveAsJsonBtn() {
         this.saveAsJsonBtn
             .addEventListener('click', event => {
-                const enginesJSONStr = this.getTxtResultField(this.codeMirror);
+                const enginesJSONStr = this.codeMirror.getValue();
 
                 SaveFileUtil.saveData(enginesJSONStr, 'search.json');
             });
@@ -173,7 +174,7 @@ class App {
     initOpenJSONInNewTabBtn() {
         this.openJSONInNewTabBtn
             .addEventListener('click', event => {
-                const json = this.getTxtResultField(this.codeMirror);
+                const json = this.codeMirror.getValue();
 
                 OpenFileUtil.openAsJson(json);
             });
@@ -221,7 +222,7 @@ class App {
     }
 
     updateDataSource() {
-        this.engines = JSON.parse(this.getTxtResultField(this.codeMirror));
+        this.engines = JSON.parse(this.codeMirror.getValue());
     }
 
     updateEditor() {
@@ -276,30 +277,24 @@ class App {
         this.mozDecompSizeTxt.value = decompressSize;
     }
 
-    getTxtResultField(codeMirror) {
-        return codeMirror.getValue();
-    }
-
     initAddEngineBtns() {
-        Array.from(document.querySelectorAll('.add-engine-btn')).forEach(btn => {
+        this.addEngineBtns.forEach(btn => {
             btn.addEventListener('click', event => {
                 const prefix = 'engine-add-';
                 const postfix = `-input-${btn.dataset.engineType}-${btn.dataset.engineName}`;
                 const nameInput = document.querySelector(`#${prefix}name${postfix}`);
                 const urlInput = document.querySelector(`#${prefix}url${postfix}`);
                 const iconInput = document.querySelector(`#${prefix}icon${postfix}`);
-                const params = Array.from(document.querySelectorAll(`[id^=${prefix}params${postfix}]`))
-                    .map(select => `${select.name}=${select.options[select.selectedIndex].value}`);
+                const paramSelects = Array.from(document.querySelectorAll(`[id^=${prefix}params${postfix}]`));
                 const engine = SearchEngineUtil.createEngine({
                     name: nameInput.value,
                     url: urlInput.value,
                     icon: iconInput.value,
-                    params
+                    params: paramSelects.map(select => `${select.name}=${select.options[select.selectedIndex].value}`)
                 });
 
 
                 console.log(engine);
-                console.log(params);
                 this.addSearchEngine(engine);
             });
         });

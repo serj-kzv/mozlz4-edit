@@ -6,7 +6,7 @@ class SearchEngineUtil {
     static createEngine(tmpl) {
         const
             name = tmpl.name,
-            params = tmpl.params === undefined ? '' : `&${tmpl.params.join('&')}`,
+            params = tmpl.params === undefined || tmpl.params.length === 0 ? '' : `&${tmpl.params.join('&')}`,
             url = `${tmpl.url}${params}`,
             icon = tmpl.icon;
 
