@@ -87,6 +87,7 @@ class App {
         this.initConvertMozLz4ToLz4Btn();
         this.initEngineListModal();
         this.initEngineListTabs();
+        this.initAddEngineBtns();
     }
 
     initEngineListModal() {
@@ -277,5 +278,26 @@ class App {
 
     getTxtResultField(codeMirror) {
         return codeMirror.getValue();
+    }
+
+    initAddEngineBtns() {
+        Array.from(document.querySelectorAll('.add-engine-btn')).forEach(btn => {
+            btn.addEventListener('click', event => {
+                const prefix = 'engine-add-';
+                const postfix = `-input-${btn.dataset.engineType}-${btn.dataset.engineName}`;
+                const nameInput = document.querySelector(`#${prefix}name${postfix}`);
+                const urlInput = document.querySelector(`#${prefix}url${postfix}`);
+                const iconInput = document.querySelector(`#${prefix}icon${postfix}`);
+                const engine = SearchEngineUtil.createEngine({
+                    name: nameInput.value,
+                    url: urlInput.value,
+                    icon: iconInput.value,
+                });
+
+
+                console.log(engine);
+                this.addSearchEngine(engine);
+            });
+        });
     }
 }

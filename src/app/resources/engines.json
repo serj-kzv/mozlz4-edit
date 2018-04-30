@@ -6,14 +6,8 @@
         {
           "name": "Google",
           "icon": "",
-          "url": "https://www.google.com/search?",
+          "url": "https://www.google.com/search?q={searchTerms}",
           "params": [
-            {
-              "param": "q",
-              "values": [
-                "{searchTerms}"
-              ]
-            },
             {
               "name": "lang",
               "param": "hl",

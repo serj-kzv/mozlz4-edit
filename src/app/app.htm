@@ -138,16 +138,18 @@
                 {#engines typename=name}
                     <div class="engine-add-block">
                         <div class="engine-add-block-line">
-                            <button class="add-engine-btn" data-engine-type="{typename}" data-engine-name="{name}">{name}</button>
+                            <button class="add-engine-btn" data-engine-type="{typename}" data-engine-name="{name}">
+                                {name}
+                            </button>
                         </div>
                         <div class="engine-add-block-line">
-                            <input type="text" value="{name}">
+                            <input id="engine-add-name-input-{typename}-{name}" type="text" value="{name}">
                         </div>
                         <div class="engine-add-block-line">
-                            <input type="text" value="{url}">
+                            <input id="engine-add-url-input-{typename}-{name}" type="text" value="{url}">
                         </div>
                         <div class="engine-add-block-line">
-                            <input id="icon{name}Input" type="text" value="{icon}">
+                            <input id="engine-add-icon-input-{typename}-{name}" type="text" value="{icon}">
                         </div>
                         <div class="engine-add-block-line">
                             <label for="openIcon{name}Btn" class="file-label open-icon-label">
@@ -155,14 +157,15 @@
                                 <input id="openIcon{name}Btn" type="file" accept=".png,.icon">
                             </label>
                         </div>
-                        <div class="engine-add-param">
-                                {#params}
-                                    <select name="{param}">
-                                        {#values}
-                                            <option value="{$idx}">{.}</option>
-                                        {/values}
-                                    </select>
-                                {/params}
+                        <div class="engine-add-block-line">
+                            {#params}
+                                <label for="engine-add-params-input-{typename}-{name}-{$idx}">{name}</label>
+                                <select id="engine-add-params-input-{typename}-{name}-{$idx}" name="{param}">
+                                    {#values}
+                                        <option value="{.}">{.}</option>
+                                    {/values}
+                                </select>
+                            {/params}
                         </div>
                     </div>
                 {/engines}
