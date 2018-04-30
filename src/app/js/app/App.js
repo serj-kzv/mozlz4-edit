@@ -29,10 +29,21 @@ class App {
 
     runOnDOMloadend() {
         document.addEventListener("DOMContentLoaded", async event => {
+            this.test();
             await this.initEngineExamples();
             this.initUIElements();
             this.initListeners();
         });
+    }
+
+    test() {
+        console.log(dust)
+        var src = document.getElementById('hello').textContent;
+        var compiled = dust.compile(src);
+        var tmpl = dust.loadSource(compiled);
+        dust.render(tmpl, { world: "Betelgeuse" }, function(err, out) { console.log(out) });
+
+
     }
 
     async initEngineExamples() {

@@ -7,7 +7,7 @@ class SearchEngineUtil {
         const
             name = tmpl.name,
             params = tmpl.params === undefined ? '' : tmpl.params.join('&'),
-            url = tmpl.url `${tmpl.url}${params}`,
+            url = `${tmpl.url}${params}`,
             icon = tmpl.icon;
 
         return {
