@@ -143,10 +143,16 @@ class App {
                 try {
                     let file = event.target.files[0];
 
+                    console.log(file);
+
                     this.setFileInfo(file);
 
                     file = await FileUtil.readFileAsUint8Array(file);
+                    console.log(file.length);
                     file = MozLz4Archiver.decompress(file);
+                    console.log(file);
+                    console.log(file.length);
+                    console.log(file.file.length);
 
                     if (file.header !== '') {
                         this.setMozHeader(file.header);
