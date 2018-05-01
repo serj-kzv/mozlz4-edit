@@ -19,6 +19,7 @@ class App {
         this.openJSONInNewTabBtn = null;
         this.convertMozLz4ToLz4Btn = null;
         this.addEngineBtns = null;
+        this.addTestEngines = null;
     }
 
     async run() {
@@ -68,6 +69,7 @@ class App {
         this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
         this.drawSearchEngineTabs();
         this.addEngineBtns = Array.from(document.querySelectorAll('.add-engine-btn'));
+        this.addTestEngines = document.querySelector('#addTestEngines');
     }
 
     initEngines() {
@@ -87,6 +89,7 @@ class App {
         this.initEngineListModal();
         this.initEngineListTabs();
         this.initAddEngineBtns();
+        this.initAddTestEngines();
     }
 
     initEngineListModal() {
@@ -292,6 +295,25 @@ class App {
 
                 this.addSearchEngine(engine);
             });
+        });
+    }
+
+    initAddTestEngines() {
+        this.addTestEngines.addEventListener('click', event => {
+            const engines = [];
+
+            for (let i = 0; i < 999; i++) {
+                const engine = SearchEngineUtil.createEngine({
+                    name: `googleTest${i}`,
+                    url: `https://www.google${i}.com/search?q={searchTerms}`,
+                    icon: '',
+                    params: ''
+                });
+
+                engines.push(engine);
+            }
+
+            this.addSearchEngines(engines);
         });
     }
 }
