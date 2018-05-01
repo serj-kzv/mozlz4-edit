@@ -285,16 +285,16 @@ class App {
                 const nameInput = document.querySelector(`#${prefix}name${postfix}`);
                 const urlInput = document.querySelector(`#${prefix}url${postfix}`);
                 const iconInput = document.querySelector(`#${prefix}icon${postfix}`);
-                const paramSelects = Array.from(document.querySelectorAll(`[id^=${prefix}params${postfix}]`));
                 const params = [];
 
-                paramSelects.forEach(select => {
-                    const value = select.options[select.selectedIndex].value;
+                Array.from(document.querySelectorAll(`[id^=${prefix}params${postfix}]`))
+                    .forEach(select => {
+                        const value = select.options[select.selectedIndex].value;
 
-                    if (value.length > 0) {
-                        params.push(`${select.name}=${value}`);
-                    }
-                });
+                        if (value.length > 0) {
+                            params.push(`${select.name}=${value}`);
+                        }
+                    });
 
                 const engine = SearchEngineUtil.createEngine({
                     name: nameInput.value,
