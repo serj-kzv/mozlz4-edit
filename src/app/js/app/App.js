@@ -117,9 +117,6 @@ class App {
                 let file = this.codeMirror.getValue();
 
                 file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
-
-                console.log(file);
-
                 SaveFileUtil.saveData(file, this.getFileInfo().name);
             });
     }
@@ -143,16 +140,10 @@ class App {
                 try {
                     let file = event.target.files[0];
 
-                    console.log(file);
-
                     this.setFileInfo(file);
 
                     file = await FileUtil.readFileAsUint8Array(file);
-                    console.log(file.length);
                     file = MozLz4Archiver.decompress(file);
-                    console.log(file);
-                    console.log(file.length);
-                    console.log(file.file.length);
 
                     if (file.header !== '') {
                         this.setMozHeader(file.header);
@@ -299,8 +290,6 @@ class App {
                     params: paramSelects.map(select => `${select.name}=${select.options[select.selectedIndex].value}`)
                 });
 
-
-                console.log(engine);
                 this.addSearchEngine(engine);
             });
         });

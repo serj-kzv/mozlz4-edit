@@ -15,8 +15,6 @@ class MozLz4Archiver {
 
         const uncompressedSize = LZ4.decodeBlock(file, uncompressedFile);
 
-        console.log(`uncompressedSize - ${uncompressedSize}`)
-
         if (truncateSize) {
             uncompressedFile = uncompressedFile.buffer.slice(0, uncompressedSize);
         }
