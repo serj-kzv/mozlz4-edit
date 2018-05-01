@@ -131,7 +131,7 @@
             </span>
         {/types}
         <span class="TabPlugin-tab TabPlugin-tab-default" data-target-tab-content-id="tab-content-testTab">
-            Test
+            The addon testing
         </span>
     </div>
     <div class="tabContainer-content">
@@ -163,6 +163,7 @@
                             {#params engineName=name}
                                 <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}">{name}</label>
                                 <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}" name="{param}">
+                                    <option value=""></option>
                                     {#values}
                                         <option value="{.}">{.}</option>
                                     {/values}
