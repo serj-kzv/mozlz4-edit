@@ -37,6 +37,7 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
         }
 
         return {
+            typeName: this.TYPE_NAME,
             file,
             header,
             decompressSizeHeader,

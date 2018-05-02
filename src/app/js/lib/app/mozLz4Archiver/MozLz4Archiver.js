@@ -72,9 +72,6 @@ class MozLz4Archiver {
     static decompress(file, commands = [
         new MozLz4ArchiverCommandMozLz4(),
         new MozLz4ArchiverCommandMozJSSLz4(),
-        new MozLz4ArchiverCommandLz4ToolsLow(),
-        new MozLz4ArchiverCommandLz4ToolsHigh(),
-        new MozLz4ArchiverCommandLz4(),
     ]) {
         for (let i = 0; i < commands.length; i++) {
             const decoder = new MozLz4ArchiverImpl(file, commands[i]);
@@ -85,6 +82,7 @@ class MozLz4Archiver {
         }
 
         return {
+            typeName: 'Unknown',
             file,
             header: '',
             decompressSizeHeader: ''

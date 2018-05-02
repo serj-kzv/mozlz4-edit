@@ -11,6 +11,7 @@ class App {
         this.mozDecompSize = null;
         this.mozDecompSizeTxt = null;
         this.fileInfo = null;
+        this.typeName = null;
 
         // buttons
         this.saveAsMozlz4Btn = null;
@@ -60,6 +61,7 @@ class App {
         this.mozDecompSize = document.querySelector('#mozDecompSize');
         this.mozDecompSizeTxt = document.querySelector('#mozDecompSizeTxt');
         this.fileInfo = document.querySelector('#fileInfo');
+        this.typeName = document.querySelector('#typeName');
 
         // buttons
         this.saveAsMozlz4Btn = document.querySelector('#saveAsMozlz4Btn');
@@ -120,7 +122,7 @@ class App {
                 let file = this.codeMirror.getValue();
 
                 file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
-                SaveFileUtil.saveData(file, this.getFileInfo().name);
+                SaveFileUtil.saveData(file, this.fileInfo.name);
             });
     }
 
@@ -133,17 +135,23 @@ class App {
             });
     }
 
+    clrFileInfoBlock() {
+        this.clearMozHeader();
+        this.clearMozDecompSize();
+        this.fileInfo.value = '';
+        this.typeName.value = '';
+    }
+
     initOpenFileBtn() {
         this.openFileBtn
             .addEventListener('change', async event => {
                 this.setStatusLoading();
-                this.clearMozHeader();
-                this.clearMozDecompSize();
+                this.clrFileInfoBlock();
 
                 try {
                     let file = event.target.files[0];
 
-                    this.setFileInfo(file);
+                    const fileName = file.name;
 
                     file = await FileUtil.readFileAsUint8Array(file);
                     file = MozLz4Archiver.decompress(file);
@@ -155,6 +163,9 @@ class App {
                     if (file.decompressSizeHeader !== '') {
                         this.setMozDecompSize(file.decompressSizeHeader, file.decompressSize);
                     }
+
+                    this.fileInfo.value = fileName;
+                    this.typeName.value = file.typeName;
 
                     const fileTxt = new TextDecoder().decode(file.file);
 
@@ -245,16 +256,6 @@ class App {
 
     setStatusFail() {
         this.setTxtResultField(this.codeMirror, 'Fail! Try again.');
-    }
-
-    setFileInfo(file) {
-        this.fileInfo.value = file.name;
-    }
-
-    getFileInfo() {
-        return {
-            name: this.fileInfo.value
-        };
     }
 
     setMozHeader(val) {
