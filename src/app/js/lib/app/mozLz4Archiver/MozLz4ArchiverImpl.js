@@ -22,7 +22,7 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
             file = MozLz4Archiver.removeLastZeros(file);
         } else {
             if (this.USE_SIZE_HEADER) {
-                file = super.decode(this.getBody(this.file), {use: true, size: decompressSize}, false);
+                file = super.decode(this.getBody(this.file), {use: true, size: decompressSize}, true);
             } else {
                 file = super.decode(this.getBody(this.file), {use: false, size: null}, true);
             }
