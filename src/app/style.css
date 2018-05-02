@@ -120,6 +120,14 @@ button:hover,
     height: 25px;
 }
 
+.engine-add-params-input-label {
+}
+
+.engine-add-params-input-select {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .open-icon-label {
 
 }

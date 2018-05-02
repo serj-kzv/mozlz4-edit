@@ -9,7 +9,7 @@
           "url": "https://www.google.com/search?q={searchTerms}",
           "params": [
             {
-              "name": "Web Interface Language Codes ",
+              "name": "Web Interface Language Codes",
               "param": "hl",
               "values": [
                 "af",
@@ -164,7 +164,7 @@
               ]
             },
             {
-              "name": "Search Language Code ",
+              "name": "Search Language Code",
               "param": "lr",
               "values": [
                 "lang_af",
@@ -216,7 +216,7 @@
               ]
             },
             {
-              "name" : "Country Codes ",
+              "name" : "Country Codes",
               "param" : "gl",
               "values" : [
                 "af",

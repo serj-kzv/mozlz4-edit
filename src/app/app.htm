@@ -143,7 +143,7 @@
                     <div class="engine-add-block">
                         <div class="engine-add-block-line">
                             <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
-                                {name}
+                                Add {name}
                             </button>
                         </div>
                         <div class="engine-add-block-line">
@@ -163,8 +163,10 @@
                         </div>
                         <div class="engine-add-block-line">
                             {#params engineName=name}
-                                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}">{name}</label>
-                                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}" name="{param}">
+                                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}" class="engine-add-params-input-label">
+                                    {name}
+                                </label>
+                                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}" name="{param}" class="engine-add-params-input-select">
                                     <option value=""></option>
                                     {#values}
                                         <option value="{.}">{.}</option>

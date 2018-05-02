@@ -21,6 +21,7 @@ class App {
         this.convertMozLz4ToLz4Btn = null;
         this.addEngineBtns = null;
         this.addTestEngines = null;
+        this.openIconBtns = null;
     }
 
     async run() {
@@ -72,6 +73,7 @@ class App {
         this.drawSearchEngineTabs();
         this.addEngineBtns = Array.from(document.querySelectorAll('.add-engine-btn'));
         this.addTestEngines = document.querySelector('#addTestEngines');
+        this.openIconBtns = Array.from(document.querySelectorAll('input[id^="openIcon"][type="file"]'));
     }
 
     initEngines() {
@@ -92,6 +94,7 @@ class App {
         this.initEngineListTabs();
         this.initAddEngineBtns();
         this.initAddTestEngines();
+        this.initOpenIconBtns();
     }
 
     initEngineListModal() {
@@ -227,9 +230,25 @@ class App {
     addSearchEngines(engines) {
         if (typeof this.engines.engines !== 'undefined') {
             try {
-                this.updateDataSource();
-                this.engines.engines.unshift(...engines);
-                this.updateEditor();
+                const
+                    engineNames = this.engines.engines.map(engine => engine._name),
+                    existedEngineNames = engines
+                        .map(engine => {
+                            const name = engine._name;
+
+                            return engineNames.includes(name) ? name : null;
+                        })
+                        .filter(engine => engine !== null);
+
+                if (existedEngineNames.length > 0) {
+                    const msg = `There are already a engine with names "${existedEngineNames.join('", "')}"!`;
+
+                    alert(msg);
+                } else {
+                    this.updateDataSource();
+                    this.engines.engines.unshift(...engines);
+                    this.updateEditor();
+                }
             } catch (parseEx) {
                 alert('JSON is invalid!');
             }
@@ -332,5 +351,12 @@ class App {
 
             this.addSearchEngines(engines);
         });
+    }
+
+    initOpenIconBtns() {
+        this.openIconBtns.forEach(openIconBtn => openIconBtn.addEventListener('click', event => {
+            event.preventDefault();
+            alert('Function is not released yet!');
+        }));
     }
 }
