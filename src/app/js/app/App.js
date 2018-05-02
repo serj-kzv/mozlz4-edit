@@ -122,7 +122,7 @@ class App {
                 let file = this.codeMirror.getValue();
 
                 file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
-                SaveFileUtil.saveData(file, this.fileInfo.name);
+                SaveFileUtil.saveData(file, this.fileInfo.value);
             });
     }
 
