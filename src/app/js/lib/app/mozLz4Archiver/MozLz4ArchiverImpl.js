@@ -17,21 +17,13 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
         const decompressSize = MozLz4Archiver.sizeHeaderToDecompSize(decompressSizeHeader);
         let file = null;
 
-        console.log('test')
-        console.log(this.TYPE_NAME)
-
         if (this.TRUNCATE_SIZE_MANUALLY) {
             file = super.decode(this.getBody(this.file), {use: false, size: null}, false);
             file = MozLz4Archiver.removeLastZeros(file);
-            console.log('test')
-
         } else {
             if (this.USE_SIZE_HEADER) {
-                console.log('test')
-
                 file = super.decode(this.getBody(this.file), {use: true, size: decompressSize}, false);
             } else {
-                console.log('test')
                 file = super.decode(this.getBody(this.file), {use: false, size: null}, true);
             }
         }
