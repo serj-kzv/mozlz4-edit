@@ -207,14 +207,20 @@ class App {
     addSearchEngine(engine) {
         if (typeof this.engines.engines !== 'undefined') {
             try {
-                this.updateDataSource();
-                this.engines.engines.unshift(engine);
-                this.updateEditor();
+                const engineName = engine._name;
+
+                if (this.engines.engines.map(engine => engine._name).includes(engineName)) {
+                    alert(`There is already a engine with name '${engineName}'! Rename engine '${engineName}' and try again`);
+                } else {
+                    this.updateDataSource();
+                    this.engines.engines.unshift(engine);
+                    this.updateEditor();
+                }
             } catch (parseEx) {
                 alert('JSON is invalid!');
             }
         } else {
-            alert('Engines is not defined correctly!')
+            alert('Engines is not defined correctly!');
         }
     }
 
