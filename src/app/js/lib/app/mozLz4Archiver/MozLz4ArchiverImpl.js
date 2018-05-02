@@ -41,8 +41,8 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
         // TODO: Find out why it's worked
         const magicSize = this.file.length + 8;
 
-        const decompressSizeHeader = MozLz4Archiver.uInt32sToUInt8s(magicSize);
-        // const decompressSizeHeader = Uint8Array.from([254, 254, 254, 127]);
+        // const decompressSizeHeader = MozLz4Archiver.uInt32sToUInt8s(magicSize);
+        const decompressSizeHeader = Uint8Array.from([254, 254, 254, 127]);
         let file = super.encode(this.file);
 
         file = this.addDecompressSize(file, decompressSizeHeader);
