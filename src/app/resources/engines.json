@@ -4,6 +4,16 @@
       "name": "General",
       "engines": [
         {
+          "name": "Yandex",
+          "icon": "",
+          "url": "https://yandex.com/search/?text={searchTerms}"
+        }
+      ]
+    },
+    {
+      "name": "Google",
+      "engines": [
+        {
           "name": "Google",
           "icon": "",
           "url": "https://www.google.com/search?q={searchTerms}",
@@ -2429,11 +2439,6 @@
               ]
             }
           ]
-        },
-        {
-          "name": "Yandex",
-          "icon": "",
-          "url": "https://yandex.com/search/?text={searchTerms}"
         }
       ]
     },
