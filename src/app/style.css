@@ -67,6 +67,10 @@ input[type="file"] {
     display: none;
 }
 
+select {
+    border-bottom: 1px solid black;
+}
+
 button,
 .file-label {
     color: black;

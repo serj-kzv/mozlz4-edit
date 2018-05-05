@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>mozlz4-edit</title>
 
+    <!--fetchEngineParamData-->
+    <script src="js/lib/app/fetchEngineParamData/FetchGoogleParams.js"></script>
+
     <!--dust.js-->
     <script src="js/lib/external/dust-full.min.js"></script>
 
@@ -169,7 +172,7 @@
                                 <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}" name="{param}" class="engine-add-params-input-select">
                                     <option value=""></option>
                                     {#values}
-                                        <option value="{.}">{.}</option>
+                                        <option value="{value}">{name} ( {value} )</option>
                                     {/values}
                                 </select>
                             {/params}
@@ -182,6 +185,9 @@
             <button id="addTestEngines">add 999 test engines</button>
         </div>
     </div>
+
+
+
 </script>
 
 </body>
