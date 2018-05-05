@@ -98,6 +98,7 @@ class App {
         this.initAddTestEngines();
         this.initOpenIconBtns();
         this.initClrIconBtns();
+        this.initImgInputAndImgSync();
     }
 
     initEngineListModal() {
@@ -379,5 +380,15 @@ class App {
             document.querySelector(`input#${targetId}`).value = '';
             document.querySelector(`img#${targetId}-img`).src = '';
         }));
+    }
+
+    initImgInputAndImgSync() {
+        document.body.addEventListener('input', event => {
+            const that = event.target;
+
+            if (that.matches('input[id^="engine-add-icon-input-"]')) {
+                document.querySelector(`img#${that.id}-img`).src = that.value;
+            }
+        });
     }
 }
