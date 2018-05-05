@@ -9,7 +9,13 @@ class FetchGoogleParams {
         const engines = await (await fetch(url)).json();
         const type = engines.types.find(type => type.name === 'General');
         const engine = type.engines.find(engine => engine.name === 'Google');
-        const params = engine.params === undefined ? engine.params = [] : engine.params;
+        let params;
+
+        if (engine.params === undefined) {
+            engine.params = [];
+        }
+        params = engine.params;
+
         const paramNames = Object.keys(this.getConf());
 
         for (let paramName of paramNames) {
