@@ -1,29 +1,7 @@
 /**
+ * How to use. In browser console type 'FetchGoogleParams.fetch()' then copy result to app/resources/engines.json
  * https://developers.google.com/custom-search/docs/xml_results_appendices
  * https://developers.google.com/custom-search/json-api/v1/reference/cse/list
-
- 0: "Boolean AND [.]"
- ​
- 1: "Boolean NOT [-]"
- ​
- 2: "Boolean OR [|]"
- ​
- 3: "Boolean Parentheses [()]"
- ​
- 4: "Hexadecimal\nEncoding"
- ​
- 5: "URL Escaped String"
- ​
- 6: "Associated Supported Languages"
- ​
- 7: "hl Parameter Value"
- ​
- 8: "lr Parameter Value"
- ​
- 9: "Country Collection Name"
- ​
- 10: "Country Code"
-
  */
 class FetchGoogleParams {
     static async fetch() {
