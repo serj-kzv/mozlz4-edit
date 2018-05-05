@@ -29,32 +29,37 @@ class FetchGoogleParams {
     static async fetch() {
         const url = browser.runtime.getURL('app/resources/engines.json');
         const engines = await (await fetch(url)).json();
-        const type = engines.types.filter(type => type.name === 'General')[0];
-        const engine = type.engines.filter(engine => engine.name === 'Google')[0];
-        const params = engine.params;
+        const type = engines.types.find(type => type.name === 'General');
+        const engine = type.engines.find(engine => engine.name === 'Google');
+        const params = engine.params === undefined ? engine.params = [] : engine.params;
         const paramNames = Object.keys(this.getConf());
-        // let param = engine.params.filter(param => param.param === 'hl')[0];
 
         for (let paramName of paramNames) {
-            let param = FetchGoogleParams.getParamObj(params, paramName);
+            const param = FetchGoogleParams.getParamByName(params, paramName);
+            const confParam = this.getConf()[`${paramName}`];
 
-            param.values = await this.fetchParams(this.getConf()[`${paramName}`]);
+            param.name = confParam.name;
+            param.param = confParam.param;
+            param.values = await this.fetchValues(confParam);
         }
 
-        console.log(JSON.stringify(engines));
+        const filledEnginesJson = JSON.stringify(engines, null, 4);
+
+        OpenFileUtil.openAsJson(filledEnginesJson);
     }
 
-    static getParamObj(params, name) {
-        const param = params.filter(param => param.param === name)[0];
+    static getParamByName(params, paramName) {
+        let param = params.find(param => param.param === paramName);
 
-        if (param.length === 0) {
-            param[`${name}`] = [];
+        if (param === undefined) {
+            param = {};
+            params.push(param);
         }
 
         return param;
     }
 
-    static async fetchParams(conf) {
+    static async fetchValues(conf) {
         const iframe = document.createElement("iframe");
 
         iframe.style.display = 'none';
@@ -84,13 +89,29 @@ class FetchGoogleParams {
         return Object.freeze({
             // Supported Interface Languages
             hl: {
+                name: "Web Interface Language Codes",
+                param: "hl",
                 url: 'https://developers.google.com/custom-search/docs/xml_results_appendices',
                 selector: 'table:nth-child(53) tr:not(:first-child)'
             },
             // Language Collection Values
             lr: {
+                name: "Search Language Codes",
+                param: "lr",
                 url: 'https://developers.google.com/custom-search/docs/xml_results_appendices',
                 selector: 'table:nth-child(57) tr:not(:first-child)'
+            },
+            cr: {
+                name: "Country Collection Values",
+                param: "cr",
+                url: 'https://developers.google.com/custom-search/docs/xml_results_appendices',
+                selector: 'table:nth-child(61) tr:not(:first-child)'
+            },
+            gl: {
+                name: "Country Codes",
+                param: "gl",
+                url: 'https://developers.google.com/custom-search/docs/xml_results_appendices',
+                selector: 'table:nth-child(65) tr:not(:first-child)'
             }
         });
     }
