@@ -22,6 +22,7 @@ class App {
         this.addEngineBtns = null;
         this.addTestEngines = null;
         this.openIconBtns = null;
+        this.clrIconBtns = null;
     }
 
     async run() {
@@ -74,6 +75,7 @@ class App {
         this.addEngineBtns = Array.from(document.querySelectorAll('.add-engine-btn'));
         this.addTestEngines = document.querySelector('#addTestEngines');
         this.openIconBtns = Array.from(document.querySelectorAll('input[type="file"].engine-add-icon-btn'));
+        this.clrIconBtns = Array.from(document.querySelectorAll('button.engine-clr-icon-btn'));
     }
 
     initEngines() {
@@ -95,6 +97,7 @@ class App {
         this.initAddEngineBtns();
         this.initAddTestEngines();
         this.initOpenIconBtns();
+        this.initClrIconBtns();
     }
 
     initEngineListModal() {
@@ -357,18 +360,24 @@ class App {
 
     initOpenIconBtns() {
         this.openIconBtns.forEach(openIconBtn => openIconBtn.addEventListener('change', async event => {
-            // event.preventDefault();
-            // alert('Function is not released yet!');
-
             const btn = event.target;
             const file = btn.files[0];
             const targetId = btn.dataset.targetId;
-            const input = document.querySelector(`input#${targetId}-btn`);
+            const input = document.querySelector(`input#${targetId}`);
             const img = document.querySelector(`img#${targetId}-img`);
             const base64 = await FileUtil.readFileAsBase64(file);
 
             input.value = base64;
             img.src = base64;
+        }));
+    }
+
+    initClrIconBtns() {
+        this.clrIconBtns.forEach(clrIconBtn => clrIconBtn.addEventListener('click', async event => {
+            const targetId = event.target.dataset.targetId;
+
+            document.querySelector(`input#${targetId}`).value = '';
+            document.querySelector(`img#${targetId}-img`).src = '';
         }));
     }
 }

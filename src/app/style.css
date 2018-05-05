@@ -133,7 +133,7 @@ button:hover,
 }
 
 .open-icon-label {
-
+    vertical-align: top;
 }
 
 .engine-icon-container {
