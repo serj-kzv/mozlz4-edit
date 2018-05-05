@@ -156,13 +156,16 @@
                             <input id="engine-add-url-input-{typeName}-{name}" type="text" value="{url}">
                         </div>
                         <div class="engine-add-block-line">
-                            <input id="engine-add-icon-input-{typeName}-{name}" type="text" value="{icon}">
+                            <input id="engine-add-icon-input-{typeName}-{name}-btn" type="text" value="{icon}">
                         </div>
                         <div class="engine-add-block-line">
-                            <label for="openIcon{name}Btn" class="file-label open-icon-label">
+                            <label class="file-label open-icon-label">
                                 Choose icon
-                                <input id="openIcon{name}Btn" type="file" accept=".png,.icon">
+                                <input data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-add-icon-btn" type="file" accept=".png,.icon,.ico">
                             </label>
+                            <div class="engine-icon-container clearfix">
+                                <img id="engine-add-icon-input-{typeName}-{name}-img" class="engine-add-icon-input-img" width="24" height="24" alt="engine icon">
+                            </div>
                         </div>
                         {#params engineName=name}
                             <div class="engine-add-block-line">
@@ -185,9 +188,6 @@
             <button id="addTestEngines">add 999 test engines</button>
         </div>
     </div>
-
-
-
 </script>
 
 </body>

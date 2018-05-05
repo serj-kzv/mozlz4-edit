@@ -73,7 +73,7 @@ class App {
         this.drawSearchEngineTabs();
         this.addEngineBtns = Array.from(document.querySelectorAll('.add-engine-btn'));
         this.addTestEngines = document.querySelector('#addTestEngines');
-        this.openIconBtns = Array.from(document.querySelectorAll('input[id^="openIcon"][type="file"]'));
+        this.openIconBtns = Array.from(document.querySelectorAll('input[type="file"].engine-add-icon-btn'));
     }
 
     initEngines() {
@@ -209,8 +209,9 @@ class App {
 
     addSearchEngine(engine) {
         if (typeof this.engines.engines !== 'undefined') {
-            this.updateDataSource();
             try {
+                this.updateDataSource();
+
                 const engineName = engine._name;
 
                 if (this.engines.engines.map(engine => engine._name).includes(engineName)) {
@@ -229,8 +230,9 @@ class App {
 
     addSearchEngines(engines) {
         if (typeof this.engines.engines !== 'undefined') {
-            this.updateDataSource();
             try {
+                this.updateDataSource();
+
                 const
                     engineNames = this.engines.engines.map(engine => engine._name),
                     existedEngineNames = engines
@@ -323,9 +325,9 @@ class App {
                     });
 
                 const engine = SearchEngineUtil.createEngine({
-                    name: nameInput.value,
-                    url: urlInput.value,
-                    icon: iconInput.value,
+                    name: nameInput == null ? '' : nameInput.value,
+                    url: urlInput == null ? '' : urlInput.value,
+                    icon: iconInput == null ? '' : iconInput.value,
                     params
                 });
 
@@ -354,9 +356,19 @@ class App {
     }
 
     initOpenIconBtns() {
-        this.openIconBtns.forEach(openIconBtn => openIconBtn.addEventListener('click', event => {
-            event.preventDefault();
-            alert('Function is not released yet!');
+        this.openIconBtns.forEach(openIconBtn => openIconBtn.addEventListener('change', async event => {
+            // event.preventDefault();
+            // alert('Function is not released yet!');
+
+            const btn = event.target;
+            const file = btn.files[0];
+            const targetId = btn.dataset.targetId;
+            const input = document.querySelector(`input#${targetId}-btn`);
+            const img = document.querySelector(`img#${targetId}-img`);
+            const base64 = await FileUtil.readFileAsBase64(file);
+
+            input.value = base64;
+            img.src = base64;
         }));
     }
 }

@@ -1,27 +1,25 @@
 class FileUtil {
 
     static readFileAsTxt(file) {
-        return new Promise(resolve => {
-            const fileReader = new FileReader();
+        return FileUtil.readFileAs(file, 'readAsText');
+    }
 
-            fileReader.addEventListener('loadend', event => {
-                const fileTxt = event.target.result;
-
-                resolve(fileTxt);
-            });
-
-            fileReader.readAsText(file);
-        });
+    static readFileAsBase64(file) {
+        return FileUtil.readFileAs(file, 'readAsDataURL');
     }
 
     static readFileAsArrayBuffer(file) {
+        return FileUtil.readFileAs(file, 'readAsArrayBuffer');
+    }
+
+    static readFileAs(file, converterName) {
         return new Promise(resolve => {
             const fileReader = new FileReader();
 
-            fileReader.addEventListener('loadend', event => {
+            fileReader.addEventListener('loadend', async event => {
                 resolve(event.target.result);
             });
-            fileReader.readAsArrayBuffer(file);
+            fileReader[converterName](file);
         });
     }
 

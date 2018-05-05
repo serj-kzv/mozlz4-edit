@@ -135,3 +135,10 @@ button:hover,
 .open-icon-label {
 
 }
+
+.engine-icon-container {
+    height: 61px;
+    padding: 3px;
+    border: 1px solid transparent;
+    display: inline;
+}
