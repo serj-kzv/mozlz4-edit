@@ -164,8 +164,8 @@
                                 <input id="openIcon{name}Btn" type="file" accept=".png,.icon">
                             </label>
                         </div>
-                        <div class="engine-add-block-line">
-                            {#params engineName=name}
+                        {#params engineName=name}
+                            <div class="engine-add-block-line">
                                 <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}" class="engine-add-params-input-label">
                                     {name}
                                 </label>
@@ -175,8 +175,8 @@
                                         <option value="{value}">{name} ( {value} )</option>
                                     {/values}
                                 </select>
-                            {/params}
-                        </div>
+                            </div>
+                        {/params}
                     </div>
                 {/engines}
             </div>
