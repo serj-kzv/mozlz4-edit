@@ -209,13 +209,13 @@ class App {
 
     addSearchEngine(engine) {
         if (typeof this.engines.engines !== 'undefined') {
+            this.updateDataSource();
             try {
                 const engineName = engine._name;
 
                 if (this.engines.engines.map(engine => engine._name).includes(engineName)) {
                     alert(`There is already a engine with name '${engineName}'! Rename engine '${engineName}' and try again`);
                 } else {
-                    this.updateDataSource();
                     this.engines.engines.unshift(engine);
                     this.updateEditor();
                 }
@@ -229,6 +229,7 @@ class App {
 
     addSearchEngines(engines) {
         if (typeof this.engines.engines !== 'undefined') {
+            this.updateDataSource();
             try {
                 const
                     engineNames = this.engines.engines.map(engine => engine._name),
@@ -245,7 +246,6 @@ class App {
 
                     alert(msg);
                 } else {
-                    this.updateDataSource();
                     this.engines.engines.unshift(...engines);
                     this.updateEditor();
                 }
