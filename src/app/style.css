@@ -133,7 +133,7 @@ button:hover,
 }
 
 .open-icon-label {
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 .engine-icon-container {
@@ -141,4 +141,8 @@ button:hover,
     padding: 3px;
     border: 1px solid transparent;
     display: inline;
+}
+
+.engine-add-icon-input-img {
+    vertical-align: bottom;
 }
