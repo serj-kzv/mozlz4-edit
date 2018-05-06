@@ -1,4 +1,6 @@
 /**
+ * The code below is not used in the addon.
+ *
  * How to use. In browser console type 'FetchGoogleParams.fetch()' then copy result to app/resources/engines.json
  * https://developers.google.com/custom-search/docs/xml_results_appendices
  * https://developers.google.com/custom-search/json-api/v1/reference/cse/list
@@ -71,14 +73,12 @@ class FetchGoogleParams {
 
     static getConf() {
         return Object.freeze({
-            // Supported Interface Languages
             hl: {
                 name: "Web Interface Language Codes",
                 param: "hl",
                 url: 'https://developers.google.com/custom-search/docs/xml_results_appendices',
                 selector: 'table:nth-child(53) tr:not(:first-child)'
             },
-            // Language Collection Values
             lr: {
                 name: "Search Language Codes",
                 param: "lr",
