@@ -1,6 +1,6 @@
 class OpenFileUtil {
     static async openAsJson(content) {
-        return this.openAsData(content, 'application/json', null, null);
+        return await this.openAsData(content, 'application/json', null, null);
     }
 
     static async openAsData(content, type, isNewTab, filename) {
