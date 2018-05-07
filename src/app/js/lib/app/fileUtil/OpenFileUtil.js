@@ -4,23 +4,31 @@ class OpenFileUtil {
     }
 
     static async openAsData(content, type, isNewTab, filename) {
-        const url = window.URL.createObjectURL(new Blob([content], {type}));
         let
             isCompleted = false,
+            isMemoryCleared = false,
             currentTab = null,
             onRemovedListener = null,
             onReplacedListener = null,
             onUpdatedListener = null;
+        const
+            url = window.URL.createObjectURL(new Blob([content], {type})),
+            clearMemory = () => {
+                if (!isMemoryCleared) {
+                    isMemoryCleared = true;
+                    browser.tabs.onRemoved.removeListener(onRemovedListener);
+                    browser.tabs.onReplaced.removeListener(onReplacedListener);
+                    browser.tabs.onUpdated.removeListener(onUpdatedListener);
+                    window.URL.revokeObjectURL(url);
+                }
+            };
 
         // clear memory on tab closed event
         onRemovedListener = (tabId, removeInfo) => {
             const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
             if (isRunAndCurrent) {
-                browser.tabs.onRemoved.removeListener(onRemovedListener);
-                browser.tabs.onReplaced.removeListener(onReplacedListener);
-                browser.tabs.onUpdated.removeListener(onUpdatedListener);
-                window.URL.revokeObjectURL(url);
+                clearMemory();
             }
         };
 
@@ -29,10 +37,7 @@ class OpenFileUtil {
             const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
             if (isRunAndCurrent) {
-                browser.tabs.onRemoved.removeListener(onRemovedListener);
-                browser.tabs.onReplaced.removeListener(onReplacedListener);
-                browser.tabs.onUpdated.removeListener(onUpdatedListener);
-                window.URL.revokeObjectURL(url);
+                clearMemory();
             }
         };
 
@@ -45,10 +50,7 @@ class OpenFileUtil {
                 if (!isCompleted && tab.status === 'complete' && url === tab.url) {
                     isCompleted = true;
                 } else if (url !== tab.url) {
-                    browser.tabs.onRemoved.removeListener(onRemovedListener);
-                    browser.tabs.onReplaced.removeListener(onReplacedListener);
-                    browser.tabs.onUpdated.removeListener(onUpdatedListener);
-                    window.URL.revokeObjectURL(url);
+                    clearMemory();
                 }
             }
         };
@@ -63,10 +65,7 @@ class OpenFileUtil {
             return currentTab;
         } catch (e) {
             // clear memory on tab open event error
-            browser.tabs.onRemoved.removeListener(onRemovedListener);
-            browser.tabs.onReplaced.removeListener(onReplacedListener);
-            browser.tabs.onUpdated.removeListener(onUpdatedListener);
-            window.URL.revokeObjectURL(url);
+            clearMemory();
 
             return false;
         }
