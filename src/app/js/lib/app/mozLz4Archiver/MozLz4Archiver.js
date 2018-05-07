@@ -27,16 +27,20 @@ class MozLz4Archiver {
         const Buffer = require('buffer').Buffer;
         const LZ4 = require('lz4');
         let input = new Buffer(data);
-        let output = new Buffer(LZ4.encodeBound(input.length));
+        const bufferSize = input.length;
+        let output = new Buffer(LZ4.encodeBound(bufferSize));
         let compressedSize = LZ4.encodeBlock(input, output);
 
-        return new Uint8Array(output.buffer.slice(0, compressedSize));
+        // here buffer size is bigger then data size, that's why we use buffer size in decopressedSize header
+        return {
+            size: bufferSize,
+            body: new Uint8Array(output.buffer.slice(0, compressedSize))
+        };
     }
 
     /**
-     * TODO: replace this by using decompressed file size lz4 header instead of zero truncating
-     *
      * This function removes the latest file zeros.
+     *
      * It's because node-lz4 lib does not recognize lz4-tool high compressed file decompressed size properly.
      * And that's why there're following zero bytes in the end of the file
      * @param file

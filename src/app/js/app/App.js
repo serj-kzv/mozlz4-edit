@@ -127,18 +127,30 @@ class App {
         this.saveAsMozlz4Btn
             .addEventListener('click', async event => {
                 let file = this.codeMirror.getValue();
+                const fileName = this.fileInfo.value;
 
                 file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
-                SaveFileUtil.saveData(file, this.fileInfo.value);
+
+                try {
+                    await SaveFileUtil.saveData(file, fileName);
+                } catch (e) {
+                    alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
+                }
             });
     }
 
     initSaveAsJsonBtn() {
         this.saveAsJsonBtn
-            .addEventListener('click', event => {
-                const enginesJSONStr = this.codeMirror.getValue();
+            .addEventListener('click', async event => {
+                const
+                    enginesJSONStr = this.codeMirror.getValue(),
+                    fileName = `${this.fileInfo.value}.json`;
 
-                SaveFileUtil.saveData(enginesJSONStr, 'search.json');
+                try {
+                    await SaveFileUtil.saveData(enginesJSONStr, fileName);
+                } catch (e) {
+                    alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
+                }
             });
     }
 
@@ -207,7 +219,11 @@ class App {
 
                 const result = new MozLz4Archiver().convert(file);
 
-                SaveFileUtil.saveData(result.file, event.target.value + '.lz4');
+                try {
+                    await SaveFileUtil.saveData(result.file, event.target.value + '.lz4');
+                } catch (e) {
+                    alert(`An error! Possibly the file is busy. Close programs that can use the file and try again.`);
+                }
             });
     }
 
@@ -219,7 +235,7 @@ class App {
                 const engineName = engine._name;
 
                 if (this.engines.engines.map(engine => engine._name).includes(engineName)) {
-                    alert(`There is already a engine with name '${engineName}'! Rename engine '${engineName}' and try again`);
+                    alert(`There is already a engine with the name '${engineName}'! Rename the engine '${engineName}' and try again.`);
                 } else {
                     this.engines.engines.unshift(engine);
                     this.updateEditor();

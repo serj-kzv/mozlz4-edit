@@ -2,13 +2,7 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     constructor(file, command = new MozLz4ArchiverCommandLz4()) {
         super();
         this.file = file;
-        this.TYPE_NAME = command.TYPE_NAME;
-        this.HEADER = command.HEADER;
-        this.DECOMPRESS_SIZE = command.DECOMPRESS_SIZE;
-        this.TRUNCATE_HEADER = command.TRUNCATE_HEADER;
-        this.TRUNCATE_DECOMPRESS_SIZE = command.TRUNCATE_DECOMPRESS_SIZE;
-        this.TRUNCATE_SIZE_MANUALLY = command.TRUNCATE_SIZE_MANUALLY;
-        this.USE_SIZE_HEADER = command.USE_SIZE_HEADER;
+        this.command = command;
     }
 
     decode() {
@@ -17,11 +11,11 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
         const decompressSize = MozLz4Archiver.sizeHeaderToDecompSize(decompressSizeHeader);
         let file = null;
 
-        if (this.TRUNCATE_SIZE_MANUALLY) {
+        if (this.command.TRUNCATE_SIZE_MANUALLY) {
             file = super.decode(this.getBody(this.file), {use: false, size: null}, false);
             file = MozLz4Archiver.removeLastZeros(file);
         } else {
-            if (this.USE_SIZE_HEADER) {
+            if (this.command.USE_SIZE_HEADER) {
                 file = super.decode(this.getBody(this.file), {use: true, size: decompressSize}, true);
             } else {
                 file = super.decode(this.getBody(this.file), {use: false, size: null}, true);
@@ -29,7 +23,7 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
         }
 
         return {
-            typeName: this.TYPE_NAME,
+            typeName: this.command.TYPE_NAME,
             file,
             header,
             decompressSizeHeader,
@@ -38,14 +32,10 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     }
 
     encode() {
-        // TODO: Find out why it's worked
-        const magicSize = this.file.length + 8;
-
-        // const decompressSizeHeader = MozLz4Archiver.uInt32sToUInt8s(magicSize);
-        const decompressSizeHeader = Uint8Array.from([254, 254, 254, 127]);
         let file = super.encode(this.file);
+        const decompressedSizeHeader = MozLz4Archiver.uInt32sToUInt8s(file.size);
 
-        file = this.addDecompressSize(file, decompressSizeHeader);
+        file = this.addDecompressSize(file.body, decompressedSizeHeader);
 
         return this.addHeader(file);
     }
@@ -58,23 +48,23 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     }
 
     addHeader(file) {
-        return MozLz4Archiver.unshiftUint8ArrayToFile(file, this.HEADER);
+        return MozLz4Archiver.unshiftUint8ArrayToFile(file, this.command.HEADER);
     }
 
     getHeader() {
-        return this.file.slice(0, this.HEADER.length);
+        return this.file.slice(0, this.command.HEADER.length);
     }
 
     getDecompressSizeHeader() {
-        return this.file.slice(this.HEADER.length, this.HEADER.length + this.DECOMPRESS_SIZE.length);
+        return this.file.slice(this.command.HEADER.length, this.command.HEADER.length + this.command.DECOMPRESS_SIZE.length);
     }
 
     getBody() {
-        if (this.TRUNCATE_HEADER) {
-            if (this.TRUNCATE_DECOMPRESS_SIZE) {
-                return this.file.slice(this.HEADER.length + this.DECOMPRESS_SIZE.length);
+        if (this.command.TRUNCATE_HEADER) {
+            if (this.command.TRUNCATE_DECOMPRESS_SIZE) {
+                return this.file.slice(this.command.HEADER.length + this.command.DECOMPRESS_SIZE.length);
             } else {
-                return this.file.slice(this.HEADER.length);
+                return this.file.slice(this.command.HEADER.length);
             }
         } else {
             return this.file;
@@ -82,6 +72,6 @@ class MozLz4ArchiverImpl extends MozLz4Archiver {
     }
 
     isThisType() {
-        return MozLz4Archiver.isEqual(this.getHeader(), this.HEADER);
+        return MozLz4Archiver.isEqual(this.getHeader(), this.command.HEADER);
     }
 }
