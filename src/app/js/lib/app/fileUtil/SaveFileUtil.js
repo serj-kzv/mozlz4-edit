@@ -61,7 +61,6 @@ class SaveFileUtil {
                     deltaId = currentDeltaId;
                 });
             } catch (e) {
-                console.error(e);
                 // clear a memory by url if an error is occurred or the downloading is canceled
                 clearMemory();
                 resolve(deltaId);
