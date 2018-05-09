@@ -7,7 +7,8 @@ The mozlz4 is a lz4 format with Mozilla's magic header.
 
 ##### Dependencies
 
-This project uses [node-lz4](https://github.com/pierrec/node-lz4) and [CodeMirror](https://github.com/codemirror/CodeMirror) libs.
+This project uses [node-lz4](https://github.com/pierrec/node-lz4),
+[dustjs](https://github.com/linkedin/dustjs) and [CodeMirror](https://github.com/codemirror/CodeMirror) libs.
 They are inside the source code and no need to advance installing.
 Their licenses inside a ```LICENSES``` source code directory.
 
