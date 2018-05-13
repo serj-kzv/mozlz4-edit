@@ -54,24 +54,13 @@
 
 <body>
 <div id="headerMenu">
-    <!--<div>-->
-    <!--<span>-->
-    <!--<span>Warning!</span> You should not delete-->
-    <!--<b>default</b> search engines if you edit a-->
-    <!--<b>search.json.mozlz4</b>! In that case the Firefox will-->
-    <!--<b>reset</b> the search engine list to a default state!-->
-    <!--</span>-->
-    <!--</div>-->
     <div class="left">
         <div>
             <label for="openFileBtn" class="file-label">
                 Open file
                 <input id="openFileBtn" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4,.json">
             </label>
-            <button id="saveAsMozlz4Btn">Save as mozlz4</button>
-            <button id="saveAsJsonBtn">Save as JSON</button>
-            <button id="openJSONInNewTabBtn">Open in new tab</button>
-            <button id="myBtn">Add engines</button>
+            <button id="saveAsMozlz4Btn">Save as mozlz4</button><button id="saveAsJsonBtn">Save as JSON</button><button id="openJSONInNewTabBtn">Open in new tab</button><button id="myBtn">Add engines</button>
         </div>
         <div>&nbsp;</div>
         <div>&nbsp;</div>
@@ -126,26 +115,23 @@
 </div>
 
 <script type="text/dust" id="tab-list-tmpl">
-    <div>
-        {#types}
-            <span class="TabPlugin-tab TabPlugin-tab-default {@first}TabPlugin-tab-default{/first}" data-target-tab-content-id="tab-content-{name}">
-                {name}
+    <div style="height: 70px; overflow: scroll;">
+        <div style="max-width: 9999px; margin-top: 20px;">
+            {#types}
+                <span class="TabPlugin-tab TabPlugin-tab-default {@first}TabPlugin-tab-default{/first}" data-target-tab-content-id="tab-content-{name}">
+                    {name}
+                </span>
+            {/types}
+            <span class="TabPlugin-tab TabPlugin-tab-default" data-target-tab-content-id="tab-content-testTab">
+                The addon testing
             </span>
-        {/types}
-        <span class="TabPlugin-tab TabPlugin-tab-default" data-target-tab-content-id="tab-content-testTab">
-            The addon testing
-        </span>
+        </div>
     </div>
     <div class="tabContainer-content">
         {#types}
             <div class="TabPlugin-tab-content" id="tab-content-{name}">
                 {#engines typeName=name}
                     <div class="engine-add-block">
-                        <div class="engine-add-block-line">
-                            <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
-                                Add {name}
-                            </button>
-                        </div>
                         <div class="engine-add-block-line">
                             <input id="engine-add-name-input-{typeName}-{name}" type="text" value="{name}">
                         </div>
@@ -156,6 +142,9 @@
                             <input id="engine-add-icon-input-{typeName}-{name}" type="text" value="{icon}">
                         </div>
                         <div class="engine-add-block-line">
+                            <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
+                                Add {name}
+                            </button>
                             <label class="file-label open-icon-label">
                                 Choose icon
                                 <input data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-add-icon-btn" type="file" accept=".png,.icon,.ico">
@@ -163,7 +152,7 @@
                             <button data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-clr-icon-btn" type="file" accept=".png,.icon,.ico">
                                 Clear icon
                             </button>
-                            <img id="engine-add-icon-input-{typeName}-{name}-img" class="engine-add-icon-input-img" width="24" height="24" src="">
+                            <img id="engine-add-icon-input-{typeName}-{name}-img" class="engine-add-icon-input-img" width="23" height="23" src="">
                         </div>
                         {#params engineName=name}
                             <div class="engine-add-block-line">

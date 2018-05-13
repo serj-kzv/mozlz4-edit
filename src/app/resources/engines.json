@@ -7,6 +7,21 @@
           "name": "Yandex",
           "icon": "",
           "url": "https://yandex.com/search/?text={searchTerms}"
+        },
+        {
+          "name": "DuckDuckGo",
+          "icon": "",
+          "url": "https://duckduckgo.com/?q={searchTerms}"
+        },
+        {
+          "name": "Bing",
+          "icon": "",
+          "url": "https://www.bing.com/search?q={searchTerms}"
+        },
+        {
+          "name": "Yahoo!",
+          "icon": "",
+          "url": "https://search.yahoo.com/search?p={searchTerms}"
         }
       ]
     },
@@ -2449,6 +2464,31 @@
           "name": "wolframalpha",
           "icon": "",
           "url": "http://www.wolframalpha.com/input/?i={searchTerms}"
+        }
+      ]
+    },
+    {
+      "name": "Programing",
+      "engines": [
+        {
+          "name": "Shodan",
+          "icon": "",
+          "url": "https://www.shodan.io/search?query={searchTerms}"
+        },
+        {
+          "name": "Censys",
+          "icon": "",
+          "url": "https://www.censys.io/ipv4?q={searchTerms}"
+        }
+      ]
+    },
+    {
+      "name": "Torrent",
+      "engines": [
+        {
+          "name": "Torrentz2",
+          "icon": "",
+          "url": "https://torrentz2.eu/search?f={searchTerms}"
         }
       ]
     }

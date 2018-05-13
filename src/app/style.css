@@ -13,6 +13,10 @@
     line-height: 11px;
 }
 
+b {
+    font-weight: bold;
+}
+
 html, body {
     height: 100%;
 }
@@ -42,15 +46,14 @@ html, body {
     vertical-align: top;
     width: calc(50% - 10px);
     height: 100%;
+    padding: 2px;
 }
 
 .left {
     border-right: 1px solid black;
-    background: aliceblue;
 }
 
 .right {
-    background: #ffffaa;
 }
 
 .left > div,
@@ -74,12 +77,12 @@ select {
 button,
 .file-label {
     color: black;
-    height: 21px;
-    min-height: 21px;
-    max-height: 21px;
+    height: 23px;
+    min-height: 23px;
+    max-height: 23px;
     background: white;
     border: 1px solid black;
-    padding: 3px;
+    padding: 4px;
 }
 
 button:hover,
@@ -90,7 +93,6 @@ button:hover,
 }
 
 .file-label {
-    margin-right: 3px;
 }
 
 #tabContainer {
@@ -99,16 +101,18 @@ button:hover,
 
 #tabContainer .TabPlugin-tab {
     border: 1px solid black;
-    padding: 3px;
+    padding: 7px;
     font-size: 20px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .tabContainer-content {
     margin-top: 20px;
 }
 
-.engine-add-block {
-    margin-bottom: 10px;
+.engine-add-block:not(:last-child) {
+    margin-bottom: 25px;
 }
 
 .engine-add-block input {
@@ -132,8 +136,18 @@ button:hover,
     margin-right: 10px;
 }
 
+.add-engine-btn,
+.open-icon-label,
+.engine-clr-icon-btn {
+    vertical-align: top;
+    display: inline-block;
+}
+
 .open-icon-label {
-    vertical-align: middle;
+    height: 11px;
+    min-height: 11px;
+    max-height: 11px;
+    padding: 5px;
 }
 
 .engine-icon-container {
