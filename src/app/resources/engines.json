@@ -2487,7 +2487,7 @@
       "engines": [
         {
           "name": "Torrentz2",
-          "icon": "",
+          "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcUlEQVRYhe3OsQnAMAwEQG3jBdx7CpWewaUHEGgQj6HWgym1ISQmCILhH74R6Dnyn0N3x1qrl1LCO8bYA6SUnIjCKyKHAFTVW2uPzTkv48z8+mNme4Cd9N4XwJzz0w4AAAAAAAAAAAAAAAAAAMC5gKhc883pr8gnjKcAAAAASUVORK5CYII=",
           "url": "https://torrentz2.eu/search?f={searchTerms}"
         }
       ]

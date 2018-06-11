@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>mozlz4-edit</title>
 
+    <!--TrimHtmlWhiteSpace-->
+    <script src="js/lib/app/TrimHtmlWhiteSpace.js"></script>
+
     <!--fetchEngineParamData-->
     <script src="js/lib/app/fetchEngineParams/FetchGoogleParams.js"></script>
 
@@ -56,11 +59,14 @@
 <div id="headerMenu">
     <div class="left">
         <div>
-            <label for="openFileBtn" class="file-label">
+            <label for="openFileBtn" class="file-label open-icon-label">
                 Open file
                 <input id="openFileBtn" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4,.json">
             </label>
-            <button id="saveAsMozlz4Btn">Save as mozlz4</button><button id="saveAsJsonBtn">Save as JSON</button><button id="openJSONInNewTabBtn">Open in new tab</button><button id="myBtn">Add engines</button>
+            <button id="saveAsMozlz4Btn">Save as mozlz4</button>
+            <button id="saveAsJsonBtn">Save as JSON</button>
+            <button id="openJSONInNewTabBtn">Open in new tab</button>
+            <button id="myBtn">Add engines</button>
         </div>
         <div>&nbsp;</div>
         <div>&nbsp;</div>
@@ -142,17 +148,17 @@
                             <input id="engine-add-icon-input-{typeName}-{name}" type="text" value="{icon}">
                         </div>
                         <div class="engine-add-block-line">
-                            <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
-                                Add {name}
+                            <img id="engine-add-icon-input-{typeName}-{name}-img" class="engine-add-icon-input-img" width="23" height="23" src="">
+                            <button data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-clr-icon-btn" type="file" accept=".png,.icon,.ico">
+                                Clear icon
                             </button>
                             <label class="file-label open-icon-label">
                                 Choose icon
                                 <input data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-add-icon-btn" type="file" accept=".png,.icon,.ico">
                             </label>
-                            <button data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-clr-icon-btn" type="file" accept=".png,.icon,.ico">
-                                Clear icon
+                            <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
+                                Add {name}
                             </button>
-                            <img id="engine-add-icon-input-{typeName}-{name}-img" class="engine-add-icon-input-img" width="23" height="23" src="">
                         </div>
                         {#params engineName=name}
                             <div class="engine-add-block-line">
@@ -175,6 +181,7 @@
             <button id="addTestEngines">add 999 test engines</button>
         </div>
     </div>
+
 </script>
 
 </body>

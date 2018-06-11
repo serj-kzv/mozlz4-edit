@@ -3,7 +3,8 @@
 }
 
 .TabPlugin-tab-shown {
-    background: antiquewhite;
+    background: black;
+    color: white;
 }
 
 .TabPlugin-tab.TabPlugin-tab-default {

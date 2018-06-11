@@ -77,6 +77,8 @@ class App {
         this.openIconBtns = Array.from(document.querySelectorAll('input[type="file"].engine-add-icon-btn'));
         this.clrIconBtns = Array.from(document.querySelectorAll('button.engine-clr-icon-btn'));
         this.updateSearchEngineIcons();
+
+        TrimHtmlWhiteSpace.trim(document.body);
     }
 
     initEngines() {
