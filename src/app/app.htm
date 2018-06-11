@@ -39,7 +39,7 @@
     <script src="js/lib/external/codemirror/addon/edit/matchbrackets.js"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <!--modal plugin-->
     <link rel="stylesheet" href="js/lib/app/modal/ModalPlugin.css">
@@ -115,7 +115,7 @@
 </div>
 
 <script type="text/dust" id="tab-list-tmpl">
-    <div style="height: 70px; overflow: scroll;">
+    <div style="height: 70px; overflow-y: scroll;">
         <div style="max-width: 9999px; margin-top: 20px;">
             {#types}
                 <span class="TabPlugin-tab TabPlugin-tab-default {@first}TabPlugin-tab-default{/first}" data-target-tab-content-id="tab-content-{name}">

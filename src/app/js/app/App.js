@@ -76,6 +76,7 @@ class App {
         this.addTestEngines = document.querySelector('#addTestEngines');
         this.openIconBtns = Array.from(document.querySelectorAll('input[type="file"].engine-add-icon-btn'));
         this.clrIconBtns = Array.from(document.querySelectorAll('button.engine-clr-icon-btn'));
+        this.updateSearchEngineIcons();
     }
 
     initEngines() {
@@ -384,9 +385,25 @@ class App {
             const img = document.querySelector(`img#${targetId}-img`);
             const base64 = await FileUtil.readFileAsBase64(file);
 
-            input.value = base64;
-            img.src = base64;
+            this.updateSearchEngineIcon(input, img, base64);
         }));
+    }
+
+    updateSearchEngineIcon(input, img, base64) {
+        if (base64 != null) {
+            input.value = base64;
+        }
+
+        img.src = input.value;
+    }
+
+    updateSearchEngineIcons() {
+        const imgs = document.querySelectorAll('img[id^="engine-add-icon-input-"]');
+        const inputs = document.querySelectorAll('input[id^="engine-add-icon-input-"]');
+
+        imgs.forEach((img, index) => {
+            this.updateSearchEngineIcon(inputs[index], img, null);
+        });
     }
 
     initClrIconBtns() {

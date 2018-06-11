@@ -4,8 +4,8 @@
       "name": "General",
       "engines": [
         {
-          "name": "Yandex",
-          "icon": "",
+          "name": "YandexCOM",
+          "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFJklEQVRYhbWWW4hWVRzFV1EPRQhFESIhVuNoBGqWlNVDVHYDM6kk0QanLFEcnLzOl+JIis3MpxEJUmHR5SEoxp4a6KUoqCgoqAwbotFBnZnSvMw5Z9/36mHv7zLfnDP2MG34sQ9777PW2v9zBUKbCmARgGcArJhkpuIi7XoAy/8H4wqLLhbgYQAr+/r6+qSUjpPY9uzZcwDAyotVYTmAFq21n0xzkhwZGTkHoAXAoxMFaAHQQnoW4l3tuP8Xcl+JXHIbOecqsgljsYZeSdJZko5dXV1vRo/CKqwCsMp7z1ycqx67Dw6Qd1xLNiNwM+hvvZKcfXk1QHW9tfTec3h4+Hz0KKxCK4DWccbWBjGl6J2je/e1YNIM+oVT6Q7upf/xW7pff6Tf1krOBNl8aVir9Zjg5XL5UPSZNkEAxzFYQ28UvdH0v3xPf+f1Ydd3T6P/7suwxll67+je6IxVuTSMVYhaQ0NDF6LPY3kBngfwvHeOjTilQiVe3RwMmkD/Zhe9MfRaV6vDckctgLVhrlLBSHd393vRa1wVVgNY7ZxjI1YpurNn6J+9n5wF+ntvoDvyE61StELQWRuoC+CspZWSzpgxWsPDw6PR6/HGAC8CeNE5y3FoRTfQTz40m5wFcvFcurOn6ZSgk1notaLr2VoLoBVdloS+Qa9c7vow+t1QH2ANgDXWWuYy0E+/qJmcBbol82nOn6M1hlbK0GtNt//lagCrFK2Kcw1aQ0NDSfRbUh9gLYC11hrmYU4eo1syPwR45Bbak8fCnJKhN5puX6kugKDVKlfLWsNyufxR9KxWYR2AddYY5iIy+rVPhEsw/2rarz+n1Zo2TUKv9Zh7wAgRxgv0Tp44kUbPJysB1gNYb4xmEe7gnvCczwTd9hdotKJRstq7fbVLoEVaqFNh//6ej6PvdABoA9BmtGYhA3/QP9AUTG69gu71nTRnTtOIjEZK2vK2WgApQjCtCvVODA5m0fcpANgAYIPWirlIQa0Vbd/H5Lwp1feBe3Am3YZltB2t9IvnxgpdQq1lA+M1B0OADQCWAUA7gPbxJ+bwVR/d4nnVy8FZkWjOJlArcVGd7u69vdF3OgBsBLBRK8lCpKj2rvRcMJ1zFV3bU3RdW+iXLqhVYCIdJSu734jwGwAA2ARgk1KChWQJlRLUP31D3nEN2Qy6pbdTnTtDJVKauqdgQh0luHv37t7oOaMSYAuALUoK5iKy6rHd+1L1HjCHesJcltL01AUo0pGCg4PH0+i3ov5FtBXAViUz5pIlof/zKN1dU8Pu77uR6uTxMJcltD3b6gIU6MiMu3bs6I1+M+oDdADokCJjLmlCKTKa17ZX/wfMvhKVEmEuTWi6awGKdAYGBpLo1dL4MSoBKEmRsgh16jjdw7PD7hdcR/nzDyFAcoEyHaXpqQ+Qr1EqlXqj102NAbYD2C5EyiLUO/tru+94jiJeFpElFFlCXRcg7/zffz+aRJ9VjeYAsAPADpGlzCMbOUX79MLw6M2dQvXFZxRZSpmOhjVpQ4Acjc2bNx+OPuN2XxcgYR7q0w+qu7etj9TGZShtYwUqYxX6+39LokdrnjkA7ASwsyiAfeae+Na7jOrw+2E8uUAts+qbzZZrn2OtRPXcLB1le3t7b/RoKgpQAtD518iIz9KE/xUpMkpZh8goRMosq6357ciRBEAnwr9gYVsJoPPtt9/69uw/f/ssHeVkkCYX2NbW9kkMULh7IPyZ7ASw639i9UTmlTYjlqkTwCuTzIS7/xfwuO1YiEiSTAAAAABJRU5ErkJggg==",
           "url": "https://yandex.com/search/?text={searchTerms}"
         },
         {
