@@ -121,7 +121,7 @@
 </div>
 
 <script type="text/dust" id="tab-list-tmpl">
-    <div style="height: 70px; overflow-y: scroll;">
+    <div style="height: 70px; overflow-y: auto;">
         <div style="max-width: 9999px; margin-top: 20px;">
             {#types}
                 <span class="TabPlugin-tab TabPlugin-tab-default {@first}TabPlugin-tab-default{/first}" data-target-tab-content-id="tab-content-{name}">
@@ -178,10 +178,9 @@
             </div>
         {/types}
         <div class="TabPlugin-tab-content" id="tab-content-testTab">
-            <button id="addTestEngines">add 999 test engines</button>
+            <button id="addTestEngines">Add 999 test engines</button>
         </div>
     </div>
-
 </script>
 
 </body>
