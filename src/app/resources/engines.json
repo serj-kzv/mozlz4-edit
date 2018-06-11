@@ -5,22 +5,22 @@
       "engines": [
         {
           "name": "YandexCOM",
-          "icon": "",
+          "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABq0lEQVRYhe3Pv8tBURgH8Cc/kwx3NNjVuYNNQhnMFBkNZFQGZTCaxF9g8S9QdpNQVpIoyYLlLmKhr+l96s2re+59vd7lnrrDOed7n+/nEP55kQWwAD8dTqdTCCEghEAkEsHlcpEeeDqdEAqFIISAqqrYbDbGAQAQjUZBRCAiNJtNaUClUuH/crmcbv4lYDQa8SBFUaBpmu6w3W4Ht9sNIoLT6cR6vTYPAIBUKsWIer2uO6xQKHC+XC7r5nUBi8UCdrsdRASv14vD4fAyu1wuOevz+XA8Hn8PAIBisSj1qmw2y7lGoyFVLgXY7/fweDwgIrhcLmy326fMbDbjcr/fj/P5/D4AANRqNS7I5/NP98lkku87nY50uTRA0zQoigIigs1mw3w+57vhcMjlwWAQt9vt/QAAaLVaXJROp/k8HA7zeb/fN1RuCHC9XhEIBLhsMpmg1+vxPhaLGS43BACAbrfLhYlEAkII3o/H478H3O93qKrKpV9fJpMxVW4YAACDweBbucPhwGq1+hwAAOLxOANKpZLpctOAarXKgHa7bQEsgAWwAJ8HvHNZgAeQEJgzSGhgkwAAAABJRU5ErkJggg==",
           "url": "https://yandex.com/search/?text={searchTerms}"
         },
         {
-          "name": "DuckDuckGo",
-          "icon": "",
+          "name": "DuckDuckGoCOM",
+          "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABuElEQVRYhe3Wv+sBcRzH8Tu5kUVZbjRdzuBXyswiGQwGJYPlIotfVyykZDIqXcno32CzGRiM8gdYKLlzL5NP3+sr7pvz8R286719nn0e2+fD4MPDfAH/FjAajeD1eu+uKIoIh8OIxWKQJAmKomC321kL6Ha7YBjG9LIsi0QigcViYT2A53lEIhGyoVAIHo8HDofjF8Rms6FWq0HTNOsArVbr7hld17FardDv98HzvAGSyWSg6/p7AT/ndDqhWCwaEJ1Ohx7gNo1Gg3Qcx2Gz2dAFXC4X+P1+0hYKBboAAJhOp6R1Op04n890AYfDAXa7nfTz+ZwuAAACgQDph8MhfUAqlSJ9s9mkD8jn86Qvl8v0AblcjvTVapU+IJlMkr7X69EHiKJIekVR6AL2+z1YliX9crmkCxiPx6R1uVwPHyXLAZqmQRAE0kqS9PC85YBKpWJ4jLbbLR2Aqqqo1+uG57jdbj/tXgYcj0dMJhP4fL73fUii0ShkWSZbKpWQzWYRDAYNj87tbyjLMlRVfXq5aYDZjcfjmM1mpi5+CcBxHNxuNwRBQDqdxmAwwHq9/tPFTwG05gv4OOAKawq05ze2YjcAAAAASUVORK5CYII=",
           "url": "https://duckduckgo.com/?q={searchTerms}"
         },
         {
-          "name": "Bing",
-          "icon": "",
+          "name": "BingCOM",
+          "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB00lEQVRYhe3SIcvqUBgH8KHgGGJQQRkL1uF0oANFhWEaFpNRzIJZUBQsgga/gH6EFXEIBqtGoxaDxYHFIqIGJ/+b3gPj3ss7ueN4w/vAvz3PeX6ccxh8uJgfwH8LmEwmkCTpj5FlGblcDqVSCY1GA+PxGIfDwV1Av98HwzBvRdM07HY79wGCICCbzZJkMhkkEgmEw+HfEH6/H5vNxl1At9v96wHH4xHD4RAcx5H+VCpFD/BVhmHYbmK/39MFAADP82RmsVjQB6TTaTIzm83oA6LRKJnZbrd0AcvlkvRLkuRouSsAy7JgGAYikQgYhgHLslitVu4CRFFEpVKxpVwuo1AoIBgMkr5kMon1eu14uWPAdwkEAhiNRng8Hm8tdwzgeR6KotgiyzJisRg8Hg/pC4VC6HQ6b0H++Q/c73dMp1PE43HSrygKbrcbHcBXXS4XiKJIZtrtNl0AAOi6bns26gDTNG2f83q9fhZwOp3oAubzOZnxer14Pp/0AK/XC6qqkhlVVR2hXQGcz2dUq1Xb9eu67h4gn8+j1WrZ0mw2Ua/XUSwWwbKsbXmtVnO03DHAaXw+H3q9HizLogPgOA6CIEDTNAwGA5im6XjxtwBa9QP4OOAX4P+JHE5g9DIAAAAASUVORK5CYII=",
           "url": "https://www.bing.com/search?q={searchTerms}"
         },
         {
-          "name": "Yahoo!",
-          "icon": "",
+          "name": "Yahoo!COM",
+          "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACB0lEQVRYhe3Uv0uqURzH8Y8GGgRB0iJENfXooIv9AS7SGLg0tNTYEk0uNjUJgg66JuYigqGLgoOrVAgN/QXi5FQKFeKP9x0u15vI83Tjym24z4GznPP5PufF+fGIb26yATZgWR8aj8eMRiOm0+n3AAzDQBKVSuXrgMFgQCgUwjAMrq+vPy06OTnBMAwuLi6WAwC4vLxEEl6vl9fXV9OCVquFJJxOJ09PT8sD9Pt9Njc3kUQikTAtCIfDSOL09HRu/K8BAOl0Gkl4PB5eXl4Wwo1GA0msrq7S7XaXDxgOh+zu7iKJeDy+EN7f30cSsVhsYe4XoFqtAtBut7m6uuLs7IxYLEaxWOTt7c0aAFAoFJDE2toavV5vNl4ul5HExsYGz8/PloCjoyMkLfStrS0eHx+tAZPJhGAwiCTOz8+Bn2/c7/cjiWQyubD4R4BhGKyvrxOPx6nX6zSbTVKp1Ox+7e3tMZlMzAEAtVoNSbhcLjqdDrlcDklsb2/z/v5uCVhZWeHh4WFhvt1u43A4kMT9/b01AH7f9uPjY3Z2dpBEPp83i88Ah4eHphmfz4ckbm5uPgfc3d3NnV8gEJjbOjNAKpUyzUQiESSRzWY/BwBEo9EZoF6vW0VngFKpZJo5ODhAEplM5s8At7e3SMLtdlsu/hFg9R/4MqBSqdgAG/CfA/5FswE2wAb8AK3hO/bAATGHAAAAAElFTkSuQmCC",
           "url": "https://search.yahoo.com/search?p={searchTerms}"
         }
       ]
@@ -29,8 +29,8 @@
       "name": "Google",
       "engines": [
         {
-          "name": "Google",
-          "icon": "",
+          "name": "GoogleCOM",
+          "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAACSklEQVRYhe3XwYs5YRgH8CkbB7WF4uCwB5H8BZzloMzuwcXBKmnb2pJSMpJclJMth73sQe3JiaHsATkr1B6WWjkiBzccGMb3d3trfjKWHX5t/d56bvM8z2feqXmfl8I/XtSvBqxWK0wmEwwGAwyHQ8xms/MCeJ5HpVJBIBCAyWSCTCYDRVGC0Ol0cDgcSKfT+Pz8lA7AsiyMRuNOw0MRi8V+BuA4DoFAYKewWq0GTdN4fHxENBrF09MTaJqGXq8XPNfpdE4H8DyPu7s7QUGbzYZ6vQ6e5/fm9Xo9pFIp+Hy+Q+8nDojH44LmiUTiYMFj115At9vF1dXVWZuLArxeL2lutVpFt1xywHw+h0KhIIBKpXKW5nsB5XKZNNdqtdhut5cFJJNJAnC73Wdrvhdwf39PAPF4/PKA29tbAshkMqIFRqMRQqGQaCwWi+MALpeLAJ6fn0UBHx8fB3/H0+n0OIDH4yHJDMNcHhAOh0my3+8XBXAch+FwuBMqlep0wOvrK0k2Go2igH1Lo9GcDvj6+hJsYb/fvywAAMxmMykQDAYvD8hms6SATCY7eK5LDlgulzAYDKTIzc3Nt0YsyQAA0Gw2IZfLSaHr62u8vb1962SUBAAAxWJRcDJSFAW9Xo+Hhwe8vLygUCjg/f0dpVIJuVwODMPAbrcLBtYfAQCg3W7DYrEcPZBKBgCAzWaDfD4Pp9O5syN/h1KphM1mQyQSQaPREP1kJ11M1us1er0earUaWJZFuVxGtVpFq9XCeDw+anr63Vez/wAp1h8CqswMLuCKJAAAAABJRU5ErkJggg==",
           "url": "https://www.google.com/search?q={searchTerms}",
           "params": [
             {
@@ -2462,7 +2462,7 @@
       "engines": [
         {
           "name": "wolframalpha",
-          "icon": "",
+          "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC9ElEQVRYhe2VTyg0cRjHv7trQ8mIMlty4iBCOa1W0VKU80r5k4Nyo92DpCgH2pVwUVo5+HOR9rQXDuIgyYWTJA5SdjmsthWF2e978mTe2dnF4fUe9neb5/k83/n0m5nfgL+8kBXICmQF/iuB7u5uqqpKVVV5cHCQdtDpdAo7MjKSlg0EAsIuLi6aCwQCAQIgAI6Pj5sGXlxcCAeADoeDyWTSlHe5XMIeHx+bC5yengrodDpNA/1+v04AAE9OTlKyiUSCdrudAFhcXExN08wFkskkVVUlANpsNsbj8ZShjY2NBMCmpibm5OQQACcmJlKy4XBYJLu6ugx9w0vY09MjA+Fw2DAQjUZptVoJgJOTk2xoaCAA1tfXpxQYHh6WvNXV1cwCa2trMuD1eg0DwWBQ+vv7+/T5fHJ9c3Nj4Kurq6V/e3ubWSASichAXV2dYaCzs5MAqCgK397euLe3J/zS0pKOvbu7k15NTY0hK6UASdbW1hIALRYLHx4epP709MS8vDwCoMfjIUm+vr6ysLCQANjR0aHLWV9fFwGfz/d1gc/burW1JfVQKCT1zc1NqXs8HgJgbm4uE4mE1Pv7+4Xf3d39usDOzo4MDg0NSb2vr48AaLfb+fj4KPWNjQ3hQ6GQ1MvKygiA+fn5fHl5+brA8/OzbHVVVRVJ8v39nSUlJQTA9vZ2HR+LxeRzHBgYIEleXl6K1N98RgGSbGtrk4D7+3seHh7K9fLysoFvbm4mAJaWllLTNK6srAi/sLDwfYHZ2Vndtk5NTREArVYrI5GIgZ+fn9cdtx+PCwDPz8+/L3B2diYBo6OjsiMulyslf3V1Jfz09DQrKioIgOXl5aY3TytAkg6HgwDY0tLCgoICAuDc3Jwp/3HouN1uWiwWAuDg4ODPBXp7ew0/nevra1N+bGzMwG9vb/9c4PNBku68/1hHR0c63mazMRaL/VwgGo2yqKiIiqJQURTOzMykDdM0jZWVlcK3tram5TMK/IuVFcgK/LrAHwXPxbWz8dsgAAAAAElFTkSuQmCC",
           "url": "http://www.wolframalpha.com/input/?i={searchTerms}"
         }
       ]
