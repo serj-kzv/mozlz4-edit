@@ -42,12 +42,21 @@ html, body {
     padding-top: 70px;
 }
 
+.beside {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.header-menu-field {
+}
+
 .left, .right {
     display: inline-block;
     vertical-align: top;
     width: calc(50% - 10px);
     height: 100%;
     padding: 2px;
+    overflow-y: auto;
 }
 
 .left {
