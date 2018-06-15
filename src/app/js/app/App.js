@@ -105,7 +105,7 @@ class App {
     }
 
     initEngineListModal() {
-        new ModalPlugin('myBtn', 'myModal');
+        new ModalPlugin('addEngineBtn', 'addEngineModal');
     }
 
     initEngineListTabs() {
@@ -333,12 +333,12 @@ class App {
             btn.addEventListener('click', event => {
                 const prefix = 'engine-add-';
                 const postfix = `-input-${btn.dataset.engineType}-${btn.dataset.engineName}`;
-                const nameInput = document.querySelector(`#${prefix}name${postfix}`);
-                const urlInput = document.querySelector(`#${prefix}url${postfix}`);
-                const iconInput = document.querySelector(`#${prefix}icon${postfix}`);
+                const nameInput = document.querySelector(`[id="${prefix}name${postfix}"]`);
+                const urlInput = document.querySelector(`[id="${prefix}url${postfix}"]`);
+                const iconInput = document.querySelector(`[id="${prefix}icon${postfix}"]`);
                 const params = [];
 
-                Array.from(document.querySelectorAll(`[id^=${prefix}params${postfix}]`))
+                Array.from(document.querySelectorAll(`[id^="${prefix}params${postfix}"]`))
                     .forEach(select => {
                         const value = select.options[select.selectedIndex].value;
 
@@ -383,8 +383,8 @@ class App {
             const btn = event.target;
             const file = btn.files[0];
             const targetId = btn.dataset.targetId;
-            const input = document.querySelector(`input#${targetId}`);
-            const img = document.querySelector(`img#${targetId}-img`);
+            const input = document.querySelector(`input[id="${targetId}"]`);
+            const img = document.querySelector(`img[id="${targetId}-img"]`);
             const base64 = await FileUtil.readFileAsBase64(file);
 
             this.updateSearchEngineIcon(input, img, base64);
@@ -412,8 +412,8 @@ class App {
         this.clrIconBtns.forEach(clrIconBtn => clrIconBtn.addEventListener('click', async event => {
             const targetId = event.target.dataset.targetId;
 
-            document.querySelector(`input#${targetId}`).value = '';
-            document.querySelector(`img#${targetId}-img`).src = '';
+            document.querySelector(`input[id="${targetId}"]`).value = '';
+            document.querySelector(`img[id="${targetId}-img"]`).src = '';
         }));
     }
 
@@ -422,7 +422,7 @@ class App {
             const that = event.target;
 
             if (that.matches('input[id^="engine-add-icon-input-"]')) {
-                document.querySelector(`img#${that.id}-img`).src = that.value;
+                document.querySelector(`img[id="${that.id}-img"]`).src = that.value;
             }
         });
     }
