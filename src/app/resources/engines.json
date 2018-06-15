@@ -2461,7 +2461,7 @@
       "name": "Science",
       "engines": [
         {
-          "name": "wolframalpha",
+          "name": "WolframAlpha",
           "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC9ElEQVRYhe2VTyg0cRjHv7trQ8mIMlty4iBCOa1W0VKU80r5k4Nyo92DpCgH2pVwUVo5+HOR9rQXDuIgyYWTJA5SdjmsthWF2e978mTe2dnF4fUe9neb5/k83/n0m5nfgL+8kBXICmQF/iuB7u5uqqpKVVV5cHCQdtDpdAo7MjKSlg0EAsIuLi6aCwQCAQIgAI6Pj5sGXlxcCAeADoeDyWTSlHe5XMIeHx+bC5yengrodDpNA/1+v04AAE9OTlKyiUSCdrudAFhcXExN08wFkskkVVUlANpsNsbj8ZShjY2NBMCmpibm5OQQACcmJlKy4XBYJLu6ugx9w0vY09MjA+Fw2DAQjUZptVoJgJOTk2xoaCAA1tfXpxQYHh6WvNXV1cwCa2trMuD1eg0DwWBQ+vv7+/T5fHJ9c3Nj4Kurq6V/e3ubWSASichAXV2dYaCzs5MAqCgK397euLe3J/zS0pKOvbu7k15NTY0hK6UASdbW1hIALRYLHx4epP709MS8vDwCoMfjIUm+vr6ysLCQANjR0aHLWV9fFwGfz/d1gc/burW1JfVQKCT1zc1NqXs8HgJgbm4uE4mE1Pv7+4Xf3d39usDOzo4MDg0NSb2vr48AaLfb+fj4KPWNjQ3hQ6GQ1MvKygiA+fn5fHl5+brA8/OzbHVVVRVJ8v39nSUlJQTA9vZ2HR+LxeRzHBgYIEleXl6K1N98RgGSbGtrk4D7+3seHh7K9fLysoFvbm4mAJaWllLTNK6srAi/sLDwfYHZ2Vndtk5NTREArVYrI5GIgZ+fn9cdtx+PCwDPz8+/L3B2diYBo6OjsiMulyslf3V1Jfz09DQrKioIgOXl5aY3TytAkg6HgwDY0tLCgoICAuDc3Jwp/3HouN1uWiwWAuDg4ODPBXp7ew0/nevra1N+bGzMwG9vb/9c4PNBku68/1hHR0c63mazMRaL/VwgGo2yqKiIiqJQURTOzMykDdM0jZWVlcK3tram5TMK/IuVFcgK/LrAHwXPxbWz8dsgAAAAAElFTkSuQmCC",
           "url": "http://www.wolframalpha.com/input/?i={searchTerms}"
         }
@@ -2489,6 +2489,31 @@
           "name": "InternetArchive",
           "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcUlEQVRYhe3OsQnAMAwEQG3jBdx7CpWewaUHEGgQj6HWgym1ISQmCILhH74R6Dnyn0N3x1qrl1LCO8bYA6SUnIjCKyKHAFTVW2uPzTkv48z8+mNme4Cd9N4XwJzz0w4AAAAAAAAAAAAAAAAAAMC5gKhc883pr8gnjKcAAAAASUVORK5CYII=",
           "url": "https://archive.org/search.php?query={searchTerms}"
+        }
+      ]
+    },
+    {
+      "name": "Shop",
+      "engines": [
+        {
+          "name": "eBayCOM",
+          "icon": "",
+          "url": "https://www.ebay.com/sch/{searchTerms}"
+        },
+        {
+          "name": "AliExpressCOM",
+          "icon": "",
+          "url": "https://aliexpress.com/wholesale?SearchText={searchTerms}"
+        },
+        {
+          "name": "AmazonCOM",
+          "icon": "",
+          "url": "https://www.amazon.com/s/field-keywords={searchTerms}"
+        },
+        {
+          "name": "YandexMarketCOM",
+          "icon": "",
+          "url": "https://market.yandex.com/search?text={searchTerms}"
         }
       ]
     }
