@@ -10,7 +10,7 @@ class FetchGoogleParams {
         const url = browser.runtime.getURL('app/resources/engines.json');
         const engines = await (await fetch(url)).json();
         const type = engines.types.find(type => type.name === 'Google');
-        const engine = type.engines.find(engine => engine.name === 'Google');
+        const engine = type.engines.find(engine => engine.name === 'GoogleCOM');
         let params;
 
         if (engine.params === undefined) {
