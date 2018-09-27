@@ -32,14 +32,17 @@ class App {
     runOnDOMloadend() {
         document.addEventListener("DOMContentLoaded", async event => {
             await this.initEngineExamples();
-            this.initUIElements();
+            await this.initUIElements();
             this.initListeners();
         });
     }
 
-    drawSearchEngineTabs() {
+    async drawSearchEngineTabs() {
+        const url = browser.runtime.getURL('app/addEngine.htm');
+        const tmplTxt = await (await fetch(url)).text();
+
         const
-            src = document.querySelector('#tab-list-tmpl').textContent,
+            src = tmplTxt,
             compiled = dust.compile(src),
             tmpl = dust.loadSource(compiled);
 
@@ -54,7 +57,7 @@ class App {
         return this.engineExamples = await (await fetch(url)).json();
     }
 
-    initUIElements() {
+    async initUIElements() {
         this.tabContainer = document.querySelector('#tabContainer');
 
         // fields
@@ -71,7 +74,7 @@ class App {
         this.openFileBtn = document.querySelector('#openFileBtn');
         this.openJSONInNewTabBtn = document.querySelector('#openJSONInNewTabBtn');
         this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
-        this.drawSearchEngineTabs();
+        await this.drawSearchEngineTabs();
         this.addEngineBtns = Array.from(document.querySelectorAll('.add-engine-btn'));
         this.addTestEngines = document.querySelector('#addTestEngines');
         this.openIconBtns = Array.from(document.querySelectorAll('input[type="file"].engine-add-icon-btn'));
