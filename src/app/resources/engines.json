@@ -374,6 +374,10 @@
             {
               "name": "Search Language Codes",
               "param": "lr",
+              "multiAnd": true,
+              "multiAndDivider": ".",
+              "multiOr": true,
+              "multiOrDivider": "|",
               "values": [
                 {
                   "name": "Arabic",

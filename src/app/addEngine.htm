@@ -1,7 +1,8 @@
 <div style="height: 70px; overflow-y: auto;">
     <div style="max-width: 9999px; margin-top: 20px;">
         {#types}
-        <span class="TabPlugin-tab TabPlugin-tab-default {@first}TabPlugin-tab-default{/first}" data-target-tab-content-id="tab-content-{name}">
+        <span class="TabPlugin-tab TabPlugin-tab-default {@first}TabPlugin-tab-default{/first}"
+              data-target-tab-content-id="tab-content-{name}">
                     {name}
                 </span>
         {/types}
@@ -25,13 +26,16 @@
                 <input id="engine-add-icon-input-{typeName}-{name}" type="text" value="{icon}">
             </div>
             <div class="engine-add-block-line">
-                <img id="engine-add-icon-input-{typeName}-{name}-img" class="engine-add-icon-input-img" width="23" height="23" src="">
-                <button data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-clr-icon-btn" type="file" accept=".png,.icon,.ico">
+                <img id="engine-add-icon-input-{typeName}-{name}-img"
+                     class="engine-add-icon-input-img" width="23" height="23" src="">
+                <button data-target-id="engine-add-icon-input-{typeName}-{name}"
+                        class="engine-clr-icon-btn" type="file" accept=".png,.icon,.ico">
                     Clear icon
                 </button>
                 <label class="file-label open-icon-label">
                     Choose icon
-                    <input data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-add-icon-btn" type="file" accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif">
+                    <input data-target-id="engine-add-icon-input-{typeName}-{name}"
+                           class="engine-add-icon-btn" type="file" accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif">
                 </label>
                 <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
                     Add
@@ -39,10 +43,12 @@
             </div>
             {#params engineName=name}
             <div class="engine-add-block-line">
-                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}" class="engine-add-params-input-label">
+                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}"
+                       class="engine-add-params-input-label">
                     {name}
                 </label>
-                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}" name="{param}" class="engine-add-params-input-select">
+                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}" name="{param}"
+                        class="engine-add-params-input-select">
                     <option value=""></option>
                     {#values}
                     <option value="{value}">{name} ( {value} )</option>
