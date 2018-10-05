@@ -47,7 +47,7 @@ class SearchEngineUtil {
 
             if (value.length > 0) {
                 const
-                    urlParamValue = param.multi ? `${value.join(param.divider)}` : `${name}=${value}`,
+                    urlParamValue = param.multi ? `${value.join(param.divider)}` : `${value}`,
                     filteredParam = filtered.find(p => p.name === name);
 
                 if (filteredParam !== undefined) {
