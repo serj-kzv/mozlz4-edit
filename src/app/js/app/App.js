@@ -339,26 +339,40 @@ class App {
                 const nameInput = document.querySelector(`[id="${prefix}name${postfix}"]`);
                 const urlInput = document.querySelector(`[id="${prefix}url${postfix}"]`);
                 const iconInput = document.querySelector(`[id="${prefix}icon${postfix}"]`);
-                const params = [];
-
-                Array.from(document.querySelectorAll(`[id^="${prefix}params${postfix}"]`))
-                    .forEach(select => {
-                        const value = select.options[select.selectedIndex].value;
-
-                        if (value.length > 0) {
-                            params.push(`${select.name}=${value}`);
-                        }
-                    });
 
                 const engine = SearchEngineUtil.createEngine({
                     name: nameInput == null ? '' : nameInput.value,
                     url: urlInput == null ? '' : urlInput.value,
                     icon: iconInput == null ? '' : iconInput.value,
-                    params
+                    params: App.collectEngineParams(`[id^="${prefix}params${postfix}"]`)
                 });
 
                 this.addSearchEngine(engine);
             });
+        });
+    }
+
+    static collectEngineParams(paramsSelector) {
+        return Array.from(document.querySelectorAll(paramsSelector)).map(param => {
+            const
+                isMulti = param.multiple,
+                dataset = param.dataset,
+                options = param.options;
+
+            return {
+                name: param.name,
+                multi: isMulti,
+                multiType: dataset.multiOr ? 'or' : dataset.multiAnd ? 'and' : undefined,
+                value: isMulti ? Array.from(options)
+                    .reduce((filtered, opt) => {
+                        if (opt.selected) {
+                            filtered.push(opt.value);
+                        }
+
+                        return filtered;
+                    }, []) : options[param.selectedIndex].value,
+                divider: dataset.multiDivider
+            };
         });
     }
 

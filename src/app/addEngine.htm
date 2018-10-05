@@ -29,19 +29,21 @@
                 <img id="engine-add-icon-input-{typeName}-{name}-img"
                      class="engine-add-icon-input-img" width="23" height="23" src="">
                 <button data-target-id="engine-add-icon-input-{typeName}-{name}"
-                        class="engine-clr-icon-btn" type="file" accept=".png,.icon,.ico">
+                        class="engine-clr-icon-btn" type="file">
                     Clear icon
                 </button>
                 <label class="file-label open-icon-label">
                     Choose icon
                     <input data-target-id="engine-add-icon-input-{typeName}-{name}"
-                           class="engine-add-icon-btn" type="file" accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif">
+                           class="engine-add-icon-btn" type="file"
+                           accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm">
                 </label>
                 <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
                     Add
                 </button>
             </div>
             {#params engineName=name}
+            {^multiOr}{^multiAnd}
             <div class="engine-add-block-line">
                 <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}"
                        class="engine-add-params-input-label">
@@ -55,6 +57,41 @@
                     {/values}
                 </select>
             </div>
+            {/multiAnd}{/multiOr}
+            {?multiOr}
+            <div class="engine-add-block-line">
+                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}-or"
+                       class="engine-add-params-input-label">
+                    {name} (OR, divider: {multiOrDivider})
+                </label>
+                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}-or" name="{param}"
+                        class="engine-add-params-input-select"
+                        data-multi-or="true"
+                        multiple="multiple" size="1"
+                        data-multi-divider="{multiOrDivider}">
+                    {#values}
+                    <option value="{value}">{name} ( {value} )</option>
+                    {/values}
+                </select>
+            </div>
+            {/multiOr}
+            {?multiAnd}
+            <div class="engine-add-block-line">
+                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}-and"
+                       class="engine-add-params-input-label">
+                    {name} (AND, divider: {multiAndDivider})
+                </label>
+                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}-and" name="{param}"
+                        class="engine-add-params-input-select"
+                        data-multi-and="true"
+                        multiple="multiple" size="1"
+                        data-multi-divider="{multiAndDivider}">
+                    {#values}
+                    <option value="{value}">{name} ( {value} )</option>
+                    {/values}
+                </select>
+            </div>
+            {/multiAnd}
             {/params}
         </div>
         {/engines}
