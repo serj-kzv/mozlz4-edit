@@ -105,6 +105,7 @@ class App {
         this.initOpenIconBtns();
         this.initClrIconBtns();
         this.initImgInputAndImgSync();
+        this.initChangeParamsUpd();
     }
 
     initEngineListModal() {
@@ -339,12 +340,12 @@ class App {
                 const nameInput = document.querySelector(`[id="${prefix}name${postfix}"]`);
                 const urlInput = document.querySelector(`[id="${prefix}url${postfix}"]`);
                 const iconInput = document.querySelector(`[id="${prefix}icon${postfix}"]`);
-
+                const paramSelects = Array.from(document.querySelectorAll(`[id^="${prefix}params${postfix}"]`));
                 const engine = SearchEngineUtil.createEngine({
                     name: nameInput == null ? '' : nameInput.value,
                     url: urlInput == null ? '' : urlInput.value,
                     icon: iconInput == null ? '' : iconInput.value,
-                    params: App.collectEngineParams(`[id^="${prefix}params${postfix}"]`)
+                    params: App.collectEngineParams(paramSelects)
                 });
 
                 this.addSearchEngine(engine);
@@ -352,8 +353,15 @@ class App {
         });
     }
 
-    static collectEngineParams(paramsSelector) {
-        return Array.from(document.querySelectorAll(paramsSelector)).map(param => {
+    initChangeParamsUpd() {
+        Array.from(document.querySelectorAll('[id^="engine-add-params-input-"]'))
+            .forEach(select => select.addEventListener('change', event => {
+                console.log(event)
+            }));
+    }
+
+    static collectEngineParams(paramSelects) {
+        return paramSelects.map(param => {
             const
                 isMulti = param.multiple,
                 dataset = param.dataset,

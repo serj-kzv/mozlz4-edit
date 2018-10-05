@@ -54,9 +54,6 @@ class SearchEngineUtil {
                     let orDivider = filteredParam.orDivider;
 
                     orDivider = orDivider === undefined ? param.divider : orDivider;
-
-                    console.log(param);
-                    console.log(filteredParam);
                     filteredParam.urlParam = `${filteredParam.urlParam}${orDivider}${urlParamValue}`;
                 } else {
                     filtered.push({
