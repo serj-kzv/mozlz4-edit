@@ -11,8 +11,6 @@ class SearchEngineUtil {
             url = `${tmpl.url}${params}`,
             icon = tmpl.icon;
 
-        console.log(params);
-
         return {
             _name: `${name}`,
             _shortName: `${name}`,

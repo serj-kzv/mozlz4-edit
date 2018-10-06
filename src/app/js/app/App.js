@@ -105,7 +105,7 @@ class App {
         this.initOpenIconBtns();
         this.initClrIconBtns();
         this.initImgInputAndImgSync();
-        this.initChangeParamsUpd();
+        this.initChangeParamsUrlUpd();
     }
 
     initEngineListModal() {
@@ -353,24 +353,22 @@ class App {
         });
     }
 
-    initChangeParamsUpd() {
+    initChangeParamsUrlUpd() {
         const selector = '[id^="engine-add-params-input-"]';
 
         Array.from(document.querySelectorAll(selector))
             .forEach(select => select.addEventListener('change', event => {
-                const
-                    engineAddBlock = event.target.closest('.engine-add-block'),
-                    urlInput = engineAddBlock.querySelector('input.engine-url'),
-                    engineTypeName = engineAddBlock.dataset.engineTypeName,
-                    engineName = engineAddBlock.dataset.engineName,
-                    engine = this.getEngine(engineTypeName, engineName);
+                const engineAddBlock = event.target.closest('.engine-add-block');
                 let engineParams = App.collectEngineParams(Array.from(engineAddBlock.querySelectorAll(selector)));
 
                 engineParams = SearchEngineUtil.engineParamsToUrlParams(engineParams).map(p => p.urlParam);
                 engineParams = engineParams.length === 0 ? '' : `&${engineParams.join('&')}`;
-                urlInput.value = `${engine.url}${engineParams}`;
-                console.log(engineParams)
-                console.log(this.getEngine(engineTypeName, engineName))
+
+                const
+                    dataset = engineAddBlock.dataset,
+                    urlInput = engineAddBlock.querySelector('input.engine-url');
+
+                urlInput.value = `${this.getEngine(dataset.engineTypeName, dataset.engineName).url}${engineParams}`;
             }));
     }
 
