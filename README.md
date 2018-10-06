@@ -12,7 +12,7 @@ flag to compress a file as the ```legacy``` lz4.
 
 This project uses [node-lz4](https://github.com/pierrec/node-lz4),
 [dustjs](https://github.com/linkedin/dustjs),
-[multi.js](https://github.com/fabianlindfors/multi.js),
+[multi.js](https://github.com/fabianlindfors/multi.js)
 and [CodeMirror](https://github.com/codemirror/CodeMirror) libs.
 They are inside the source code and no need to advance installing.
 Their licenses inside a ```LICENSES``` source code directory.
