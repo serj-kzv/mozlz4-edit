@@ -1,4 +1,4 @@
-##### What it's
+##### What is it?
 mozlz4-edit is a text ```mozlz4``` file archiver.
 
 ##### Description
