@@ -106,6 +106,7 @@ class App {
         this.initClrIconBtns();
         this.initImgInputAndImgSync();
         this.initChangeParamsUrlUpd();
+        this.initMultiJsSelects();
     }
 
     initEngineListModal() {
@@ -340,12 +341,10 @@ class App {
                 const nameInput = document.querySelector(`[id="${prefix}name${postfix}"]`);
                 const urlInput = document.querySelector(`[id="${prefix}url${postfix}"]`);
                 const iconInput = document.querySelector(`[id="${prefix}icon${postfix}"]`);
-                const paramSelects = Array.from(document.querySelectorAll(`[id^="${prefix}params${postfix}"]`));
                 const engine = SearchEngineUtil.createEngine({
                     name: nameInput == null ? '' : nameInput.value,
                     url: urlInput == null ? '' : urlInput.value,
-                    icon: iconInput == null ? '' : iconInput.value,
-                    // params: App.collectEngineParams(paramSelects)
+                    icon: iconInput == null ? '' : iconInput.value
                 });
 
                 this.addSearchEngine(engine);
@@ -356,20 +355,19 @@ class App {
     initChangeParamsUrlUpd() {
         const selector = '[id^="engine-add-params-input-"]';
 
-        Array.from(document.querySelectorAll(selector))
-            .forEach(select => select.addEventListener('change', event => {
-                const engineAddBlock = event.target.closest('.engine-add-block');
-                let engineParams = App.collectEngineParams(Array.from(engineAddBlock.querySelectorAll(selector)));
+        Array.from(document.querySelectorAll(selector)).forEach(select => select.addEventListener('change', event => {
+            const engineAddBlock = event.target.closest('.engine-add-block');
+            let engineParams = App.collectEngineParams(Array.from(engineAddBlock.querySelectorAll(selector)));
 
-                engineParams = SearchEngineUtil.engineParamsToUrlParams(engineParams).map(p => p.urlParam);
-                engineParams = engineParams.length === 0 ? '' : `&${engineParams.join('&')}`;
+            engineParams = SearchEngineUtil.engineParamsToUrlParams(engineParams).map(p => p.urlParam);
+            engineParams = engineParams.length === 0 ? '' : `&${engineParams.join('&')}`;
 
-                const
-                    dataset = engineAddBlock.dataset,
-                    urlInput = engineAddBlock.querySelector('input.engine-url');
+            const
+                dataset = engineAddBlock.dataset,
+                urlInput = engineAddBlock.querySelector('input.engine-url');
 
-                urlInput.value = `${this.getEngine(dataset.engineTypeName, dataset.engineName).url}${engineParams}`;
-            }));
+            urlInput.value = `${this.getEngine(dataset.engineTypeName, dataset.engineName).url}${engineParams}`;
+        }));
     }
 
     getEngine(typeName, name) {
@@ -395,14 +393,13 @@ class App {
                 name: param.name,
                 multi: isMulti,
                 multiType: dataset.multiOr ? 'or' : dataset.multiAnd ? 'and' : undefined,
-                value: isMulti ? Array.from(options)
-                    .reduce((filtered, opt) => {
-                        if (opt.selected) {
-                            filtered.push(opt.value);
-                        }
+                value: isMulti ? Array.from(options).reduce((filtered, opt) => {
+                    if (opt.selected) {
+                        filtered.push(opt.value);
+                    }
 
-                        return filtered;
-                    }, []) : options[param.selectedIndex].value,
+                    return filtered;
+                }, []) : options[param.selectedIndex].value,
                 divider: dataset.multiDivider
             };
         });
@@ -452,9 +449,7 @@ class App {
         const imgs = document.querySelectorAll('img[id^="engine-add-icon-input-"]');
         const inputs = document.querySelectorAll('input[id^="engine-add-icon-input-"]');
 
-        imgs.forEach((img, index) => {
-            this.updateSearchEngineIcon(inputs[index], img, null);
-        });
+        imgs.forEach((img, index) => this.updateSearchEngineIcon(inputs[index], img, null));
     }
 
     initClrIconBtns() {
@@ -474,5 +469,10 @@ class App {
                 document.querySelector(`img[id="${that.id}-img"]`).src = that.value;
             }
         });
+    }
+
+    initMultiJsSelects() {
+        Array.from(document.querySelectorAll('select.engine-add-params-input-select[multiple]'))
+            .forEach(select => multi(select));
     }
 }

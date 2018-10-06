@@ -524,6 +524,10 @@
             {
               "name": "Country Collection Values",
               "param": "cr",
+              "multiAnd": true,
+              "multiAndDivider": ".",
+              "multiOr": true,
+              "multiOrDivider": "|",
               "values": [
                 {
                   "name": "Afghanistan",

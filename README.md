@@ -1,23 +1,27 @@
 ##### What it's
-mozlz4 editor
+mozlz4-edit is a text ```mozlz4``` file archiver.
 
 ##### Description
 
-The mozlz4 is a lz4 format with Mozilla's magic header.
+The mozlz4 is a lz4 file archive format with Mozilla's magic file header.
+<br>
+mozlz4 is a ```legacy``` variant of lz4 format. If you use ```liblz4-tool``` then you have to use ```-l```
+flag to compress a file as the ```legacy``` lz4.
 
 ##### Dependencies
 
 This project uses [node-lz4](https://github.com/pierrec/node-lz4),
-[dustjs](https://github.com/linkedin/dustjs) and [CodeMirror](https://github.com/codemirror/CodeMirror) libs.
+[dustjs](https://github.com/linkedin/dustjs),
+[multi.js](https://github.com/fabianlindfors/multi.js),
+and [CodeMirror](https://github.com/codemirror/CodeMirror) libs.
 They are inside the source code and no need to advance installing.
 Their licenses inside a ```LICENSES``` source code directory.
 
 ##### TODO
 1. Use [Emscripten](http://kripken.github.io/emscripten-site/)
-to convert C++ lz4 lib to JS (asmjs)
+to convert C++ lz4 lib to JS ([asm.js](https://developer.mozilla.org/en-US/docs/Games/Tools/asm.js))
 2. Replace an estimate of uncompressed file size of lz4
 by proper formula
-3. Convert mozlz4 to lz4 and lz4 to mozlz4 functionality
 
 ##### Links
 1. Format description and lz4 lib list is [here](https://github.com/lz4/lz4)  

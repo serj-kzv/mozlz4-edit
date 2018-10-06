@@ -134,11 +134,13 @@ button:hover,
 
 }
 
-.engine-add-block-line {
-    height: 25px;
+.engine-add-block-line:not(:last-child) {
+    /*height: 250px;*/
+    margin-bottom: 10px;
 }
 
 .engine-add-params-input-label {
+    font-weight: bold;
 }
 
 .engine-add-params-input-select {

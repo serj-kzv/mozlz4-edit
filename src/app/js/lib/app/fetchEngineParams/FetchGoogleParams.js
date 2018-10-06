@@ -4,6 +4,7 @@
  * How to use. In the browser console type 'FetchGoogleParams.fetch()' then copy result to the app/resources/engines.json
  * https://developers.google.com/custom-search/docs/xml_results_appendices
  * https://developers.google.com/custom-search/json-api/v1/reference/cse/list
+ * https://developers.google.com/custom-search/docs/xml_results
  */
 class FetchGoogleParams {
     static async fetch() {
