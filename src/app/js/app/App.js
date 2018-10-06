@@ -345,7 +345,7 @@ class App {
                     name: nameInput == null ? '' : nameInput.value,
                     url: urlInput == null ? '' : urlInput.value,
                     icon: iconInput == null ? '' : iconInput.value,
-                    params: App.collectEngineParams(paramSelects)
+                    // params: App.collectEngineParams(paramSelects)
                 });
 
                 this.addSearchEngine(engine);
@@ -354,10 +354,36 @@ class App {
     }
 
     initChangeParamsUpd() {
-        Array.from(document.querySelectorAll('[id^="engine-add-params-input-"]'))
+        const selector = '[id^="engine-add-params-input-"]';
+
+        Array.from(document.querySelectorAll(selector))
             .forEach(select => select.addEventListener('change', event => {
-                console.log(event)
+                const
+                    engineAddBlock = event.target.closest('.engine-add-block'),
+                    urlInput = engineAddBlock.querySelector('input.engine-url'),
+                    engineTypeName = engineAddBlock.dataset.engineTypeName,
+                    engineName = engineAddBlock.dataset.engineName,
+                    engine = this.getEngine(engineTypeName, engineName);
+                let engineParams = App.collectEngineParams(Array.from(engineAddBlock.querySelectorAll(selector)));
+
+                engineParams = SearchEngineUtil.engineParamsToUrlParams(engineParams).map(p => p.urlParam);
+                engineParams = engineParams.length === 0 ? '' : `&${engineParams.join('&')}`;
+                urlInput.value = `${engine.url}${engineParams}`;
+                console.log(engineParams)
+                console.log(this.getEngine(engineTypeName, engineName))
             }));
+    }
+
+    getEngine(typeName, name) {
+        const engineType = this.getEngineType(typeName);
+
+        if (engineType !== undefined) {
+            return engineType.engines.find(e => e.name === name);
+        }
+    }
+
+    getEngineType(typeName) {
+        return this.engineExamples.types.find(t => t.name === typeName);
     }
 
     static collectEngineParams(paramSelects) {

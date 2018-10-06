@@ -5,7 +5,7 @@ class SearchEngineUtil {
 
     static createEngine(tmpl) {
         const
-            tmplParams = SearchEngineUtil.engineParamsToUrlParams(tmpl.params).map(p => p.urlParam),
+            tmplParams = tmpl.params,
             name = tmpl.name,
             params = tmplParams === undefined || tmplParams.length === 0 ? '' : `&${tmplParams.join('&')}`,
             url = `${tmpl.url}${params}`,

@@ -15,12 +15,13 @@
     {#types}
     <div class="TabPlugin-tab-content" id="tab-content-{name}">
         {#engines typeName=name}
-        <div class="engine-add-block">
+        <div class="engine-add-block" data-engine-type-name="{typeName}" data-engine-name="{name}">
             <div class="engine-add-block-line">
                 <input id="engine-add-name-input-{typeName}-{name}" type="text" value="{name}">
             </div>
             <div class="engine-add-block-line">
-                <input id="engine-add-url-input-{typeName}-{name}" type="text" value="{url}">
+                <input id="engine-add-url-input-{typeName}-{name}" type="text" value="{url}"
+                       class="engine-url">
             </div>
             <div class="engine-add-block-line">
                 <input id="engine-add-icon-input-{typeName}-{name}" type="text" value="{icon}">
