@@ -46,7 +46,7 @@ class App {
             compiled = dust.compile(src),
             tmpl = dust.loadSource(compiled);
 
-        dust.render(tmpl, {types: this.engineExamples.types}, (err, out) => {
+        dust.render(tmpl, { types: this.engineExamples.types }, (err, out) => {
             this.tabContainer.innerHTML = out;
         });
     }
@@ -107,6 +107,7 @@ class App {
         this.initImgInputAndImgSync();
         this.initChangeParamsUrlUpd();
         this.initMultiJsSelects();
+        this.initTxtToEngineIcon();
     }
 
     initEngineListModal() {
@@ -132,19 +133,18 @@ class App {
     }
 
     initSaveAsMozlz4Btn() {
-        this.saveAsMozlz4Btn
-            .addEventListener('click', async event => {
-                let file = this.codeMirror.getValue();
-                const fileName = this.fileInfo.value;
+        this.saveAsMozlz4Btn.addEventListener('click', async event => {
+            let file = this.codeMirror.getValue();
+            const fileName = this.fileInfo.value;
 
-                file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
+            file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
 
-                try {
-                    await SaveFileUtil.saveData(file, fileName);
-                } catch (e) {
-                    alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
-                }
-            });
+            try {
+                await SaveFileUtil.saveData(file, fileName);
+            } catch (e) {
+                alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
+            }
+        });
     }
 
     initSaveAsJsonBtn() {
@@ -472,5 +472,29 @@ class App {
     initMultiJsSelects() {
         Array.from(document.querySelectorAll('select.engine-add-params-input-select[multiple]'))
             .forEach(select => multi(select));
+    }
+
+    initTxtToEngineIcon() {
+        Array.from(document.querySelectorAll('.engine-icon-txt'))
+            .forEach(input => input.addEventListener('input', async event => {
+                const that = event.target;
+                const value = that.value;
+                const engineBlock = that.closest('.engine-add-block');
+                const iconInput = engineBlock.querySelector('input[id^="engine-add-icon-input-"]');
+
+                if (value.length > 0) {
+                    iconInput.value = await FileUtil.readFileAsBase64(new Blob(
+                        [IconUtil.txtToSvg(value, 23, 23)],
+                        { type: 'image/svg+xml' }
+                    ));
+
+                    const img = engineBlock.querySelector('img[id^="engine-add-icon-input-"]');
+
+                    this.updateSearchEngineIcon(iconInput, img, null);
+                } else {
+                    const img = engineBlock.querySelector('img[id^="engine-add-icon-input-"]');
+                    this.updateSearchEngineIcon(iconInput, img, '');
+                }
+            }));
     }
 }

@@ -1,41 +1,57 @@
 class IconUtil {
-    static createSvgIcon(name) {
-        if (name.length > IconUtil.cfg().maxLength) {
-            throw `Max length is ${IconUtil.cfg().maxLength}`;
-        }
-
-        const maxTopLen = 3;
-        const areThereTwoLines = name.length > maxTopLen;
-        const topName = areThereTwoLines ? name.substr(0, maxTopLen) : name;
-        const bottomName = areThereTwoLines ? name.substr(maxTopLen) : '';
-
-        console.log(bottomName);
-
-        return `<svg   xmlns="http://www.w3.org/2000/svg" 
-                            height="${IconUtil.cfg().size}"
-                            width="${IconUtil.cfg().size}">
-                        <text>
-                            <tspan
-                                style="font-size: 22px;"
-                                x="0" y="${areThereTwoLines ? IconUtil.cfg().secondY : IconUtil.cfg().size}">
-                                ${topName}
-                            </tspan>
-                            <tspan
-                                style="font-size: 11px;"
-                                x="0" y="${IconUtil.cfg().size}">
-                                ${areThereTwoLines ? bottomName : ''}
-                            </tspan>
-                        </text>
-                    </svg>`;
+    static getTextWidth(text, font) {
+        // re-use canvas object for better performance
+        var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+        var context = canvas.getContext("2d");
+        context.font = font;
+        var metrics = context.measureText(text);
+        return metrics.width;
     }
 
-    static cfg() {
-        const c = Object.create(null);
+    static f1(txt, fontSize, width, height) {
+        let rowQ, columnQ, imgH, imgW, imgS, rowSymbolQ, symbolQ, symbolS;
 
-        c.maxLength = 6;
-        c.size = 22;
-        c.secondY = c.size / 2;
+        fontSize += 0.3; // TODO: beautify code
+        do {
+            fontSize -= 0.3;
+            rowQ = Math.floor(width / fontSize);
+            imgH = Math.ceil(rowQ * fontSize);
+            columnQ = Math.floor(height / fontSize);
+            imgW = Math.ceil(columnQ * fontSize);
+            imgS = Math.floor(imgH * imgW);
+            symbolS = Math.pow(fontSize, 2);
+            symbolQ = Math.floor(imgS / symbolS);
+        } while (symbolQ < txt.length);
 
-        return Object.freeze(c);
+        return { fontSize, rowQ, columnQ, imgH, imgW, imgS, symbolQ, symbolS };
+    }
+
+    static txtToSvg(txt, width, height, fontSize = 1200) {
+        const props = IconUtil.f1(txt, fontSize, width, height);
+        console.log(props);
+        const rows = txt.match(new RegExp(`(.|[\r\n]){1,${props.rowQ}}`, 'g'));
+        let size = props.imgH;
+
+        fontSize = `font-size: ${props.rowH};`;
+
+        const tmplOfRows = rows.map(row => {
+            const tmpl = `<tspan style="${fontSize} font-family: monospace;"
+                            x="0" y="${size}">
+                            ${row}
+                          </tspan>`;
+
+            size -= props.fontSize;
+
+            return tmpl;
+        }).join('');
+
+        console.log(rows);
+
+        return `<svg xmlns="http://www.w3.org/2000/svg" 
+                    height="${height}" width="${width}">
+                        <text>
+                            ${tmplOfRows}
+                        </text>
+                </svg>`;
     }
 }
