@@ -8,7 +8,7 @@ class IconUtil {
         return metrics.width;
     }
 
-    static f1(txt, fontSize, width, height) {
+    static fontProps(txt, fontSize, width, height) {
         let rowQ, columnQ, imgH, imgW, imgS, rowSymbolQ, symbolQ, symbolS;
 
         fontSize += 0.3; // TODO: beautify the code
@@ -27,7 +27,7 @@ class IconUtil {
     }
 
     static txtToSvg(txt, width, height, fontSize = 1200) {
-        const props = IconUtil.f1(txt, fontSize, width, height);
+        const props = IconUtil.fontProps(txt, fontSize, width, height);
         const rows = txt.match(new RegExp(`(.|[\r\n]){1,${props.rowQ}}`, 'g'));
         let size = 0;
 
