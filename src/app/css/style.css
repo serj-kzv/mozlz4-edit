@@ -135,7 +135,6 @@ button:hover,
 }
 
 .engine-add-block-line:not(:last-child) {
-    /*height: 250px;*/
     margin-bottom: 10px;
 }
 
@@ -149,7 +148,7 @@ button:hover,
 }
 
 .engine-add-block .engine-icon-txt {
-    width: 50px;
+    width: 150px;
     margin: 0 5px;
 }
 

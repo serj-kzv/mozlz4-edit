@@ -1,9 +1,15 @@
 ##### What is it?
-mozlz4-edit is a text ```mozlz4``` file archiver.
+**mozlz4-edit** is a file archiver that can open, edit and save text ```mozlz4``` files.
+<br>
+The mozlz4-edit is developed as an WebExtension addon because ```mozlz4```
+file format is [Mozilla Firefox](https://www.mozilla.org)-based products' only.
+
+##### Installation
+Click [mozlz4-edit for Firefox](https://addons.mozilla.org/en-US/firefox/addon/mozlz4-edit/) to install.
 
 ##### Description
 
-The mozlz4 is a lz4 file archive format with Mozilla's magic file header.
+The mozlz4 is a lz4 file archive format with Mozilla's "magic" file header.
 <br>
 mozlz4 is a ```legacy``` variant of lz4 format. If you use ```liblz4-tool``` then you have to use ```-l```
 flag to compress a file as the ```legacy``` lz4.
@@ -30,11 +36,11 @@ by proper formula
 4. mozlz4 format description is [here](https://dxr.mozilla.org/mozilla-central/rev/2535bad09d720e71a982f3f70dd6925f66ab8ec7/toolkit/components/lz4/lz4.js#54)
 5. A good article about lz4 is [LZ4 Data Compression](https://www.brutaldeluxe.fr/products/crossdevtools/lz4/index.html)
 
-##### lz4 links
+##### About lz4
 1. https://github.com/lz4/lz4/issues/276#issuecomment-262789645
 2. https://github.com/lz4/lz4/wiki/lz4_Frame_format.md
 
-#### moz specific lz4
+#### Mozilla specific lz4
 1. https://hg.mozilla.org/mozilla-central/file/a9a24a28013b/toolkit/mozapps/extensions/AddonManagerStartup.cpp
 2. https://hg.mozilla.org/mozilla-central/rev/a9a24a28013b
 3. https://raw.githubusercontent.com/mozilla/gecko-dev/40e8eb46609dcb8780764774ec550afff1eed3a5/toolkit/mozapps/extensions/AddonManagerStartup.cpp

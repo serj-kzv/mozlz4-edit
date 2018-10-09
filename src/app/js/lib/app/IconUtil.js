@@ -1,7 +1,7 @@
 class IconUtil {
     static getTextWidth(text, font) {
         // re-use canvas object for better performance
-        var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+        var canvas = document.createElement("canvas");
         var context = canvas.getContext("2d");
         context.font = font;
         var metrics = context.measureText(text);
@@ -11,7 +11,7 @@ class IconUtil {
     static f1(txt, fontSize, width, height) {
         let rowQ, columnQ, imgH, imgW, imgS, rowSymbolQ, symbolQ, symbolS;
 
-        fontSize += 0.3; // TODO: beautify code
+        fontSize += 0.3; // TODO: beautify the code
         do {
             fontSize -= 0.3;
             rowQ = Math.floor(width / fontSize);
@@ -28,24 +28,17 @@ class IconUtil {
 
     static txtToSvg(txt, width, height, fontSize = 1200) {
         const props = IconUtil.f1(txt, fontSize, width, height);
-        console.log(props);
         const rows = txt.match(new RegExp(`(.|[\r\n]){1,${props.rowQ}}`, 'g'));
-        let size = props.imgH;
+        let size = 0;
 
-        fontSize = `font-size: ${props.rowH};`;
+        fontSize = `font-size: ${props.fontSize}px;`;
 
         const tmplOfRows = rows.map(row => {
-            const tmpl = `<tspan style="${fontSize} font-family: monospace;"
-                            x="0" y="${size}">
+            return `<tspan style="${fontSize} font-family: monospace;"
+                            x="0" y="${size += props.fontSize}">
                             ${row}
                           </tspan>`;
-
-            size -= props.fontSize;
-
-            return tmpl;
         }).join('');
-
-        console.log(rows);
 
         return `<svg xmlns="http://www.w3.org/2000/svg" 
                     height="${height}" width="${width}">
