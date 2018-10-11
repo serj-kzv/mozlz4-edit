@@ -1,4 +1,4 @@
-class TrimHtmlWhiteSpace {
+export default class TrimHtmlWhiteSpace {
     static trim(parent) {
         const rgEx = /\S/;
 

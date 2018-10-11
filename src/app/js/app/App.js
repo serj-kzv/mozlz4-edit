@@ -1,4 +1,15 @@
-class App {
+import FileUtil from '/app/js/lib/app/fileUtil/FileUtil.js';
+import OpenFileUtil from '/app/js/lib/app/fileUtil/OpenFileUtil.js';
+import SaveFileUtil from '/app/js/lib/app/fileUtil/SaveFileUtil.js';
+import IconUtil from '/app/js/lib/app/IconUtil.js';
+import ModalPlugin from '/app/js/lib/app/modal/ModalPlugin.js';
+import MozLz4ArchiverCommandMozLz4 from '/app/js/lib/app/mozLz4Archiver/command/MozLz4ArchiverCommandMozLz4.js';
+import MozLz4Archiver from '/app/js/lib/app/mozLz4Archiver/MozLz4ArchiverImpl.js';
+import SearchEngineUtil from '/app/js/lib/app/SearchEngineUtil.js';
+import TabPlugin from '/app/js/lib/app/tab/TabPlugin.js';
+import TrimHtmlWhiteSpace from '/app/js/lib/app/TrimHtmlWhiteSpace.js';
+
+export default class App {
     constructor() {
         this.engineExamples = null;
         this.engines = null;
@@ -46,7 +57,7 @@ class App {
             compiled = dust.compile(src),
             tmpl = dust.loadSource(compiled);
 
-        dust.render(tmpl, { types: this.engineExamples.types }, (err, out) => {
+        dust.render(tmpl, {types: this.engineExamples.types}, (err, out) => {
             this.tabContainer.innerHTML = out;
         });
     }
@@ -485,7 +496,7 @@ class App {
                 if (value.length > 0) {
                     iconInput.value = await FileUtil.readFileAsBase64(new Blob(
                         [IconUtil.txtToSvg(value, 23, 23)],
-                        { type: 'image/svg+xml' }
+                        {type: 'image/svg+xml'}
                     ));
 
                     const img = engineBlock.querySelector('img[id^="engine-add-icon-input-"]');

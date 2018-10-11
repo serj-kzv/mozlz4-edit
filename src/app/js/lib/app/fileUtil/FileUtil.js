@@ -1,4 +1,4 @@
-class FileUtil {
+export default class FileUtil {
 
     static readFileAsTxt(file) {
         return FileUtil.readFileAs(file, 'readAsText');

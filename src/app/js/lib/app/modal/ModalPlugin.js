@@ -1,4 +1,4 @@
-class ModalPlugin {
+export default class ModalPlugin {
     constructor(openBtnSelector, modalId) {
         this.isOpened = false;
         this.openModalFunc = null;

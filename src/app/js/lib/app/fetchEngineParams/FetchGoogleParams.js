@@ -6,7 +6,9 @@
  * https://developers.google.com/custom-search/json-api/v1/reference/cse/list
  * https://developers.google.com/custom-search/docs/xml_results
  */
-class FetchGoogleParams {
+import OpenFileUtil from '/app/js/lib/app/fileUtil/OpenFileUtil.js';
+
+export default class FetchGoogleParams {
     static async fetch() {
         const url = browser.runtime.getURL('app/resources/engines.json');
         const engines = await (await fetch(url)).json();

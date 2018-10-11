@@ -1,4 +1,4 @@
-class TabPlugin {
+export default class TabPlugin {
     constructor(tabContainerSelector) {
         this.activePair = null;
         this.init(tabContainerSelector);

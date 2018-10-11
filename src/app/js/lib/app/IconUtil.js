@@ -1,4 +1,4 @@
-class IconUtil {
+export default class IconUtil {
     static getTextWidth(text, font) {
         // re-use canvas object for better performance
         var canvas = document.createElement("canvas");

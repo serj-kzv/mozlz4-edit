@@ -1,4 +1,6 @@
-class MozLz4ArchiverCommandMozJSSLz4 extends MozLz4ArchiverCommand {
+import MozLz4ArchiverCommand from '/app/js/lib/app/mozLz4Archiver/command/MozLz4ArchiverCommand.js';
+
+export default class MozLz4ArchiverCommandMozJSSLz4 extends MozLz4ArchiverCommand {
     constructor() {
         super({
             TYPE_NAME: 'mozJSSCLz40v001',

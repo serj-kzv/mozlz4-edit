@@ -1,4 +1,4 @@
-class SearchEngineUtil {
+export default class SearchEngineUtil {
     static createEngines(tmpls) {
         return tmpls.map(tmpl => SearchEngineUtil.createEngine(tmpl));
     }

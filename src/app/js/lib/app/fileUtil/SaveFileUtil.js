@@ -1,4 +1,4 @@
-class SaveFileUtil {
+export default class SaveFileUtil {
     static saveData(content, fileName) {
         return this.saveAsData(content, 'octet/stream', false, fileName);
     }

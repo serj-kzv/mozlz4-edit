@@ -1,4 +1,4 @@
-class OpenFileUtil {
+export default class OpenFileUtil {
     static async openAsJson(content) {
         return await this.openAsData(content, 'application/json', null, null);
     }

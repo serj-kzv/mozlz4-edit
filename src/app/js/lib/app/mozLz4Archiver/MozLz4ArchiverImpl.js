@@ -1,5 +1,8 @@
-class MozLz4ArchiverImpl extends MozLz4Archiver {
-    constructor(file, command = new MozLz4ArchiverCommandLz4()) {
+import MozLz4Archiver from '/app/js/lib/app/mozLz4Archiver/MozLz4Archiver.js';
+import MozLz4ArchiverCommandMozLz4 from '/app/js/lib/app/mozLz4Archiver/command/MozLz4ArchiverCommandMozLz4.js';
+
+export default class MozLz4ArchiverImpl extends MozLz4Archiver {
+    constructor(file, command = new MozLz4ArchiverCommandMozLz4()) {
         super();
         this.file = file;
         this.command = command;
