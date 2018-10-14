@@ -1,16 +1,19 @@
 export default class SaveFileUtil {
-    static saveData(content, fileName) {
-        return this.saveAsData(content, 'octet/stream', false, fileName);
+    static saveData(content, fileName, webExt = true) {
+        if (webExt) {
+            return this.webExtSaveAsData(content, 'octet/stream', false, fileName);
+        }
+        return this.browserSaveAsData(content, 'octet/stream', false, fileName);
     }
 
     /**
      * Returns promise with deltaId if all is fine. Returns promise with an exception if an error is occurred.
      */
-    static saveAsData(content, type, isNewTab, filename) {
+    static webExtSaveAsData(content, type, isNewTab, filename) {
         return new Promise((resolve, reject) => {
             let deltaId = null, changedListener = null, erasedListener = null, isMemoryCleared = false;
             const
-                url = window.URL.createObjectURL(new Blob([content], {type})),
+                url = window.URL.createObjectURL(new Blob([content], { type })),
                 clearMemory = () => {
                     if (!isMemoryCleared) {
                         isMemoryCleared = true;
@@ -57,7 +60,7 @@ export default class SaveFileUtil {
             browser.downloads.onErased.addListener(erasedListener);
 
             try {
-                browser.downloads.download({url, filename}).then(currentDeltaId => {
+                browser.downloads.download({ url, filename }).then(currentDeltaId => {
                     deltaId = currentDeltaId;
                 });
             } catch (e) {
@@ -66,5 +69,30 @@ export default class SaveFileUtil {
                 resolve(deltaId);
             }
         });
+    }
+
+    static browserSaveAsData(content, type, isNewTab, filename) {
+        const iframe = document.createElement('iframe');
+        const url = window.URL.createObjectURL(new Blob([content], { type }));
+        const
+            focusListener = evt => {
+                console.log(evt);
+                iframe.removeEventListener("focus", focusListener);
+            },
+            loadListener = evt => {
+                evt.preventDefault();
+                evt.returnValue = '';
+                console.log(evt);
+                iframe.removeEventListener('beforeunload', loadListener);
+            };
+
+        console.log(url);
+
+        iframe.style.display = 'none';
+        iframe.src = url;
+        iframe.addEventListener('load', loadListener);
+        iframe.addEventListener("beforeunload", focusListener);
+        document.body.appendChild(iframe);
+        // document.body.removeChild(iframe)
     }
 }

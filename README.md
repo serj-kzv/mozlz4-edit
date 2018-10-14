@@ -5,13 +5,13 @@ The mozlz4-edit is developed as an WebExtension addon because ```mozlz4```
 file format is [Mozilla Firefox](https://www.mozilla.org)-based products' only.
 
 ##### Installation
-Click [mozlz4-edit for Firefox](https://addons.mozilla.org/en-US/firefox/addon/mozlz4-edit/) to install.
+Click [mozlz4-edit for Firefox](https://addons.mozilla.org/addon/mozlz4-edit/) to install.
 
 ##### Description
 
-The mozlz4 is a lz4 file archive format with Mozilla's "magic" file header.
+The mozlz4 is a [lz4](https://lz4.github.io/lz4/) file archive format with Mozilla's "magic" file header.
 <br>
-mozlz4 is a ```legacy``` variant of lz4 format. If you use ```liblz4-tool``` then you have to use ```-l```
+mozlz4 is a ```legacy``` variant of lz4 format. If you use [liblz4-tool](https://packages.ubuntu.com/liblz4-tool) then you have to use ```-l```
 flag to compress a file as the ```legacy``` lz4.
 
 ##### Dependencies
@@ -35,6 +35,7 @@ by proper formula
 3. node-mozlz4a is a node.js lib to work with mozlz4 is [here](https://github.com/piroor/node-mozlz4a) (I didn't use it)
 4. mozlz4 format description is [here](https://dxr.mozilla.org/mozilla-central/rev/2535bad09d720e71a982f3f70dd6925f66ab8ec7/toolkit/components/lz4/lz4.js#54)
 5. A good article about lz4 is [LZ4 Data Compression](https://www.brutaldeluxe.fr/products/crossdevtools/lz4/index.html)
+6. Firefox's [Use standard lz4 file format instead of the non-standard jsonlz4/mozlz4](https://bugzilla.mozilla.org/show_bug.cgi?id=1209390) bug
 
 ##### About lz4
 1. https://github.com/lz4/lz4/issues/276#issuecomment-262789645

@@ -166,7 +166,7 @@ export default class App {
                     fileName = `${this.fileInfo.value}.json`;
 
                 try {
-                    await SaveFileUtil.saveData(enginesJSONStr, fileName);
+                    await SaveFileUtil.saveData(enginesJSONStr, fileName, false);
                 } catch (e) {
                     alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
                 }

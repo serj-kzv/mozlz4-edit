@@ -117,26 +117,26 @@ export default class MozLz4Archiver {
     }
 
     getHeader() {
-        throw new Error('This method has to be implemented!');
+        throw 'This method has to be implemented!';
     }
 
     addDecompressSize() {
-        throw new Error('This method has to be implemented!');
+        throw 'This method has to be implemented!';
     }
 
     addHeader() {
-        throw new Error('This method has to be implemented!');
+        throw 'This method has to be implemented!';
     }
 
     getDecompressSizeHeader() {
-        throw new Error('This method has to be implemented!');
+        throw 'This method has to be implemented!';
     }
 
     getBody() {
-        throw new Error('This method has to be implemented!');
+        throw 'This method has to be implemented!';
     }
 
     isThisType() {
-        throw new Error('This method has to be implemented!');
+        throw 'This method has to be implemented!';
     }
 }
