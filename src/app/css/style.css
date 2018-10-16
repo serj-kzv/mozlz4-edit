@@ -177,3 +177,53 @@ button:hover,
 .engine-add-icon-input-img {
     vertical-align: bottom;
 }
+
+.radio-switcher {
+    border: 1px solid black;
+    padding: 2px;
+
+}
+
+.radio-switcher .radio-switcher-container-txt {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.radio-switcher input {
+    display: none;
+    color: black;
+    background: white;
+}
+
+.radio-switcher .radio-switcher-head {
+    font-weight: bold;
+    text-decoration: underline;
+    padding: 0 0 4px 0;
+}
+
+.radio-switcher input ~ .radio-switcher-container-txt {
+    padding: 3px;
+}
+
+.radio-switcher input:checked ~ .radio-switcher-container-txt {
+    color: white;
+    background: black;
+}
+
+.radio-switcher .radio-switcher-container {
+    cursor: pointer;
+}
+
+.radio-switcher .radio-switcher-container:hover .radio-switcher-container-txt {
+    background: #606060;
+    color: white;
+}
+
+.radio-switcher .radio-switcher-container-description,
+.radio-switcher .radio-switcher-container-title {
+    display: inline;
+}
+
+.radio-switcher .radio-switcher-container-title {
+    font-weight: bold;
+}

@@ -23,6 +23,7 @@ export default class App {
         this.mozDecompSizeTxt = null;
         this.fileInfo = null;
         this.typeName = null;
+        this.downloadType = null;
 
         // buttons
         this.saveAsMozlz4Btn = null;
@@ -34,6 +35,7 @@ export default class App {
         this.addTestEngines = null;
         this.openIconBtns = null;
         this.clrIconBtns = null;
+        this.downloadTypeSwitcher = null;
     }
 
     async run() {
@@ -90,6 +92,7 @@ export default class App {
         this.addTestEngines = document.querySelector('#addTestEngines');
         this.openIconBtns = Array.from(document.querySelectorAll('input[type="file"].engine-add-icon-btn'));
         this.clrIconBtns = Array.from(document.querySelectorAll('button.engine-clr-icon-btn'));
+        this.downloadTypeSwitcher = Array.from(document.querySelectorAll('input[name="downloadType"]'));
         this.updateSearchEngineIcons();
 
         TrimHtmlWhiteSpace.trim(document.body);
@@ -119,6 +122,7 @@ export default class App {
         this.initChangeParamsUrlUpd();
         this.initMultiJsSelects();
         this.initTxtToEngineIcon();
+        this.initDownloadTypeSwitcher();
     }
 
     initEngineListModal() {
@@ -151,7 +155,7 @@ export default class App {
             file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
 
             try {
-                await SaveFileUtil.saveData(file, fileName);
+                await SaveFileUtil.saveData(file, fileName, this.downloadType);
             } catch (e) {
                 alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
             }
@@ -166,7 +170,7 @@ export default class App {
                     fileName = `${this.fileInfo.value}.json`;
 
                 try {
-                    await SaveFileUtil.saveData(enginesJSONStr, fileName, false);
+                    await SaveFileUtil.saveData(enginesJSONStr, fileName, this.downloadType);
                 } catch (e) {
                     alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
                 }
@@ -239,7 +243,7 @@ export default class App {
                 const result = new MozLz4Archiver().convert(file);
 
                 try {
-                    await SaveFileUtil.saveData(result.file, event.target.value + '.lz4');
+                    await SaveFileUtil.saveData(result.file, event.target.value + '.lz4', this.downloadType);
                 } catch (e) {
                     alert(`An error! Possibly the file is busy. Close programs that can use the file and try again.`);
                 }
@@ -507,5 +511,20 @@ export default class App {
                     this.updateSearchEngineIcon(iconInput, img, '');
                 }
             }));
+    }
+
+    initDownloadTypeSwitcher() {
+        this.downloadTypeSwitcher.forEach(switcher => {
+            if (switcher.checked) {
+                this.downloadType = switcher.value === 'browser';
+            }
+            switcher.addEventListener('change', evt => {
+                const that = evt.target;
+
+                if (that.checked) {
+                    this.downloadType = that.value === 'browser';
+                }
+            });
+        });
     }
 }

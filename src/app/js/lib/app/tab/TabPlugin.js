@@ -1,6 +1,7 @@
 export default class TabPlugin {
     constructor(tabContainerSelector) {
         this.activePair = null;
+        this.CFG = TabPlugin.getCfg();
         this.init(tabContainerSelector);
     }
 
@@ -11,7 +12,7 @@ export default class TabPlugin {
     }
 
     initPairs(tabContainerSelector) {
-        return Array.from(document.querySelectorAll(`${tabContainerSelector} .${TabPlugin.getConf().tabClass}`))
+        return Array.from(document.querySelectorAll(`${tabContainerSelector} .${this.CFG.tabClass}`))
             .map(tab => {
                 const pair = {
                     tab,
@@ -25,7 +26,7 @@ export default class TabPlugin {
     }
 
     setDefaultPair(pairs) {
-        const defaultPair = pairs.find(pair => pair.tab.classList.contains(`${TabPlugin.getConf().defaultTabClass}`));
+        const defaultPair = pairs.find(pair => pair.tab.classList.contains(`${this.CFG.defaultTabClass}`));
 
         this.show(defaultPair);
     }
@@ -33,16 +34,16 @@ export default class TabPlugin {
     show(pair) {
         if (this.activePair !== pair) {
             if (this.activePair != null) {
-                this.activePair.tab.classList.remove(`${TabPlugin.getConf().tabShownClass}`);
-                this.activePair.tabContent.classList.remove(`${TabPlugin.getConf().tabContentShownClass}`);
+                this.activePair.tab.classList.remove(`${this.CFG.tabShownClass}`);
+                this.activePair.tabContent.classList.remove(`${this.CFG.tabContentShownClass}`);
             }
             this.activePair = pair;
-            this.activePair.tab.classList.add(`${TabPlugin.getConf().tabShownClass}`);
-            this.activePair.tabContent.classList.add(`${TabPlugin.getConf().tabContentShownClass}`);
+            this.activePair.tab.classList.add(`${this.CFG.tabShownClass}`);
+            this.activePair.tabContent.classList.add(`${this.CFG.tabContentShownClass}`);
         }
     }
 
-    static getConf() {
+    static getCfg() {
         return Object.freeze({
             tabClass: 'TabPlugin-tab',
             tabShownClass: 'TabPlugin-tab-shown',

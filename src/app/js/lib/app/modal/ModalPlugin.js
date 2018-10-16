@@ -1,35 +1,35 @@
 export default class ModalPlugin {
     constructor(openBtnSelector, modalId) {
         this.isOpened = false;
-        this.openModalFunc = null;
+        this.openModalFn = null;
+        this.CFG = ModalPlugin.getCfg();
         this.init(openBtnSelector, modalId);
     }
 
     init(openBtnSelector, modalId) {
-        this.initOpenModalFunc();
+        this.initOpenModalFn();
         this.initOpenModal(openBtnSelector, modalId);
     }
 
-    initOpenModalFunc() {
-        this.openModalFunc = modal => {
+    initOpenModalFn() {
+        this.openModalFn = modal => {
             if (!this.isOpened) {
                 this.isOpened = true;
 
                 const
-                    conf = ModalPlugin.getConf(),
-                    closeBtns = Array.from(modal.querySelectorAll(`.${conf.modalCloseBtnClass}`)),
-                    closeModalFunc = event => {
+                    closeBtns = Array.from(modal.querySelectorAll(`.${this.CFG.modalCloseBtnClass}`)),
+                    closeModalFn = event => {
                         const target = event.target;
 
                         if (modal === target || closeBtns.some(closeBtn => closeBtn === target)) {
-                            modal.classList.remove(conf.modalClass);
-                            modal.removeEventListener('click', closeModalFunc);
+                            modal.classList.remove(this.CFG.modalClass);
+                            modal.removeEventListener('click', closeModalFn);
                             this.isOpened = false;
                         }
                     };
 
-                modal.addEventListener('click', closeModalFunc);
-                modal.classList.add(conf.modalClass);
+                modal.addEventListener('click', closeModalFn);
+                modal.classList.add(this.CFG.modalClass);
             }
         };
     }
@@ -39,10 +39,10 @@ export default class ModalPlugin {
             modalBtns = document.querySelectorAll(`#${openBtnSelector}`),
             modal = document.querySelector(`#${modalId}`);
 
-        modalBtns.forEach(modalBtn => modalBtn.addEventListener('click', event => this.openModalFunc(modal)));
+        modalBtns.forEach(modalBtn => modalBtn.addEventListener('click', evt => this.openModalFn(modal)));
     }
 
-    static getConf() {
+    static getCfg() {
         return Object.freeze({
             modalClass: 'modal',
             modalContentClass: 'modal-content',

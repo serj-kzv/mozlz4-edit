@@ -1,9 +1,13 @@
 export default class SaveFileUtil {
-    static saveData(content, fileName, webExt = true) {
-        if (webExt) {
-            return this.webExtSaveAsData(content, 'octet/stream', false, fileName);
+    static saveData(content, fileName, browser = false) {
+        console.log(browser)
+        if (browser) {
+            const url = this.browserSaveAsData(content, 'octet/stream', false, fileName);
+
+            return new Promise(resolve => resolve(url));
         }
-        return this.browserSaveAsData(content, 'octet/stream', false, fileName);
+
+        return this.webExtSaveAsData(content, 'octet/stream', false, fileName);
     }
 
     /**
@@ -13,7 +17,7 @@ export default class SaveFileUtil {
         return new Promise((resolve, reject) => {
             let deltaId = null, changedListener = null, erasedListener = null, isMemoryCleared = false;
             const
-                url = window.URL.createObjectURL(new Blob([content], { type })),
+                url = window.URL.createObjectURL(new Blob([content], {type})),
                 clearMemory = () => {
                     if (!isMemoryCleared) {
                         isMemoryCleared = true;
@@ -60,7 +64,7 @@ export default class SaveFileUtil {
             browser.downloads.onErased.addListener(erasedListener);
 
             try {
-                browser.downloads.download({ url, filename }).then(currentDeltaId => {
+                browser.downloads.download({url, filename}).then(currentDeltaId => {
                     deltaId = currentDeltaId;
                 });
             } catch (e) {
@@ -71,28 +75,46 @@ export default class SaveFileUtil {
         });
     }
 
-    static browserSaveAsData(content, type, isNewTab, filename) {
-        const iframe = document.createElement('iframe');
-        const url = window.URL.createObjectURL(new Blob([content], { type }));
-        const
-            focusListener = evt => {
-                console.log(evt);
-                iframe.removeEventListener("focus", focusListener);
-            },
-            loadListener = evt => {
-                evt.preventDefault();
-                evt.returnValue = '';
-                console.log(evt);
-                iframe.removeEventListener('beforeunload', loadListener);
-            };
+    static browserSaveAsData2(content, type, isNewTab, filename) {
+        const id = 'SaveFileUtil-browserSaveAsData';
+        let iframe = document.querySelector(`#${id}`);
 
-        console.log(url);
-
+        if (iframe != null) {
+            iframe.remove();
+        }
+        iframe = document.createElement('iframe');
+        iframe.id = id;
         iframe.style.display = 'none';
-        iframe.src = url;
-        iframe.addEventListener('load', loadListener);
-        iframe.addEventListener("beforeunload", focusListener);
         document.body.appendChild(iframe);
-        // document.body.removeChild(iframe)
+
+        console.log(iframe)
+        iframe.contentDocument.head.title = '123';
+
+        return iframe.src = window.URL.createObjectURL(new Blob([content], {type}));
+    }
+
+    static browserSaveAsData(content, type, isNewTab, filename) {
+        const id = 'SaveFileUtil-browserSaveAsData';
+        let iframe = document.querySelector(`#${id}`);
+
+        if (iframe != null) {
+            iframe.remove();
+        }
+        iframe = document.createElement('a');
+        iframe.id = id;
+        iframe.style.display = 'none';
+        iframe.target = '_blank';
+        iframe.setAttribute('target', '_blank');
+        iframe.download = filename;
+        iframe.setAttribute('download', filename);
+        document.body.appendChild(iframe);
+
+        console.log(iframe)
+        // iframe.contentDocument.head.title = '123';
+
+        iframe.href = window.URL.createObjectURL(new Blob([content], {type}));
+        iframe.click();
+
+        return iframe.href;
     }
 }
