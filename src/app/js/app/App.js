@@ -1,13 +1,14 @@
-import FileUtil from '/app/js/lib/app/fileUtil/FileUtil.js';
-import OpenFileUtil from '/app/js/lib/app/fileUtil/OpenFileUtil.js';
-import SaveFileUtil from '/app/js/lib/app/fileUtil/SaveFileUtil.js';
-import IconUtil from '/app/js/lib/app/IconUtil.js';
-import ModalPlugin from '/app/js/lib/app/modal/ModalPlugin.js';
-import MozLz4ArchiverCommandMozLz4 from '/app/js/lib/app/mozLz4Archiver/command/MozLz4ArchiverCommandMozLz4.js';
-import MozLz4Archiver from '/app/js/lib/app/mozLz4Archiver/MozLz4ArchiverImpl.js';
-import SearchEngineUtil from '/app/js/lib/app/SearchEngineUtil.js';
-import TabPlugin from '/app/js/lib/app/tab/TabPlugin.js';
-import TrimHtmlWhiteSpace from '/app/js/lib/app/TrimHtmlWhiteSpace.js';
+import BrowserApi from '../lib/app/BrowserApi.js';
+import FileUtil from '../lib/app/fileUtil/FileUtil.js';
+import OpenFileUtil from '../lib/app/fileUtil/OpenFileUtil.js';
+import SaveFileUtil from '../lib/app/fileUtil/SaveFileUtil.js';
+import IconUtil from '../lib/app/IconUtil.js';
+import ModalPlugin from '../lib/app/modal/ModalPlugin.js';
+import MozLz4ArchiverCommandMozLz4 from '../lib/app/mozLz4Archiver/command/MozLz4ArchiverCommandMozLz4.js';
+import MozLz4Archiver from '../lib/app/mozLz4Archiver/MozLz4ArchiverImpl.js';
+import SearchEngineUtil from '../lib/app/SearchEngineUtil.js';
+import TabPlugin from '../lib/app/tab/TabPlugin.js';
+import TrimHtmlWhiteSpace from '../lib/app/TrimHtmlWhiteSpace.js';
 
 export default class App {
     constructor() {
@@ -51,7 +52,7 @@ export default class App {
     }
 
     async drawSearchEngineTabs() {
-        const url = browser.runtime.getURL('app/addEngine.htm');
+        const url = BrowserApi.getURL('app/addEngine.htm');
         const tmplTxt = await (await fetch(url)).text();
 
         const
@@ -65,7 +66,7 @@ export default class App {
     }
 
     async initEngineExamples() {
-        const url = browser.runtime.getURL('app/resources/engines.json');
+        const url = BrowserApi.getURL('app/resources/engines.json');
 
         return this.engineExamples = await (await fetch(url)).json();
     }
@@ -225,12 +226,16 @@ export default class App {
     }
 
     initOpenJSONInNewTabBtn() {
-        this.openJSONInNewTabBtn
-            .addEventListener('click', event => {
-                const json = this.codeMirror.getValue();
+        this.openJSONInNewTabBtn.addEventListener('click', event => {
+            const json = this.codeMirror.getValue();
 
-                OpenFileUtil.openAsJson(json);
-            });
+            OpenFileUtil.openAsJson(json);
+        });
+
+        // to work as a page
+        if (typeof browser === 'undefined') {
+            this.openJSONInNewTabBtn.disabled = true;
+        }
     }
 
     initConvertMozLz4ToLz4Btn() {
@@ -526,5 +531,11 @@ export default class App {
                 }
             });
         });
+
+        // to work as a html page
+        if (typeof browser === 'undefined') {
+            this.downloadTypeSwitcher.find(switcher => switcher.value === 'browserLink').click();
+            this.downloadTypeSwitcher.find(switcher => switcher.value === 'webExt').disabled = true;
+        }
     }
 }

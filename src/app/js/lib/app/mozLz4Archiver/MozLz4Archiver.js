@@ -1,6 +1,6 @@
-import MozLz4ArchiverCommandMozJSSLz4 from '/app/js/lib/app/mozLz4Archiver/command/MozLz4ArchiverCommandMozJSSLz4.js';
-import MozLz4ArchiverCommandMozLz4 from '/app/js/lib/app/mozLz4Archiver/command/MozLz4ArchiverCommandMozLz4.js';
-import MozLz4ArchiverImpl from '/app/js/lib/app/mozLz4Archiver/MozLz4ArchiverImpl.js';
+import MozLz4ArchiverCommandMozJSSLz4 from './command/MozLz4ArchiverCommandMozJSSLz4.js';
+import MozLz4ArchiverCommandMozLz4 from './command/MozLz4ArchiverCommandMozLz4.js';
+import MozLz4ArchiverImpl from './MozLz4ArchiverImpl.js';
 
 export default class MozLz4Archiver {
     decode(file, useSizeHeader = {use: false, size: null}, truncateSize = true) {

@@ -1,18 +1,18 @@
 export default class SaveFileUtil {
     static saveData(content, fileName, downloadingType = null) {
         const CFG = SaveFileUtil.getCfg();
-        console.log(browser)
 
         if (downloadingType == null) {
             downloadingType = CFG.WEB_EXT;
         }
-
         switch (true) {
             case downloadingType === CFG.BROWSER_IFRAME: {
-                return this.browserSaveAsDataIframe(content, 'octet/stream', false, fileName);
+                return new Promise(resolve =>
+                    resolve(this.browserSaveAsDataIframe(content, 'octet/stream', false, fileName)));
             }
             case downloadingType === CFG.BROWSER_LINK: {
-                return this.browserSaveAsDataLink(content, 'octet/stream', false, fileName);
+                return new Promise(resolve =>
+                    resolve(this.browserSaveAsDataLink(content, 'octet/stream', false, fileName)));
             }
             case downloadingType === CFG.WEB_EXT: {
                 return this.webExtSaveAsData(content, 'octet/stream', false, fileName);
@@ -88,61 +88,47 @@ export default class SaveFileUtil {
     }
 
     static browserSaveAsDataIframe(content, type, isNewTab, filename) {
-        const id = 'SaveFileUtil-browserSaveAsData';
+        const id = 'SaveFileUtil-browserSaveAsData-iframe';
         let iframe = document.querySelector(`#${id}`);
 
         if (iframe != null) {
+            window.URL.revokeObjectURL(iframe.src);
             iframe.remove();
         }
         iframe = document.createElement('iframe');
         iframe.id = id;
         iframe.style.display = 'none';
+
+        const url = window.URL.createObjectURL(new Blob([content], {type}));
+
+        iframe.src = url;
         document.body.appendChild(iframe);
+        window.URL.revokeObjectURL(url);
 
-        console.log(iframe)
-        iframe.contentDocument.head.title = '123';
-
-        return iframe.src = window.URL.createObjectURL(new Blob([content], {type}));
+        return url;
     }
 
     static browserSaveAsDataLink(content, type, isNewTab, filename) {
-        return new Promise(resolve => {
-            // const id = 'SaveFileUtil-browserSaveAsData';
-            // let a = document.querySelector(`#${id}`);
-            //
-            // if (a != null) {
-            //     a.remove();
-            // }
-            // a = document.createElement('a');
-            // a.id = id;
-            // a.style.display = 'none';
-            // a.target = '_blank';
-            // a.setAttribute('target', '_blank');
-            // a.download = filename;
-            // a.setAttribute('download', filename);
-            // document.body.appendChild(iframe);
-            //
-            // console.log(a)
-            // // iframe.contentDocument.head.title = '123';
-            //
-            // a.onclick = evt => {
-            //     a.href = window.URL.createObjectURL(new Blob([content], {type}));
-            //     resolve(a.href);
-            //     evt.preventDefault();
-            //     return false;
-            // };
-            // a.click();
+        const id = 'SaveFileUtil-browserSaveAsData-link';
+        let a = document.querySelector(`#${id}`);
 
-            let a = document.createElement("a");
-            a.style = "display: none";
-            document.body.appendChild(a);
-            let url = window.URL.createObjectURL(new Blob([content], {type}));
-            a.href = url;
-            a.download = 'myFile.pdf'; // gives it a name via an a tag
-            a.click();
-            window.URL.revokeObjectURL(url);
-            resolve(a.href);
-        });
+        if (a != null) {
+            window.URL.revokeObjectURL(a.href);
+            a.remove();
+        }
+        a = document.createElement('a');
+        a.id = id;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+
+        const url = window.URL.createObjectURL(new Blob([content], {type}));
+
+        a.href = url;
+        a.download = filename; // gives it a name via an a tag
+        a.click();
+        window.URL.revokeObjectURL(url);
+
+        return url;
     }
 
     static getCfg() {

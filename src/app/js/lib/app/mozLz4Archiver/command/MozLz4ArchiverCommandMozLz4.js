@@ -1,4 +1,4 @@
-import MozLz4ArchiverCommand from '/app/js/lib/app/mozLz4Archiver/command/MozLz4ArchiverCommand.js';
+import MozLz4ArchiverCommand from './MozLz4ArchiverCommand.js';
 
 export default class MozLz4ArchiverCommandMozLz4 extends MozLz4ArchiverCommand {
     constructor() {

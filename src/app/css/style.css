@@ -95,7 +95,7 @@ button,
     padding: 4px;
 }
 
-button:hover,
+button:not(:disabled):hover,
 .file-label:hover {
     background: black;
     color: white;
@@ -195,6 +195,13 @@ button:hover,
     background: white;
 }
 
+button:disabled,
+.radio-switcher input:disabled ~ .radio-switcher-container-txt {
+    background: #cccccc;
+    text-decoration: line-through;
+    cursor: default;
+}
+
 .radio-switcher .radio-switcher-head {
     font-weight: bold;
     text-decoration: underline;
@@ -215,7 +222,7 @@ button:hover,
     display: inline;
 }
 
-.radio-switcher .radio-switcher-container:hover .radio-switcher-container-txt {
+.radio-switcher .radio-switcher-container:hover input:not(:disabled) ~ .radio-switcher-container-txt {
     background: #606060;
     color: white;
 }

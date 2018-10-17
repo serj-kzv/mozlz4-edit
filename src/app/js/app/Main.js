@@ -1,4 +1,4 @@
-import App from '/app/js/app/App.js';
+import App from './App.js';
 
 class Main {
     static main() {
