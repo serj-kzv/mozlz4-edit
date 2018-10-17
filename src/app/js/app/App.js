@@ -626,7 +626,10 @@ export default class App {
         document.querySelector('#resetCfgEngineListBtn').addEventListener('click', async () => {
             await this.initEngineExamples();
             this.updCfgEngineList();
-            this.saveCfgEngineList();
+
+            if (typeof browser !== 'undefined') {
+                this.saveCfgEngineList();
+            }
         });
     }
 
