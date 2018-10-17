@@ -1,13 +1,25 @@
 export default class SaveFileUtil {
-    static saveData(content, fileName, browser = false) {
+    static saveData(content, fileName, downloadingType = null) {
+        const CFG = SaveFileUtil.getCfg();
         console.log(browser)
-        if (browser) {
-            const url = this.browserSaveAsData(content, 'octet/stream', false, fileName);
 
-            return new Promise(resolve => resolve(url));
+        if (downloadingType == null) {
+            downloadingType = CFG.WEB_EXT;
         }
 
-        return this.webExtSaveAsData(content, 'octet/stream', false, fileName);
+        switch (true) {
+            case downloadingType === CFG.BROWSER_IFRAME: {
+                return this.browserSaveAsDataIframe(content, 'octet/stream', false, fileName);
+            }
+            case downloadingType === CFG.BROWSER_LINK: {
+                return this.browserSaveAsDataLink(content, 'octet/stream', false, fileName);
+            }
+            case downloadingType === CFG.WEB_EXT: {
+                return this.webExtSaveAsData(content, 'octet/stream', false, fileName);
+            }
+        }
+
+        return new Promise((resolve, reject) => reject('Error. Downloading type is wrong.'));
     }
 
     /**
@@ -75,7 +87,7 @@ export default class SaveFileUtil {
         });
     }
 
-    static browserSaveAsData2(content, type, isNewTab, filename) {
+    static browserSaveAsDataIframe(content, type, isNewTab, filename) {
         const id = 'SaveFileUtil-browserSaveAsData';
         let iframe = document.querySelector(`#${id}`);
 
@@ -93,28 +105,51 @@ export default class SaveFileUtil {
         return iframe.src = window.URL.createObjectURL(new Blob([content], {type}));
     }
 
-    static browserSaveAsData(content, type, isNewTab, filename) {
-        const id = 'SaveFileUtil-browserSaveAsData';
-        let iframe = document.querySelector(`#${id}`);
+    static browserSaveAsDataLink(content, type, isNewTab, filename) {
+        return new Promise(resolve => {
+            // const id = 'SaveFileUtil-browserSaveAsData';
+            // let a = document.querySelector(`#${id}`);
+            //
+            // if (a != null) {
+            //     a.remove();
+            // }
+            // a = document.createElement('a');
+            // a.id = id;
+            // a.style.display = 'none';
+            // a.target = '_blank';
+            // a.setAttribute('target', '_blank');
+            // a.download = filename;
+            // a.setAttribute('download', filename);
+            // document.body.appendChild(iframe);
+            //
+            // console.log(a)
+            // // iframe.contentDocument.head.title = '123';
+            //
+            // a.onclick = evt => {
+            //     a.href = window.URL.createObjectURL(new Blob([content], {type}));
+            //     resolve(a.href);
+            //     evt.preventDefault();
+            //     return false;
+            // };
+            // a.click();
 
-        if (iframe != null) {
-            iframe.remove();
-        }
-        iframe = document.createElement('a');
-        iframe.id = id;
-        iframe.style.display = 'none';
-        iframe.target = '_blank';
-        iframe.setAttribute('target', '_blank');
-        iframe.download = filename;
-        iframe.setAttribute('download', filename);
-        document.body.appendChild(iframe);
+            let a = document.createElement("a");
+            a.style = "display: none";
+            document.body.appendChild(a);
+            let url = window.URL.createObjectURL(new Blob([content], {type}));
+            a.href = url;
+            a.download = 'myFile.pdf'; // gives it a name via an a tag
+            a.click();
+            window.URL.revokeObjectURL(url);
+            resolve(a.href);
+        });
+    }
 
-        console.log(iframe)
-        // iframe.contentDocument.head.title = '123';
-
-        iframe.href = window.URL.createObjectURL(new Blob([content], {type}));
-        iframe.click();
-
-        return iframe.href;
+    static getCfg() {
+        return Object.freeze({
+            BROWSER_IFRAME: 'browserIframe',
+            BROWSER_LINK: 'browserLink',
+            WEB_EXT: 'webExt'
+        });
     }
 }

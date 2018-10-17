@@ -31,15 +31,15 @@ html, body {
     position: fixed;
     top: 0;
     left: 0;
-    height: 60px;
+    height: 80px;
     width: 100%;
     display: block;
     z-index: 5;
 }
 
 #txtResultWrapper {
-    margin-top: 70px;
-    padding-top: 70px;
+    margin-top: 80px;
+    padding-top: 80px;
 }
 
 .beside {
@@ -212,16 +212,12 @@ button:hover,
 
 .radio-switcher .radio-switcher-container {
     cursor: pointer;
+    display: inline;
 }
 
 .radio-switcher .radio-switcher-container:hover .radio-switcher-container-txt {
     background: #606060;
     color: white;
-}
-
-.radio-switcher .radio-switcher-container-description,
-.radio-switcher .radio-switcher-container-title {
-    display: inline;
 }
 
 .radio-switcher .radio-switcher-container-title {

@@ -516,13 +516,13 @@ export default class App {
     initDownloadTypeSwitcher() {
         this.downloadTypeSwitcher.forEach(switcher => {
             if (switcher.checked) {
-                this.downloadType = switcher.value === 'browser';
+                this.downloadType = switcher.value;
             }
             switcher.addEventListener('change', evt => {
                 const that = evt.target;
 
                 if (that.checked) {
-                    this.downloadType = that.value === 'browser';
+                    this.downloadType = that.value;
                 }
             });
         });
