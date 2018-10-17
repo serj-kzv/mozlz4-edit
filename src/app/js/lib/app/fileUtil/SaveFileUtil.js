@@ -103,6 +103,8 @@ export default class SaveFileUtil {
 
         iframe.src = url;
         document.body.appendChild(iframe);
+
+        // TODO: research whether it's right way to call window.URL.revokeObjectURL
         window.URL.revokeObjectURL(url);
 
         return url;
@@ -126,6 +128,8 @@ export default class SaveFileUtil {
         a.href = url;
         a.download = filename; // gives it a name via an a tag
         a.click();
+
+        // TODO: research whether it's right way to call window.URL.revokeObjectURL
         window.URL.revokeObjectURL(url);
 
         return url;

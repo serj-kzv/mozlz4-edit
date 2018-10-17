@@ -1,5 +1,6 @@
 export default class ModalPlugin {
-    constructor(openBtnSelector, modalId) {
+    constructor(openBtnSelector, modalId, options) {
+        this.options = options;
         this.isOpened = false;
         this.openModalFn = null;
         this.CFG = ModalPlugin.getCfg();
@@ -25,6 +26,7 @@ export default class ModalPlugin {
                             modal.classList.remove(this.CFG.modalClass);
                             modal.removeEventListener('click', closeModalFn);
                             this.isOpened = false;
+                            this.options.onClose(this);
                         }
                     };
 

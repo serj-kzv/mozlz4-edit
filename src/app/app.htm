@@ -47,38 +47,7 @@
                 <button id="saveAsJsonBtn">Save as JSON</button>
                 <button id="openJSONInNewTabBtn">Open in new tab</button>
                 <button id="addEngineBtn">Add engines</button>
-            </div>
-            <div style="margin-top: 3px;" class="radio-switcher">
-                <div class="radio-switcher-head">Download type switching</div>
-                <div class="radio-switcher-body">
-                    <label class="radio-switcher-container">
-                        <input type="radio" name="downloadType" value="webExt" checked="checked">
-                        <div class="radio-switcher-container-txt">
-                            <div class="radio-switcher-container-title">WebExtensions</div>
-                            <div class="radio-switcher-container-description">
-                                (works in extension only)
-                            </div>
-                        </div>
-                    </label>
-                    <label class="radio-switcher-container">
-                        <input type="radio" name="downloadType" value="browserIframe">
-                        <div class="radio-switcher-container-txt">
-                            <div class="radio-switcher-container-title">In-browser (iframe)</div>
-                            <div class="radio-switcher-container-description">
-                                (works everywhere, BUGGY! Don't use it!)
-                            </div>
-                        </div>
-                    </label>
-                    <label class="radio-switcher-container">
-                        <input type="radio" name="downloadType" value="browserLink">
-                        <div class="radio-switcher-container-txt">
-                            <div class="radio-switcher-container-title">In-browser (link)</div>
-                            <div class="radio-switcher-container-description">
-                                (works everywhere, BUGGY! Don't use it!)
-                            </div>
-                        </div>
-                    </label>
-                </div>
+                <button id="engineCfgBtn">Configuration</button>
             </div>
         </div>
         <div>&nbsp;</div>
@@ -156,6 +125,8 @@
     </div>
 
 </div>
+
+<div id="cfgContainer"></div>
 
 </body>
 

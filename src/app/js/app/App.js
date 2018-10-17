@@ -14,7 +14,8 @@ export default class App {
     constructor() {
         this.engineExamples = null;
         this.engines = null;
-        this.codeMirror = null;
+        this.codeMirrorFileContent = null;
+        this.codeMirrorEngineList = null;
         this.tabContainer = null;
 
         // fields
@@ -37,6 +38,7 @@ export default class App {
         this.openIconBtns = null;
         this.clrIconBtns = null;
         this.downloadTypeSwitcher = null;
+        this.engineCfgBtn = null;
     }
 
     async run() {
@@ -45,7 +47,7 @@ export default class App {
 
     runOnDOMloadend() {
         document.addEventListener("DOMContentLoaded", async event => {
-            await this.initEngineExamples();
+            await this.initCfgEngineList();
             await this.initUIElements();
             this.initListeners();
         });
@@ -89,11 +91,13 @@ export default class App {
         this.openJSONInNewTabBtn = document.querySelector('#openJSONInNewTabBtn');
         this.convertMozLz4ToLz4Btn = document.querySelector('#convertMozLz4ToLz4Btn');
         await this.drawSearchEngineTabs();
+        await this.initCfgTmpl();
         this.addEngineBtns = Array.from(document.querySelectorAll('.add-engine-btn'));
         this.addTestEngines = document.querySelector('#addTestEngines');
         this.openIconBtns = Array.from(document.querySelectorAll('input[type="file"].engine-add-icon-btn'));
         this.clrIconBtns = Array.from(document.querySelectorAll('button.engine-clr-icon-btn'));
         this.downloadTypeSwitcher = Array.from(document.querySelectorAll('input[name="downloadType"]'));
+        this.engineCfgBtn = document.querySelector('#engineCfgBtn');
         this.updateSearchEngineIcons();
 
         TrimHtmlWhiteSpace.trim(document.body);
@@ -108,6 +112,7 @@ export default class App {
     initListeners() {
         this.initEngines();
         this.initEditor();
+        this.initEngineListEditor();
         this.initSaveAsMozlz4Btn();
         this.initSaveAsJsonBtn();
         this.initOpenFileBtn();
@@ -124,6 +129,10 @@ export default class App {
         this.initMultiJsSelects();
         this.initTxtToEngineIcon();
         this.initDownloadTypeSwitcher();
+        this.initEgineCfgBtn();
+        this.initFormatCfgEngineListBtn();
+        this.initResetCfgEngineListBtn();
+        this.initSaveCfgEngineListBtn();
     }
 
     initEngineListModal() {
@@ -135,22 +144,38 @@ export default class App {
     }
 
     initEditor() {
-        const txtResult = document.querySelector('#txtResult');
+        this.codeMirrorFileContent = CodeMirror.fromTextArea(
+            document.querySelector('#txtResult'),
+            {
+                mode: "javascript",
+                theme: "liquibyte",
+                lineNumbers: true,
+                viewportMargin: Infinity,
+                maxHighlightLength: Infinity,
+                styleActiveLine: true,
+                matchBrackets: true
+            }
+        );
+    }
 
-        this.codeMirror = CodeMirror.fromTextArea(txtResult, {
-            mode: "javascript",
-            theme: "liquibyte",
-            lineNumbers: true,
-            viewportMargin: Infinity,
-            maxHighlightLength: Infinity,
-            styleActiveLine: true,
-            matchBrackets: true
-        });
+    initEngineListEditor() {
+        this.codeMirrorEngineList = CodeMirror.fromTextArea(
+            document.querySelector('#cfgEngineList'),
+            {
+                mode: "javascript",
+                theme: "liquibyte",
+                lineNumbers: true,
+                viewportMargin: Infinity,
+                maxHighlightLength: Infinity,
+                styleActiveLine: true,
+                matchBrackets: true
+            }
+        );
     }
 
     initSaveAsMozlz4Btn() {
         this.saveAsMozlz4Btn.addEventListener('click', async event => {
-            let file = this.codeMirror.getValue();
+            let file = this.codeMirrorFileContent.getValue();
             const fileName = this.fileInfo.value;
 
             file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
@@ -167,7 +192,7 @@ export default class App {
         this.saveAsJsonBtn
             .addEventListener('click', async event => {
                 const
-                    enginesJSONStr = this.codeMirror.getValue(),
+                    enginesJSONStr = this.codeMirrorFileContent.getValue(),
                     fileName = `${this.fileInfo.value}.json`;
 
                 try {
@@ -214,9 +239,9 @@ export default class App {
 
                     try {
                         this.engines = JSON.parse(fileTxt);
-                        this.setTxtResultField(this.codeMirror, this.engines);
+                        this.setTxtResultField(this.codeMirrorFileContent, this.engines);
                     } catch (jsonParseEx) {
-                        this.setTxtResultFieldTxt(this.codeMirror, fileTxt);
+                        this.setTxtResultFieldTxt(this.codeMirrorFileContent, fileTxt);
                     }
                 } catch (e) {
                     console.error(e);
@@ -227,12 +252,12 @@ export default class App {
 
     initOpenJSONInNewTabBtn() {
         this.openJSONInNewTabBtn.addEventListener('click', event => {
-            const json = this.codeMirror.getValue();
+            const json = this.codeMirrorFileContent.getValue();
 
             OpenFileUtil.openAsJson(json);
         });
 
-        // to work as a page
+        // to work as a page, we will block broken 'open in new tab' function
         if (typeof browser === 'undefined') {
             this.openJSONInNewTabBtn.disabled = true;
         }
@@ -308,11 +333,11 @@ export default class App {
     }
 
     updateDataSource() {
-        this.engines = JSON.parse(this.codeMirror.getValue());
+        this.engines = JSON.parse(this.codeMirrorFileContent.getValue());
     }
 
     updateEditor() {
-        this.setTxtResultField(this.codeMirror, this.engines);
+        this.setTxtResultField(this.codeMirrorFileContent, this.engines);
     }
 
     setTxtResultField(codeMirror, engines) {
@@ -326,11 +351,11 @@ export default class App {
     }
 
     setStatusLoading() {
-        this.setTxtResultField(this.codeMirror, 'Loading... Wait.');
+        this.setTxtResultField(this.codeMirrorFileContent, 'Loading... Wait.');
     }
 
     setStatusFail() {
-        this.setTxtResultField(this.codeMirror, 'Fail! Try again.');
+        this.setTxtResultField(this.codeMirrorFileContent, 'Fail! Try again.');
     }
 
     setMozHeader(val) {
@@ -532,10 +557,120 @@ export default class App {
             });
         });
 
-        // to work as a html page
+        this.setDefaultDownloadType();
+    }
+
+    // to work as a html page, we will set up default way to save the file
+    setDefaultDownloadType() {
         if (typeof browser === 'undefined') {
             this.downloadTypeSwitcher.find(switcher => switcher.value === 'browserLink').click();
             this.downloadTypeSwitcher.find(switcher => switcher.value === 'webExt').disabled = true;
+        }
+    }
+
+    async initCfgTmpl() {
+        document.querySelector('#cfgContainer').innerHTML = await (
+            await fetch(BrowserApi.getURL('app/cfg.htm'))
+        ).text();
+    }
+
+    async initEgineCfgBtn() {
+        const that = this;
+
+        new ModalPlugin('engineCfgBtn', 'engineCfgModal', {
+            onClose: () => that.clrCfgEngineList()
+        });
+        new TabPlugin('#tabContainer2');
+        this.engineCfgBtn.addEventListener('click', evt => {
+            this.updCfgEngineList();
+        });
+    }
+
+    updCfgEngineList(jsonObj) {
+        if (jsonObj === undefined) {
+            this.codeMirrorEngineList.setValue(JSON.stringify(this.engineExamples, null, 4));
+        } else {
+            this.codeMirrorEngineList.setValue(JSON.stringify(jsonObj, null, 4));
+        }
+    }
+
+    clrCfgEngineList() {
+        this.codeMirrorEngineList.setValue('');
+    }
+
+    formatCfgEngineList() {
+        const txt = this.codeMirrorEngineList.getValue();
+
+        try {
+            const json = JSON.parse(txt);
+
+            this.updCfgEngineList(json);
+        } catch (e) {
+            alert('Error. JSON is invalid.');
+        }
+    }
+
+    getCfgEngineList() {
+        try {
+            return JSON.parse(this.codeMirrorEngineList.getValue());
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    initFormatCfgEngineListBtn() {
+        document.querySelector('#formatCfgEngineListBtn').addEventListener('click', () => this.formatCfgEngineList());
+    }
+
+    initResetCfgEngineListBtn() {
+        document.querySelector('#resetCfgEngineListBtn').addEventListener('click', async () => {
+            await this.initEngineExamples();
+            this.updCfgEngineList();
+            this.saveCfgEngineList();
+        });
+    }
+
+    initSaveCfgEngineListBtn() {
+        if (typeof browser !== 'undefined') {
+            document.querySelector('#saveCfgEngineListBtn').addEventListener('click', () => {
+                this.saveCfgEngineList();
+            });
+        } else {
+            document.querySelector('#saveCfgEngineListBtn').disabled = true
+        }
+    }
+
+    async saveCfgEngineList() {
+        try {
+            this.engineExamples = this.getCfgEngineList();
+
+            const engineExamples = this.engineExamples;
+
+            await browser.storage.local.set({options: {engineExamples}});
+        } catch (e) {
+            alert('Error. JSON is invalid.');
+        }
+    }
+
+    async initCfgEngineList() {
+        if (typeof browser !== 'undefined') {
+            try {
+                const stored = await browser.storage.local.get('options');
+
+                if (typeof stored.options !== 'undefined') {
+                    this.engineExamples = stored.options.engineExamples;
+                } else {
+                    await this.initEngineExamples();
+                    const engineExamples = this.engineExamples;
+                    await browser.storage.local.set({options: {engineExamples}});
+                }
+            } catch (e) {
+                await this.initEngineExamples();
+                const engineExamples = this.engineExamples;
+                await browser.storage.local.set({options: {engineExamples}});
+            }
+        } else {
+            this.initEngineExamples();
         }
     }
 }

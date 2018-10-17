@@ -31,7 +31,7 @@ html, body {
     position: fixed;
     top: 0;
     left: 0;
-    height: 80px;
+    height: 157px;
     width: 100%;
     display: block;
     z-index: 5;
@@ -105,10 +105,12 @@ button:not(:disabled):hover,
 .file-label {
 }
 
+#tabContainer2,
 #tabContainer {
     margin-top: 10px;
 }
 
+#tabContainer2 .TabPlugin-tab,
 #tabContainer .TabPlugin-tab {
     border: 1px solid black;
     padding: 7px;
@@ -222,7 +224,7 @@ button:disabled,
     display: inline;
 }
 
-.radio-switcher .radio-switcher-container:hover input:not(:disabled) ~ .radio-switcher-container-txt {
+.radio-switcher .radio-switcher-container:hover input:not(:disabled):not(:checked) ~ .radio-switcher-container-txt {
     background: #606060;
     color: white;
 }
