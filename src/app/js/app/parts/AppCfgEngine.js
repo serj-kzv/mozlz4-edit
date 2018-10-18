@@ -1,6 +1,6 @@
-import BrowserApi from '../../lib/app/BrowserApi.js';
 import ModalPlugin from '../../lib/app/modal/ModalPlugin.js';
 import TabPlugin from '../../lib/app/tab/TabPlugin.js';
+import WEB_EXT_API from '../../lib/app/WebExtApi.js';
 
 export default class AppCfgEngine {
     constructor() {
@@ -41,15 +41,9 @@ export default class AppCfgEngine {
         );
     }
 
-    async initEngineExamples() {
-        const url = BrowserApi.getURL('app/resources/engines.json');
-
-        return this.engineExamples = await (await fetch(url)).json();
-    }
-
     async initCfgTmpl() {
         document.querySelector('#cfgContainer').innerHTML = await (
-            await fetch(BrowserApi.getURL('app/cfg.htm'))
+            await fetch(WEB_EXT_API.getURL('app/cfg.htm'))
         ).text();
     }
 
@@ -130,30 +124,6 @@ export default class AppCfgEngine {
         } catch (e) {
             alert('Error. JSON is invalid.');
         }
-    }
-
-    async initCfgEngineList() {
-        if (typeof browser !== 'undefined') {
-            try {
-                const stored = await browser.storage.local.get('options');
-
-                if (typeof stored.options !== 'undefined') {
-                    this.engineExamples = stored.options.engineExamples;
-                } else {
-                    await this.loadAndSaveDefaultEngineList();
-                }
-            } catch (e) {
-                await this.loadAndSaveDefaultEngineList();
-            }
-        } else {
-            await this.initEngineExamples();
-        }
-    }
-
-    async loadAndSaveDefaultEngineList() {
-        await this.initEngineExamples();
-        const engineExamples = this.engineExamples;
-        await browser.storage.local.set({options: {engineExamples}});
     }
 
     getEngineType(typeName) {

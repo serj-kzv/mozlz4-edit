@@ -3,15 +3,11 @@ import OpenFileUtil from '../../lib/app/fileUtil/OpenFileUtil.js';
 import SaveFileUtil from '../../lib/app/fileUtil/SaveFileUtil.js';
 import MozLz4ArchiverCommandMozLz4 from '../../lib/app/mozLz4Archiver/command/MozLz4ArchiverCommandMozLz4.js';
 import MozLz4Archiver from '../../lib/app/mozLz4Archiver/MozLz4ArchiverImpl.js';
-import TrimHtmlWhiteSpace from '../../lib/app/TrimHtmlWhiteSpace.js';
 
 export default class AppEditor {
     constructor() {
         this.engines = null;
         this.codeMirrorFileContent = null;
-
-        // parts
-        this.appCfg = null;
 
         // fields
         this.mozHeader = null;
@@ -26,6 +22,14 @@ export default class AppEditor {
         this.saveAsJsonBtn = null;
         this.openFileBtn = null;
         this.openJSONInNewTabBtn = null;
+    }
+
+    static async build() {
+        const appEditor = new AppEditor();
+
+        await appEditor.init();
+
+        return appEditor;
     }
 
     async init() {
@@ -48,8 +52,6 @@ export default class AppEditor {
         this.saveAsJsonBtn = document.querySelector('#saveAsJsonBtn');
         this.openFileBtn = document.querySelector('#openFileBtn');
         this.openJSONInNewTabBtn = document.querySelector('#openJSONInNewTabBtn');
-
-        TrimHtmlWhiteSpace.trim(document.body);
     }
 
     initEngines() {

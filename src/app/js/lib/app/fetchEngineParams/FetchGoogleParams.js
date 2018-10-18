@@ -7,10 +7,11 @@
  * https://developers.google.com/custom-search/docs/xml_results
  */
 import OpenFileUtil from '../fileUtil/OpenFileUtil.js';
+import WEB_EXT_API from '../WebExtApi.js';
 
 export default class FetchGoogleParams {
     static async fetch() {
-        const url = BrowserApi.getURL('app/resources/engines.json');
+        const url = WEB_EXT_API.getURL('app/resources/engines.json');
         const engines = await (await fetch(url)).json();
         const type = engines.types.find(type => type.name === 'Google');
         const engine = type.engines.find(engine => engine.name === 'GoogleCOM');

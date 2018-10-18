@@ -1,8 +1,7 @@
-import AppCfgEngine from './AppCfgEngine.js';
+import WEB_EXT_API from '../../lib/app/WebExtApi.js';
 
 export default class AppCfg {
     constructor() {
-        this.appCfgEngine = null;
     }
 
     static async build() {
@@ -14,14 +13,38 @@ export default class AppCfg {
     }
 
     async init() {
-        this.appCfgEngine = await AppCfgEngine.build();
+        await this.initCfgEngineList();
     }
 
-    getEngines() {
-        return this.appCfgEngine.engineExamples;
+    async initEngineExamples() {
+        const url = WEB_EXT_API.getURL('app/resources/engines.json');
+
+        return this.engineExamples = await (await fetch(url)).json();
     }
 
-    getEngineType(typeName) {
-        return this.appCfgEngine.getEngineType(typeName);
+    async initCfgEngineList() {
+        if (typeof browser !== 'undefined') {
+            try {
+                const stored = await browser.storage.local.get('options');
+
+                if (typeof stored.options !== 'undefined') {
+                    this.engineExamples = stored.options.engineExamples;
+                } else {
+                    await this.loadAndSaveDefaultEngineList();
+                }
+            } catch (e) {
+                await this.loadAndSaveDefaultEngineList();
+            }
+        } else {
+            await this.initEngineExamples();
+        }
+    }
+
+    async loadAndSaveDefaultEngineList() {
+        await this.initEngineExamples();
+
+        const engineExamples = this.engineExamples;
+
+        await browser.storage.local.set({options: {engineExamples}});
     }
 }

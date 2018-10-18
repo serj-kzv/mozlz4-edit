@@ -1,9 +1,9 @@
-import BrowserApi from '../../lib/app/BrowserApi.js';
 import FileUtil from '../../lib/app/fileUtil/FileUtil.js';
 import IconUtil from '../../lib/app/IconUtil.js';
 import ModalPlugin from '../../lib/app/modal/ModalPlugin.js';
 import SearchEngineUtil from '../../lib/app/SearchEngineUtil.js';
 import TabPlugin from '../../lib/app/tab/TabPlugin.js';
+import WEB_EXT_API from '../../lib/app/WebExtApi.js';
 
 export default class AppAddEngine {
     constructor(appCfg) {
@@ -16,6 +16,14 @@ export default class AppAddEngine {
         this.addEngineTmpl = null;
     }
 
+    static async build() {
+        const appAddEngine = new AppAddEngine();
+
+        await appAddEngine.init();
+
+        return appAddEngine;
+    }
+
     async init() {
         await this.initSearchEngineTabs();
         this.updateSearchEngineIcons();
@@ -24,7 +32,7 @@ export default class AppAddEngine {
     }
 
     async initSearchEngineTabs() {
-        const url = BrowserApi.getURL('app/addEngine.htm');
+        const url = WEB_EXT_API.getURL('app/addEngine.htm');
         const tmplTxt = await (await fetch(url)).text();
 
         const
