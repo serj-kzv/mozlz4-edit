@@ -23,7 +23,7 @@ export default class OpenFileUtil {
                 }
             };
 
-        // clear memory on tab closed event
+        // clear memory on a tab is closed event
         onRemovedListener = (tabId, removeInfo) => {
             const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
@@ -32,7 +32,7 @@ export default class OpenFileUtil {
             }
         };
 
-        // clear memory on tab replaced event
+        // clear memory on a tab is replaced event
         onReplacedListener = (addedTabId, removedTabId) => {
             const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
@@ -41,12 +41,12 @@ export default class OpenFileUtil {
             }
         };
 
-        // clear memory on a tab content was replaced
+        // clear memory on a tab content is replaced event
         onUpdatedListener = (tabId, changeInfo, tab) => {
             const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
 
             if (isRunAndCurrent) {
-                // check if a original tab content was replaced
+                // checks if an original tab content was replaced
                 if (!isCompleted && tab.status === 'complete' && url === tab.url) {
                     isCompleted = true;
                 } else if (url !== tab.url) {
@@ -60,11 +60,9 @@ export default class OpenFileUtil {
         browser.tabs.onUpdated.addListener(onUpdatedListener);
 
         try {
-            currentTab = await browser.tabs.create({url});
-
-            return currentTab;
+            return currentTab = await browser.tabs.create({url});
         } catch (e) {
-            // clear memory on tab open event error
+            // clear memory on a tab open event error
             clearMemory();
 
             return false;
