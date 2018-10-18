@@ -4,6 +4,7 @@ export default class ModalPlugin {
         this.isOpened = false;
         this.openModalFn = null;
         this.CFG = ModalPlugin.getCfg();
+        this.hasOptions = typeof this.options !== 'undefined';
         this.init(openBtnSelector, modalId);
     }
 
@@ -23,15 +24,22 @@ export default class ModalPlugin {
                         const target = event.target;
 
                         if (modal === target || closeBtns.some(closeBtn => closeBtn === target)) {
+                            if (this.hasOptions && typeof this.options.onClose !== 'undefined') {
+                                this.options.onClose(this);
+                            }
+
                             modal.classList.remove(this.CFG.modalClass);
                             modal.removeEventListener('click', closeModalFn);
                             this.isOpened = false;
-                            this.options.onClose(this);
                         }
                     };
 
                 modal.addEventListener('click', closeModalFn);
                 modal.classList.add(this.CFG.modalClass);
+
+                if (this.hasOptions && typeof this.options.onOpen !== 'undefined') {
+                    this.options.onOpen(this);
+                }
             }
         };
     }

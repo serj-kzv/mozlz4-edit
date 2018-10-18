@@ -43,9 +43,6 @@ export default class MozLz4ArchiverImpl extends MozLz4Archiver {
         return this.addHeader(file);
     }
 
-    convert() {
-    }
-
     addDecompressSize(file, decompressSizeHeader) {
         return MozLz4Archiver.unshiftUint8ArrayToFile(file, decompressSizeHeader);
     }
