@@ -26,14 +26,12 @@ export default class App {
         this.mozDecompSizeTxt = null;
         this.fileInfo = null;
         this.typeName = null;
-        this.downloadType = null;
 
         // buttons
         this.saveAsMozlz4Btn = null;
         this.saveAsJsonBtn = null;
         this.openFileBtn = null;
         this.openJSONInNewTabBtn = null;
-        this.downloadTypeSwitcher = null;
     }
 
     async run() {
@@ -62,7 +60,6 @@ export default class App {
         this.saveAsJsonBtn = document.querySelector('#saveAsJsonBtn');
         this.openFileBtn = document.querySelector('#openFileBtn');
         this.openJSONInNewTabBtn = document.querySelector('#openJSONInNewTabBtn');
-        this.downloadTypeSwitcher = Array.from(document.querySelectorAll('input[name="downloadType"]'));
 
         TrimHtmlWhiteSpace.trim(document.body);
     }
@@ -80,7 +77,6 @@ export default class App {
         this.initSaveAsJsonBtn();
         this.initOpenFileBtn();
         this.initOpenJSONInNewTabBtn();
-        this.initDownloadTypeSwitcher();
     }
 
     initEditor() {
@@ -232,40 +228,5 @@ export default class App {
     setMozDecompSize(decompressSizeHeader, decompressSize) {
         this.mozDecompSize.value = decompressSizeHeader;
         this.mozDecompSizeTxt.value = decompressSize;
-    }
-
-    initDownloadTypeSwitcher() {
-        this.downloadTypeSwitcher.forEach(switcher => {
-            if (switcher.checked) {
-                this.downloadType = switcher.value;
-            }
-            switcher.addEventListener('change', evt => {
-                const that = evt.target;
-
-                if (that.checked) {
-                    this.downloadType = that.value;
-                }
-            });
-        });
-
-        this.setDefaultDownloadType();
-    }
-
-    // to work as a html page, we will set up default way to save the file
-    setDefaultDownloadType() {
-        if (typeof browser === 'undefined') {
-            for (const switcher of this.downloadTypeSwitcher) {
-                switch (true) {
-                    case switcher.value === 'browserLink' : {
-                        switcher.click();
-                        break;
-                    }
-                    case switcher.value === 'webExt': {
-                        switcher.disabled = true;
-                        break;
-                    }
-                }
-            }
-        }
     }
 }
