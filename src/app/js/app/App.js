@@ -1,8 +1,9 @@
 import TrimHtmlWhiteSpace from '../lib/app/TrimHtmlWhiteSpace.js';
 import AppCfg from './parts/AppCfg.js';
 import AppEditor from './parts/AppEditor.js';
+import AppAddEngine from './parts/AppAddEngine.js';
 
-export const APP = {ctx: null};
+export const APP = { ctx: null };
 export default class App {
     constructor() {
         this.appCfgEngine = null;
@@ -14,19 +15,22 @@ export default class App {
     }
 
     async run() {
-        this.runOnDOMloadend();
+        await this.runOnDOMloadend();
     }
 
     runOnDOMloadend() {
-        document.addEventListener("DOMContentLoaded", () => this.init());
+        return new Promise(resolve => document.addEventListener("DOMContentLoaded", async () => {
+            await this.init();
+            resolve(true);
+        }));
     }
 
     async init() {
         this.appCfg = await AppCfg.build();
         // this.appCfgEngine = await AppCfgEngine.build();
         // this.appCfgDownload = new AppCfgDownload();
-        // this.appAddEngine = await AppAddEngine.build();
         this.appEditor = await AppEditor.build();
+        this.appAddEngine = await AppAddEngine.build();
         TrimHtmlWhiteSpace.trim(document.body);
     }
 }

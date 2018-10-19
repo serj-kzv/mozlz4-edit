@@ -1,105 +1,94 @@
-<div style="height: 70px; overflow-y: auto;">
-    <div style="max-width: 9999px; margin-top: 20px;">
-        {#types}
-        <span class="TabPlugin-tab TabPlugin-tab-default {@first}TabPlugin-tab-default{/first}"
-              data-target-tab-content-id="tab-content-{name}">
-                    {name}
-                </span>
-        {/types}
-        <span class="TabPlugin-tab TabPlugin-tab-default" data-target-tab-content-id="tab-content-testTab">
+<div id="tabContainer">
+    <div style="height: 70px; overflow-y: auto;">
+        <div style="max-width: 9999px; margin-top: 20px;">
+            {#types}
+            <span class="TabPlugin-tab TabPlugin-tab-default {@first}TabPlugin-tab-default{/first}"
+                data-target-tab-content-id="tab-content-{name}">
+                {name}
+            </span>
+            {/types}
+            <span class="TabPlugin-tab TabPlugin-tab-default" data-target-tab-content-id="tab-content-testTab">
                 The addon testing
             </span>
-    </div>
-</div>
-<div class="tabContainer-content">
-    {#types}
-    <div class="TabPlugin-tab-content" id="tab-content-{name}">
-        {#engines typeName=name}
-        <div class="engine-add-block" data-engine-type-name="{typeName}" data-engine-name="{name}">
-            <div class="engine-add-block-line">
-                <input id="engine-add-name-input-{typeName}-{name}" type="text" value="{name}">
-            </div>
-            <div class="engine-add-block-line">
-                <input id="engine-add-url-input-{typeName}-{name}" type="text" value="{url}"
-                       class="engine-url">
-            </div>
-            <div class="engine-add-block-line">
-                <input id="engine-add-icon-input-{typeName}-{name}" type="text" value="{icon}">
-            </div>
-            <div class="engine-add-block-line">
-                <img id="engine-add-icon-input-{typeName}-{name}-img"
-                     class="engine-add-icon-input-img" width="23" height="23" src="">
-                <input type="text" class="engine-icon-txt" placeholder="Icon text (alpha version!)">
-                <button data-target-id="engine-add-icon-input-{typeName}-{name}"
-                        class="engine-clr-icon-btn" type="file">
-                    Clear icon
-                </button>
-                <label class="file-label open-icon-label">
-                    Choose icon
-                    <input data-target-id="engine-add-icon-input-{typeName}-{name}"
-                           class="engine-add-icon-btn" type="file"
-                           accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm">
-                </label>
-                <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
-                    Add
-                </button>
-            </div>
-            {#params engineName=name}
-            {^multiOr}{^multiAnd}
-            <div class="engine-add-block-line">
-                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}"
-                       class="engine-add-params-input-label">
-                    {name}
-                </label>
-                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}" name="{param}"
-                        class="engine-add-params-input-select">
-                    <option value=""></option>
-                    {#values}
-                    <option value="{value}">{name} ( {value} )</option>
-                    {/values}
-                </select>
-            </div>
-            {/multiAnd}{/multiOr}
-            {?multiOr}
-            <div class="engine-add-block-line">
-                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}-or"
-                       class="engine-add-params-input-label">
-                    {name} (OR, divider: {multiOrDivider} )
-                </label>
-                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}-or" name="{param}"
-                        class="engine-add-params-input-select"
-                        data-multi-or="true"
-                        multiple="multiple" size="1"
-                        data-multi-divider="{multiOrDivider}">
-                    {#values}
-                    <option value="{value}">{name} ( {value} )</option>
-                    {/values}
-                </select>
-            </div>
-            {/multiOr}
-            {?multiAnd}
-            <div class="engine-add-block-line">
-                <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}-and"
-                       class="engine-add-params-input-label">
-                    {name} (AND, divider: {multiAndDivider} )
-                </label>
-                <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}-and" name="{param}"
-                        class="engine-add-params-input-select"
-                        data-multi-and="true"
-                        multiple="multiple" size="1"
-                        data-multi-divider="{multiAndDivider}">
-                    {#values}
-                    <option value="{value}">{name} ( {value} )</option>
-                    {/values}
-                </select>
-            </div>
-            {/multiAnd}
-            {/params}
         </div>
-        {/engines}
     </div>
-    {/types}
-    <div class="TabPlugin-tab-content" id="tab-content-testTab">
-        <button id="addTestEngines">Add 999 test engines</button>
+    <div class="tabContainer-content">
+        {#types}
+        <div class="TabPlugin-tab-content" id="tab-content-{name}">
+            {#engines typeName=name}
+            <div class="engine-add-block" data-engine-type-name="{typeName}" data-engine-name="{name}">
+                <div class="engine-add-block-line">
+                    <input id="engine-add-name-input-{typeName}-{name}" type="text" value="{name}">
+                </div>
+                <div class="engine-add-block-line">
+                    <input id="engine-add-url-input-{typeName}-{name}" type="text" value="{url}" class="engine-url">
+                </div>
+                <div class="engine-add-block-line">
+                    <input id="engine-add-icon-input-{typeName}-{name}" type="text" value="{icon}">
+                </div>
+                <div class="engine-add-block-line">
+                    <img id="engine-add-icon-input-{typeName}-{name}-img" class="engine-add-icon-input-img" width="23"
+                        height="23" src="">
+                    <input type="text" class="engine-icon-txt" placeholder="Icon text (alpha version!)">
+                    <button data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-clr-icon-btn" type="file">
+                        Clear icon
+                    </button>
+                    <label class="file-label open-icon-label">
+                        Choose icon
+                        <input data-target-id="engine-add-icon-input-{typeName}-{name}" class="engine-add-icon-btn"
+                            type="file" accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm">
+                    </label>
+                    <button class="add-engine-btn" data-engine-type="{typeName}" data-engine-name="{name}">
+                        Add
+                    </button>
+                </div>
+                {#params engineName=name}
+                {^multiOr}{^multiAnd}
+                <div class="engine-add-block-line">
+                    <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}" class="engine-add-params-input-label">
+                        {name}
+                    </label>
+                    <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}" name="{param}" class="engine-add-params-input-select">
+                        <option value=""></option>
+                        {#values}
+                        <option value="{value}">{name} ( {value} )</option>
+                        {/values}
+                    </select>
+                </div>
+                {/multiAnd}{/multiOr}
+                {?multiOr}
+                <div class="engine-add-block-line">
+                    <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}-or" class="engine-add-params-input-label">
+                        {name} (OR, divider: {multiOrDivider} )
+                    </label>
+                    <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}-or" name="{param}" class="engine-add-params-input-select"
+                        data-multi-or="true" multiple="multiple" size="1" data-multi-divider="{multiOrDivider}">
+                        {#values}
+                        <option value="{value}">{name} ( {value} )</option>
+                        {/values}
+                    </select>
+                </div>
+                {/multiOr}
+                {?multiAnd}
+                <div class="engine-add-block-line">
+                    <label for="engine-add-params-input-{typeName}-{engineName}-{$idx}-and" class="engine-add-params-input-label">
+                        {name} (AND, divider: {multiAndDivider} )
+                    </label>
+                    <select id="engine-add-params-input-{typeName}-{engineName}-{$idx}-and" name="{param}" class="engine-add-params-input-select"
+                        data-multi-and="true" multiple="multiple" size="1" data-multi-divider="{multiAndDivider}">
+                        {#values}
+                        <option value="{value}">{name} ( {value} )</option>
+                        {/values}
+                    </select>
+                </div>
+                {/multiAnd}
+                {/params}
+            </div>
+            {/engines}
+        </div>
+        {/types}
+        <div class="TabPlugin-tab-content" id="tab-content-testTab">
+            <button id="addTestEngines">Add 999 test engines</button>
+        </div>
     </div>
 </div>

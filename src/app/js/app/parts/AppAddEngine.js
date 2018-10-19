@@ -4,15 +4,15 @@ import ModalPlugin from '../../lib/app/modal/ModalPlugin.js';
 import SearchEngineUtil from '../../lib/app/SearchEngineUtil.js';
 import TabPlugin from '../../lib/app/tab/TabPlugin.js';
 import WEB_EXT_API from '../../lib/app/WebExtApi.js';
+import { APP } from '../App.js';
 
 export default class AppAddEngine {
-    constructor(appCfg) {
-        this.appCfg = appCfg;
+    constructor() {
         this.addEngineBtns = null;
         this.addTestEngines = null;
         this.openIconBtns = null;
         this.clrIconBtns = null;
-        this.tabContainer = null;
+        this.addEngineTabContainer = null;
         this.addEngineTmpl = null;
     }
 
@@ -26,24 +26,20 @@ export default class AppAddEngine {
 
     async init() {
         await this.initSearchEngineTabs();
-        this.updateSearchEngineIcons();
-        this.tabContainer = document.querySelector('#tabContainer');
         this.initEngineListModal();
     }
 
     async initSearchEngineTabs() {
-        const url = WEB_EXT_API.getURL('app/addEngine.htm');
-        const tmplTxt = await (await fetch(url)).text();
-
         const
-            src = tmplTxt,
-            compiled = dust.compile(src);
+            url = WEB_EXT_API.getURL('app/addEngine.htm'),
+            tmplTxt = await (await fetch(url)).text(),
+            compiled = dust.compile(tmplTxt);
 
         this.addEngineTmpl = dust.loadSource(compiled);
     }
 
     initAddEngine() {
-        new TabPlugin('#tabContainer');
+        new TabPlugin('#addEngineTabContainer');
         this.addEngineBtns = Array.from(document.querySelectorAll('.add-engine-btn'));
         this.addTestEngines = document.querySelector('#addTestEngines');
         this.openIconBtns = Array.from(document.querySelectorAll('input[type="file"].engine-add-icon-btn'));
@@ -62,15 +58,16 @@ export default class AppAddEngine {
     initTxtToEngineIcon() {
         Array.from(document.querySelectorAll('.engine-icon-txt'))
             .forEach(input => input.addEventListener('input', async event => {
-                const that = event.target;
-                const value = that.value;
-                const engineBlock = that.closest('.engine-add-block');
-                const iconInput = engineBlock.querySelector('input[id^="engine-add-icon-input-"]');
+                const
+                    that = event.target,
+                    value = that.value,
+                    engineBlock = that.closest('.engine-add-block'),
+                    iconInput = engineBlock.querySelector('input[id^="engine-add-icon-input-"]');
 
                 if (value.length > 0) {
                     iconInput.value = await FileUtil.readFileAsBase64(new Blob(
                         [IconUtil.txtToSvg(value, 23, 23)],
-                        {type: 'image/svg+xml'}
+                        { type: 'image/svg+xml' }
                     ));
 
                     const img = engineBlock.querySelector('img[id^="engine-add-icon-input-"]');
@@ -78,6 +75,7 @@ export default class AppAddEngine {
                     this.updateSearchEngineIcon(iconInput, img, null);
                 } else {
                     const img = engineBlock.querySelector('img[id^="engine-add-icon-input-"]');
+
                     this.updateSearchEngineIcon(iconInput, img, '');
                 }
             }));
@@ -89,21 +87,21 @@ export default class AppAddEngine {
     }
 
     initChangeParamsUrlUpd() {
-        const selector = '[id^="engine-add-params-input-"]';
+        Array.from(document.querySelectorAll('[id^="engine-add-params-input-"]'))
+            .forEach(select => select.addEventListener('change', event => {
+                const engineAddBlock = event.target.closest('.engine-add-block');
+                let engineParams = AppAddEngine
+                    .collectEngineParams(Array.from(engineAddBlock.querySelectorAll('[id^="engine-add-params-input-"]')));
 
-        Array.from(document.querySelectorAll(selector)).forEach(select => select.addEventListener('change', event => {
-            const engineAddBlock = event.target.closest('.engine-add-block');
-            let engineParams = App.collectEngineParams(Array.from(engineAddBlock.querySelectorAll(selector)));
+                engineParams = SearchEngineUtil.engineParamsToUrlParams(engineParams).map(p => p.urlParam);
+                engineParams = engineParams.length === 0 ? '' : `&${engineParams.join('&')}`;
 
-            engineParams = SearchEngineUtil.engineParamsToUrlParams(engineParams).map(p => p.urlParam);
-            engineParams = engineParams.length === 0 ? '' : `&${engineParams.join('&')}`;
+                const
+                    dataset = engineAddBlock.dataset,
+                    urlInput = engineAddBlock.querySelector('input.engine-url');
 
-            const
-                dataset = engineAddBlock.dataset,
-                urlInput = engineAddBlock.querySelector('input.engine-url');
-
-            urlInput.value = `${this.getEngine(dataset.engineTypeName, dataset.engineName).url}${engineParams}`;
-        }));
+                urlInput.value = `${APP.ctx.appCfg.getEngine(dataset.engineTypeName, dataset.engineName).url}${engineParams}`;
+            }));
     }
 
     initImgInputAndImgSync() {
@@ -126,36 +124,43 @@ export default class AppAddEngine {
     }
 
     initEngineListModal() {
+        const that = this;
+
         new ModalPlugin('addEngineBtn', 'addEngineModal', {
-            onOpen: () => {
-                dust.render(
-                    this.addEngineTmpl,
-                    {types: this.appCfg.getEngines().types}, (err, out) => this.tabContainer.innerHTML = out);
-                this.initAddEngine();
-            },
-            onClose: () => this.tabContainer.innerHTML = ''
+            onOpen: () => that.initAddEnginePage(),
+            onClose: () => this.addEngineTabContainer.innerHTML = ''
+        });
+    }
+
+    initAddEnginePage() {
+        dust.render(this.addEngineTmpl, { types: APP.ctx.appCfg.engineExamples.types }, (err, out) => {
+            this.addEngineTabContainer = document.querySelector('#addEngineTabContainer');
+            this.addEngineTabContainer.innerHTML = out;
+            this.initAddEngine();
+            this.updateSearchEngineIcons();
         });
     }
 
     initAddEngineBtns() {
-        this.addEngineBtns.forEach(btn => btn.addEventListener('click', event => {
-            const prefix = 'engine-add-';
-            const postfix = `-input-${btn.dataset.engineType}-${btn.dataset.engineName}`;
-            const nameInput = document.querySelector(`[id="${prefix}name${postfix}"]`);
-            const urlInput = document.querySelector(`[id="${prefix}url${postfix}"]`);
-            const iconInput = document.querySelector(`[id="${prefix}icon${postfix}"]`);
-            const engine = SearchEngineUtil.createEngine({
-                name: nameInput == null ? '' : nameInput.value,
-                url: urlInput == null ? '' : urlInput.value,
-                icon: iconInput == null ? '' : iconInput.value
-            });
+        this.addEngineBtns.forEach(btn => btn.addEventListener('click', () => {
+            const
+                prefix = 'engine-add-',
+                postfix = `-input-${btn.dataset.engineType}-${btn.dataset.engineName}`,
+                nameInput = document.querySelector(`[id="${prefix}name${postfix}"]`),
+                urlInput = document.querySelector(`[id="${prefix}url${postfix}"]`),
+                iconInput = document.querySelector(`[id="${prefix}icon${postfix}"]`),
+                engine = SearchEngineUtil.createEngine({
+                    name: nameInput == null ? '' : nameInput.value,
+                    url: urlInput == null ? '' : urlInput.value,
+                    icon: iconInput == null ? '' : iconInput.value
+                });
 
             this.addSearchEngine(engine);
         }));
     }
 
     initAddTestEngines() {
-        this.addTestEngines.addEventListener('click', event => {
+        this.addTestEngines.addEventListener('click', () => {
             const engines = [];
 
             for (let i = 0; i < 999; i++) {
@@ -175,12 +180,13 @@ export default class AppAddEngine {
 
     initOpenIconBtns() {
         this.openIconBtns.forEach(openIconBtn => openIconBtn.addEventListener('change', async event => {
-            const btn = event.target;
-            const file = btn.files[0];
-            const targetId = btn.dataset.targetId;
-            const input = document.querySelector(`input[id="${targetId}"]`);
-            const img = document.querySelector(`img[id="${targetId}-img"]`);
-            const base64 = await FileUtil.readFileAsBase64(file);
+            const
+                btn = event.target,
+                file = btn.files[0],
+                targetId = btn.dataset.targetId,
+                input = document.querySelector(`input[id="${targetId}"]`),
+                img = document.querySelector(`img[id="${targetId}-img"]`),
+                base64 = await FileUtil.readFileAsBase64(file);
 
             this.updateSearchEngineIcon(input, img, base64);
         }));
@@ -195,19 +201,22 @@ export default class AppAddEngine {
     }
 
     updateSearchEngineIcons() {
-        const imgs = document.querySelectorAll('img[id^="engine-add-icon-input-"]');
-        const inputs = document.querySelectorAll('input[id^="engine-add-icon-input-"]');
+        const
+            imgs = document.querySelectorAll('img[id^="engine-add-icon-input-"]'),
+            inputs = document.querySelectorAll('input[id^="engine-add-icon-input-"]');
 
         imgs.forEach((img, index) => this.updateSearchEngineIcon(inputs[index], img, null));
     }
 
     addSearchEngines(engines) {
-        if (typeof this.engines.engines !== 'undefined') {
+        const appEditor = APP.ctx.appEditor;
+
+        if (typeof appEditor.engines.engines !== 'undefined') {
             try {
                 this.updateDataSource();
 
                 const
-                    engineNames = this.engines.engines.map(engine => engine._name),
+                    engineNames = appEditor.engines.engines.map(engine => engine._name),
                     existedEngineNames = engines
                         .map(engine => {
                             const name = engine._name;
@@ -221,28 +230,30 @@ export default class AppAddEngine {
 
                     alert(msg);
                 } else {
-                    this.engines.engines.unshift(...engines);
+                    appEditor.engines.engines.unshift(...engines);
                     this.updateEditor();
                 }
             } catch (parseEx) {
                 alert('JSON is invalid!');
             }
         } else {
-            alert('Engines is not defined correctly!')
+            alert('Engines is not defined correctly!');
         }
     }
 
     addSearchEngine(engine) {
-        if (typeof this.engines.engines !== 'undefined') {
+        const appEditor = APP.ctx.appEditor;
+
+        if (typeof appEditor.engines.engines !== 'undefined') {
             try {
                 this.updateDataSource();
 
                 const engineName = engine._name;
 
-                if (this.engines.engines.map(engine => engine._name).includes(engineName)) {
+                if (appEditor.engines.engines.map(engine => engine._name).includes(engineName)) {
                     alert(`There is already a engine with the name '${engineName}'! Rename the engine '${engineName}' and try again.`);
                 } else {
-                    this.engines.engines.unshift(engine);
+                    appEditor.engines.engines.unshift(engine);
                     this.updateEditor();
                 }
             } catch (parseEx) {

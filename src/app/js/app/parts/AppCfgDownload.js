@@ -1,7 +1,6 @@
 export default class AppCfgDownload {
     constructor() {
         this.downloadTypeSwitcher = null;
-        this.downloadType = null;
     }
 
     init() {
@@ -22,25 +21,5 @@ export default class AppCfgDownload {
                 }
             });
         });
-
-        this.setDefaultDownloadType();
-    }
-
-    // to work as a html page, we will set up default way to save the file
-    setDefaultDownloadType() {
-        if (typeof browser === 'undefined') {
-            for (const switcher of this.downloadTypeSwitcher) {
-                switch (true) {
-                    case switcher.value === 'browserLink' : {
-                        switcher.click();
-                        break;
-                    }
-                    case switcher.value === 'webExt': {
-                        switcher.disabled = true;
-                        break;
-                    }
-                }
-            }
-        }
     }
 }

@@ -3,6 +3,8 @@ import OpenFileUtil from '../../lib/app/fileUtil/OpenFileUtil.js';
 import SaveFileUtil from '../../lib/app/fileUtil/SaveFileUtil.js';
 import MozLz4ArchiverCommandMozLz4 from '../../lib/app/mozLz4Archiver/command/MozLz4ArchiverCommandMozLz4.js';
 import MozLz4Archiver from '../../lib/app/mozLz4Archiver/MozLz4ArchiverImpl.js';
+import { APP } from '../App.js';
+import WEB_EXT_API from '../../lib/app/WebExtApi.js';
 
 export default class AppEditor {
     constructor() {
@@ -85,14 +87,13 @@ export default class AppEditor {
     }
 
     initSaveAsMozlz4Btn() {
-        this.saveAsMozlz4Btn.addEventListener('click', async event => {
-            let file = this.codeMirrorFileContent.getValue();
-            const fileName = this.fileInfo.value;
-
-            file = MozLz4Archiver.compress(file, new MozLz4ArchiverCommandMozLz4());
+        this.saveAsMozlz4Btn.addEventListener('click', async () => {
+            const
+                fileName = this.fileInfo.value,
+                file = MozLz4Archiver.compress(this.codeMirrorFileContent.getValue(), new MozLz4ArchiverCommandMozLz4());
 
             try {
-                await SaveFileUtil.saveData(file, fileName, this.downloadType);
+                await SaveFileUtil.saveData(file, fileName, APP.ctx.appCfg.downloadType);
             } catch (e) {
                 alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
             }
@@ -101,13 +102,13 @@ export default class AppEditor {
 
     initSaveAsJsonBtn() {
         this.saveAsJsonBtn
-            .addEventListener('click', async event => {
+            .addEventListener('click', async () => {
                 const
                     enginesJSONStr = this.codeMirrorFileContent.getValue(),
                     fileName = `${this.fileInfo.value}.json`;
 
                 try {
-                    await SaveFileUtil.saveData(enginesJSONStr, fileName, this.downloadType);
+                    await SaveFileUtil.saveData(enginesJSONStr, fileName, APP.ctx.appCfg.downloadType);
                 } catch (e) {
                     alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
                 }
@@ -122,54 +123,52 @@ export default class AppEditor {
     }
 
     initOpenFileBtn() {
-        this.openFileBtn
-            .addEventListener('change', async event => {
-                this.setStatusLoading();
-                this.clrFileInfoBlock();
+        this.openFileBtn.addEventListener('change', async event => {
+            this.setStatusLoading();
+            this.clrFileInfoBlock();
+
+            try {
+                let file = event.target.files[0];
+
+                const fileName = file.name;
+
+                file = await FileUtil.readFileAsUint8Array(file);
+                file = MozLz4Archiver.decompress(file);
+
+                if (file.header !== '') {
+                    this.setMozHeader(file.header);
+                }
+
+                if (file.decompressSizeHeader !== '') {
+                    this.setMozDecompSize(file.decompressSizeHeader, file.decompressSize);
+                }
+
+                this.fileInfo.value = fileName;
+                this.typeName.value = file.typeName;
+
+                const fileTxt = new TextDecoder().decode(file.file);
 
                 try {
-                    let file = event.target.files[0];
-
-                    const fileName = file.name;
-
-                    file = await FileUtil.readFileAsUint8Array(file);
-                    file = MozLz4Archiver.decompress(file);
-
-                    if (file.header !== '') {
-                        this.setMozHeader(file.header);
-                    }
-
-                    if (file.decompressSizeHeader !== '') {
-                        this.setMozDecompSize(file.decompressSizeHeader, file.decompressSize);
-                    }
-
-                    this.fileInfo.value = fileName;
-                    this.typeName.value = file.typeName;
-
-                    const fileTxt = new TextDecoder().decode(file.file);
-
-                    try {
-                        this.engines = JSON.parse(fileTxt);
-                        this.setTxtResultField(this.codeMirrorFileContent, this.engines);
-                    } catch (jsonParseEx) {
-                        this.setTxtResultFieldTxt(this.codeMirrorFileContent, fileTxt);
-                    }
-                } catch (e) {
-                    console.error(e);
-                    this.setStatusFail();
+                    this.engines = JSON.parse(fileTxt);
+                    this.setTxtResultField(this.codeMirrorFileContent, this.engines);
+                } catch (jsonParseEx) {
+                    this.setTxtResultFieldTxt(this.codeMirrorFileContent, fileTxt);
                 }
-            });
+            } catch (e) {
+                console.error(e);
+                this.setStatusFail();
+            }
+        });
     }
 
     initOpenJSONInNewTabBtn() {
-        this.openJSONInNewTabBtn.addEventListener('click', event => {
-            const json = this.codeMirrorFileContent.getValue();
+        if (WEB_EXT_API.isWebExt) {
+            this.openJSONInNewTabBtn.addEventListener('click', () => {
+                const json = this.codeMirrorFileContent.getValue();
 
-            OpenFileUtil.openAsJson(json);
-        });
-
-        // to work as a page, we will block broken 'open in new tab' function
-        if (typeof browser === 'undefined') {
+                OpenFileUtil.openAsJson(json);
+            });
+        } else {
             this.openJSONInNewTabBtn.disabled = true;
         }
     }

@@ -125,16 +125,4 @@ export default class AppCfgEngine {
             alert('Error. JSON is invalid.');
         }
     }
-
-    getEngineType(typeName) {
-        return this.engineExamples.types.find(t => t.name === typeName);
-    }
-
-    getEngine(typeName, name) {
-        const engineType = this.getEngineType(typeName);
-
-        if (engineType !== undefined) {
-            return engineType.engines.find(e => e.name === name);
-        }
-    }
 }
