@@ -1,10 +1,10 @@
 import ModalPlugin from '../../lib/app/modal/ModalPlugin.js';
 import TabPlugin from '../../lib/app/tab/TabPlugin.js';
 import WEB_EXT_API from '../../lib/app/WebExtApi.js';
+import {APP} from '../App.js';
 
 export default class AppCfgEngine {
     constructor() {
-        this.engineExamples = null;
         this.codeMirrorEngineList = null;
     }
 
@@ -17,8 +17,6 @@ export default class AppCfgEngine {
     }
 
     async init() {
-        await this.initCfgEngineList();
-        await this.initCfgTmpl();
         this.initEngineListEditor();
         await this.initEngineCfgBtn();
         this.initFormatCfgEngineListBtn();
@@ -41,12 +39,6 @@ export default class AppCfgEngine {
         );
     }
 
-    async initCfgTmpl() {
-        document.querySelector('#cfgContainer').innerHTML = await (
-            await fetch(WEB_EXT_API.getURL('app/cfg.htm'))
-        ).text();
-    }
-
     async initEngineCfgBtn() {
         const that = this;
 
@@ -59,7 +51,7 @@ export default class AppCfgEngine {
 
     updCfgEngineList(jsonObj) {
         if (jsonObj === undefined) {
-            this.codeMirrorEngineList.setValue(JSON.stringify(this.engineExamples, null, 4));
+            this.codeMirrorEngineList.setValue(JSON.stringify(APP.ctx.appCfg.engineExamples, null, 4));
         } else {
             this.codeMirrorEngineList.setValue(JSON.stringify(jsonObj, null, 4));
         }
@@ -95,17 +87,17 @@ export default class AppCfgEngine {
 
     async initResetCfgEngineListBtn() {
         document.querySelector('#resetCfgEngineListBtn').addEventListener('click', async () => {
-            await this.initEngineExamples();
+            await APP.ctx.appCfg.initEngineExamples();
             this.updCfgEngineList();
 
-            if (typeof browser !== 'undefined') {
+            if (WEB_EXT_API.isWebExt) {
                 await this.saveCfgEngineList();
             }
         });
     }
 
     initSaveCfgEngineListBtn() {
-        if (typeof browser !== 'undefined') {
+        if (WEB_EXT_API.isWebExt) {
             document.querySelector('#saveCfgEngineListBtn').addEventListener('click', () => {
                 this.saveCfgEngineList();
             });
@@ -116,7 +108,7 @@ export default class AppCfgEngine {
 
     async saveCfgEngineList() {
         try {
-            this.engineExamples = this.getCfgEngineList();
+            APP.ctx.appCfg.engineExamples = this.getCfgEngineList();
 
             const engineExamples = this.engineExamples;
 

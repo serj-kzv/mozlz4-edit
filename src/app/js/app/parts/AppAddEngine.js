@@ -133,6 +133,7 @@ export default class AppAddEngine {
     }
 
     initAddEnginePage() {
+        console.log(APP)
         dust.render(this.addEngineTmpl, { types: APP.ctx.appCfg.engineExamples.types }, (err, out) => {
             this.addEngineTabContainer = document.querySelector('#addEngineTabContainer');
             this.addEngineTabContainer.innerHTML = out;
@@ -213,7 +214,7 @@ export default class AppAddEngine {
 
         if (typeof appEditor.engines.engines !== 'undefined') {
             try {
-                this.updateDataSource();
+                appEditor.updateDataSource();
 
                 const
                     engineNames = appEditor.engines.engines.map(engine => engine._name),
@@ -231,13 +232,13 @@ export default class AppAddEngine {
                     alert(msg);
                 } else {
                     appEditor.engines.engines.unshift(...engines);
-                    this.updateEditor();
+                    appEditor.updateEditor();
                 }
             } catch (parseEx) {
                 alert('JSON is invalid!');
             }
         } else {
-            alert('Engines is not defined correctly!');
+            alert('Engines are not defined correctly!');
         }
     }
 
@@ -246,7 +247,7 @@ export default class AppAddEngine {
 
         if (typeof appEditor.engines.engines !== 'undefined') {
             try {
-                this.updateDataSource();
+                appEditor.updateDataSource();
 
                 const engineName = engine._name;
 
@@ -254,13 +255,13 @@ export default class AppAddEngine {
                     alert(`There is already a engine with the name '${engineName}'! Rename the engine '${engineName}' and try again.`);
                 } else {
                     appEditor.engines.engines.unshift(engine);
-                    this.updateEditor();
+                    appEditor.updateEditor();
                 }
             } catch (parseEx) {
                 alert('JSON is invalid!');
             }
         } else {
-            alert('Engines is not defined correctly!');
+            alert('Engines are not defined correctly!');
         }
     }
 

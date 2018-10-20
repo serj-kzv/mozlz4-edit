@@ -1,11 +1,11 @@
 ##### What is it?
 **mozlz4-edit** is a file archiver that can open, edit and save text ```mozlz4``` files.
 <br>
-The mozlz4-edit is developed as an WebExtension addon because ```mozlz4```
-file format is [Mozilla Firefox](https://www.mozilla.org)-based products' only.
+The mozlz4-edit is developed as an WebExtension addon because a ```mozlz4```
+file format is the [Mozilla Firefox](https://www.mozilla.org)-based products' format only.
 
 ##### Installation
-Click [mozlz4-edit for Firefox](https://addons.mozilla.org/addon/mozlz4-edit/) to install.
+Click a [mozlz4-edit for Firefox](https://addons.mozilla.org/addon/mozlz4-edit/) link to install.
 
 ##### Description
 
@@ -19,7 +19,7 @@ flag to compress a file as the ```legacy``` lz4.
 This project uses [node-lz4](https://github.com/pierrec/node-lz4),
 [dustjs](https://github.com/linkedin/dustjs),
 [multi.js](https://github.com/fabianlindfors/multi.js)
-and [CodeMirror](https://github.com/codemirror/CodeMirror) libs.
+and [CodeMirror](https://github.com/codemirror/CodeMirror) libraries.
 They are inside the source code and no need to advance installing.
 Their licenses inside a ```LICENSES``` source code directory.
 

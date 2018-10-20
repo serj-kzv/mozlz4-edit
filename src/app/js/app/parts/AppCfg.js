@@ -1,3 +1,4 @@
+import OPTION_API from '../../lib/app/OptionApi.js';
 import WEB_EXT_API from '../../lib/app/WebExtApi.js';
 
 export default class AppCfg {
@@ -16,7 +17,8 @@ export default class AppCfg {
 
     async init() {
         await this.initCfgEngineList();
-        this.setDefaultDownloadType();
+        await this.initDownloadType();
+        await this.initCfgTmpl();
     }
 
     async initEngineExamples() {
@@ -28,10 +30,10 @@ export default class AppCfg {
     async initCfgEngineList() {
         if (WEB_EXT_API.isWebExt) {
             try {
-                const stored = await browser.storage.local.get('options');
+                const engineExamples = await OPTION_API.readEngineExamples();
 
-                if (typeof stored.options !== 'undefined') {
-                    this.engineExamples = stored.options.engineExamples;
+                if (engineExamples !== undefined) {
+                    this.engineExamples = engineExamples;
                 } else {
                     await this.loadAndSaveDefaultEngineList();
                 }
@@ -48,26 +50,21 @@ export default class AppCfg {
 
         const engineExamples = this.engineExamples;
 
-        await browser.storage.local.set({ options: { engineExamples } });
+        await OPTION_API.saveEngineExamples(engineExamples);
     }
 
-    setDefaultDownloadType() {
-        this.downloadType = WEB_EXT_API.isWebExt ? 'webExt' : 'browserLink';
-        console.log(this.downloadType)
-        // if (WEB_EXT_API.isWebExt) {
-        //     for (const switcher of this.downloadTypeSwitcher) {
-        //         switch (true) {
-        //             case switcher.value === 'browserLink': {
-        //                 switcher.click();
-        //                 break;
-        //             }
-        //             case switcher.value === 'webExt': {
-        //                 switcher.disabled = true;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }
+    async initDownloadType() {
+        if (WEB_EXT_API.isWebExt) {
+            const downloadType = await OPTION_API.readDownloadType();
+
+            if (downloadType === undefined) {
+                await OPTION_API.saveDownloadType(this.downloadType = 'webExt');
+            } else {
+                this.downloadType = downloadType;
+            }
+        } else {
+            this.downloadType = 'browserLink';
+        }
     }
 
     getEngineType(typeName) {
@@ -80,5 +77,11 @@ export default class AppCfg {
         if (engineType !== undefined) {
             return engineType.engines.find(e => e.name === name);
         }
+    }
+
+    async initCfgTmpl() {
+        document.querySelector('#cfgContainer').innerHTML = await (
+            await fetch(WEB_EXT_API.getURL('app/cfg.htm'))
+        ).text();
     }
 }
