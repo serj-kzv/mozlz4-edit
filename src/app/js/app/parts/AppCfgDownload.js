@@ -1,5 +1,6 @@
 import OPTION_API from '../../lib/app/OptionApi.js';
 import WEB_EXT_API from '../../lib/app/WebExtApi.js';
+import {APP} from '../App.js';
 
 export default class AppCfgDownload {
     constructor() {
@@ -16,32 +17,47 @@ export default class AppCfgDownload {
 
     async init() {
         this.downloadTypeSwitcher = Array.from(document.querySelectorAll('input[name="downloadType"]'));
-        this.initDownloadTypeSwitcher();
+        await this.initDownloadTypeSwitcher();
     }
 
-    initDownloadTypeSwitcher() {
-        this.downloadTypeSwitcher.forEach(switcher => {
-            switcher.addEventListener('change', evt => {
-                const that = evt.target;
+    async initDownloadTypeSwitcher() {
+        if (WEB_EXT_API.isWebExt) {
+            const downloadType = await OPTION_API.readDownloadType();
 
-                if (that.checked) {
-                    OPTION_API.saveDownloadType(this.downloadType = that.value);
-                }
-            });
-        });
-        if (!WEB_EXT_API.isWebExt) {
+            this.downloadTypeSwitcher.find(switcher => switcher.value === downloadType).click();
+        } else {
+            // small optimization, radioCount > N has to break the loop, where N == ('quantity of case operators' - 1)
+            let radioCount = 0;
+
             for (const switcher of this.downloadTypeSwitcher) {
+                if (radioCount > 1) {
+                    break;
+                }
                 switch (true) {
                     case switcher.value === 'browserLink': {
                         switcher.click();
+                        radioCount++;
                         break;
                     }
                     case switcher.value === 'webExt': {
                         switcher.disabled = true;
+                        radioCount++;
                         break;
                     }
                 }
             }
         }
+        this.downloadTypeSwitcher.forEach(switcher => {
+            switcher.addEventListener('change', evt => {
+                const that = evt.target;
+
+                if (that.checked) {
+                    APP.ctx.appCfg.downloadType = that.value;
+                    if (WEB_EXT_API.isWebExt) {
+                        OPTION_API.saveDownloadType(that.value);
+                    }
+                }
+            });
+        });
     }
 }
