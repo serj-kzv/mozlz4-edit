@@ -3,7 +3,7 @@ import OpenFileUtil from '../../lib/app/fileUtil/OpenFileUtil.js';
 import SaveFileUtil from '../../lib/app/fileUtil/SaveFileUtil.js';
 import MozLz4ArchiverCommandMozLz4 from '../../lib/app/mozLz4Archiver/command/MozLz4ArchiverCommandMozLz4.js';
 import MozLz4Archiver from '../../lib/app/mozLz4Archiver/MozLz4ArchiverImpl.js';
-import { APP } from '../App.js';
+import {APP} from '../App.js';
 import WEB_EXT_API from '../../lib/app/WebExtApi.js';
 
 export default class AppEditor {
@@ -69,6 +69,7 @@ export default class AppEditor {
         this.initSaveAsJsonBtn();
         this.initOpenFileBtn();
         this.initOpenJSONInNewTabBtn();
+        this.initDevToolsBtn();
     }
 
     initEditor() {
@@ -217,5 +218,16 @@ export default class AppEditor {
     setMozDecompSize(decompressSizeHeader, decompressSize) {
         this.mozDecompSize.value = decompressSizeHeader;
         this.mozDecompSizeTxt.value = decompressSize;
+    }
+
+    initDevToolsBtn() {
+        const btn = document.querySelector('#devToolsBtn');
+
+        if (WEB_EXT_API.isWebExt) {
+            btn.addEventListener('click', () =>
+                window.open('../standalone_scripts/index.html'));
+        } else {
+            btn.disabled = true;
+        }
     }
 }
