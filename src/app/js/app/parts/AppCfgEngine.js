@@ -1,4 +1,5 @@
 import ModalPlugin from '../../lib/app/modal/ModalPlugin.js';
+import OPTION_API from '../../lib/app/OptionApi.js';
 import TabPlugin from '../../lib/app/tab/TabPlugin.js';
 import WEB_EXT_API from '../../lib/app/WebExtApi.js';
 import {APP} from '../App.js';
@@ -97,22 +98,22 @@ export default class AppCfgEngine {
     }
 
     initSaveCfgEngineListBtn() {
+        const saveCfgEngineListBtn = document.querySelector('#saveCfgEngineListBtn');
+
         if (WEB_EXT_API.isWebExt) {
-            document.querySelector('#saveCfgEngineListBtn').addEventListener('click', () => {
+            saveCfgEngineListBtn.addEventListener('click', () => {
                 this.saveCfgEngineList();
             });
         } else {
-            document.querySelector('#saveCfgEngineListBtn').disabled = true
+            saveCfgEngineListBtn.disabled = true
         }
     }
 
     async saveCfgEngineList() {
         try {
-            APP.ctx.appCfg.engineExamples = this.getCfgEngineList();
+            const engineExamples = APP.ctx.appCfg.engineExamples = this.getCfgEngineList();
 
-            const engineExamples = this.engineExamples;
-
-            await browser.storage.local.set({options: {engineExamples}});
+            await OPTION_API.saveEngineExamples(engineExamples);
         } catch (e) {
             alert('Error. JSON is invalid.');
         }

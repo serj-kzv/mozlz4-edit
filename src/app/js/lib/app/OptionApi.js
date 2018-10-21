@@ -11,6 +11,14 @@ class OptionApi {
         }
     }
 
+    async saveOptions(name, data) {
+        const options = await this.readOptions();
+
+        options[name] = data;
+
+        return await browser.storage.local.set({options});
+    }
+
     async readEngineExamples() {
         const options = await this.readOptions();
 
@@ -28,11 +36,11 @@ class OptionApi {
     }
 
     async saveEngineExamples(engineExamples) {
-        return await browser.storage.local.set({options: {engineExamples}});
+        return await this.saveOptions('engineExamples', engineExamples);
     }
 
     async saveDownloadType(downloadType) {
-        return await browser.storage.local.set({options: {downloadType}});
+        return await this.saveOptions('downloadType', downloadType);
     }
 
     static cfg() {

@@ -4,7 +4,7 @@ import ModalPlugin from '../../lib/app/modal/ModalPlugin.js';
 import SearchEngineUtil from '../../lib/app/SearchEngineUtil.js';
 import TabPlugin from '../../lib/app/tab/TabPlugin.js';
 import WEB_EXT_API from '../../lib/app/WebExtApi.js';
-import { APP } from '../App.js';
+import {APP} from '../App.js';
 
 export default class AppAddEngine {
     constructor() {
@@ -67,7 +67,7 @@ export default class AppAddEngine {
                 if (value.length > 0) {
                     iconInput.value = await FileUtil.readFileAsBase64(new Blob(
                         [IconUtil.txtToSvg(value, 23, 23)],
-                        { type: 'image/svg+xml' }
+                        {type: 'image/svg+xml'}
                     ));
 
                     const img = engineBlock.querySelector('img[id^="engine-add-icon-input-"]');
@@ -133,8 +133,7 @@ export default class AppAddEngine {
     }
 
     initAddEnginePage() {
-        console.log(APP)
-        dust.render(this.addEngineTmpl, { types: APP.ctx.appCfg.engineExamples.types }, (err, out) => {
+        dust.render(this.addEngineTmpl, {types: APP.ctx.appCfg.engineExamples.types}, (err, out) => {
             this.addEngineTabContainer = document.querySelector('#addEngineTabContainer');
             this.addEngineTabContainer.innerHTML = out;
             this.initAddEngine();
