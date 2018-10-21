@@ -91,8 +91,10 @@ export default class AppCfg {
 
         if (WEB_EXT_API.isWebExt) {
             fullCfgResetBtn.addEventListener('click', async () => {
-                await OPTION_API.clear();
-                document.location.replace(location.href);
+                if (window.confirm('Are you sure that you want to delete all configurations?')) {
+                    await OPTION_API.clear();
+                    document.location.replace(location.href);
+                }
             });
         } else {
             fullCfgResetBtn.disabled = true;
