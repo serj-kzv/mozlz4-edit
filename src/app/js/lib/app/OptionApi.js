@@ -19,20 +19,24 @@ class OptionApi {
         return await browser.storage.local.set({options});
     }
 
-    async readEngineExamples() {
+    async readOptionsData(name) {
         const options = await this.readOptions();
 
-        if (options !== undefined && typeof options.engineExamples !== 'undefined') {
-            return options.engineExamples;
+        if (options !== undefined) {
+            const cfg = options[name];
+
+            if (typeof cfg !== 'undefined') {
+                return cfg;
+            }
         }
     }
 
-    async readDownloadType() {
-        const options = await this.readOptions();
+    async readEngineExamples() {
+        return await this.readOptionsData('engineExamples');
+    }
 
-        if (options !== undefined && typeof options.downloadType !== 'undefined') {
-            return options.downloadType;
-        }
+    async readDownloadType() {
+        return await this.readOptionsData('downloadType');
     }
 
     async saveEngineExamples(engineExamples) {
