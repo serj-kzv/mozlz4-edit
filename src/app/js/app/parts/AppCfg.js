@@ -19,6 +19,7 @@ export default class AppCfg {
         await this.initCfgEngineList();
         await this.initDownloadType();
         await this.initCfgTmpl();
+        this.initFullCfgResetBtn();
     }
 
     async initEngineExamples() {
@@ -83,5 +84,18 @@ export default class AppCfg {
         document.querySelector('#cfgContainer').innerHTML = await (
             await fetch(WEB_EXT_API.getURL('app/cfg.htm'))
         ).text();
+    }
+
+    initFullCfgResetBtn() {
+        const fullCfgResetBtn = document.querySelector('#fullCfgResetBtn');
+
+        if (WEB_EXT_API.isWebExt) {
+            fullCfgResetBtn.addEventListener('click', async () => {
+                await OPTION_API.clear();
+                document.location.replace(location.href);
+            });
+        } else {
+            fullCfgResetBtn.disabled = true;
+        }
     }
 }

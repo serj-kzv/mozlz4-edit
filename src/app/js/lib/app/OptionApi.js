@@ -52,6 +52,10 @@ class OptionApi {
     async saveDownloadType(downloadType) {
         return await this.saveOptionsData('downloadType', downloadType);
     }
+
+    async clear() {
+        return await browser.storage.local.clear();
+    }
 }
 
 const OPTION_API = new OptionApi();

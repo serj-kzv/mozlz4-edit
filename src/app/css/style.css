@@ -31,15 +31,14 @@ html, body {
     position: fixed;
     top: 0;
     left: 0;
-    height: 157px;
+    height: 70px;
     width: 100%;
     display: block;
     z-index: 5;
 }
 
 #txtResultWrapper {
-    margin-top: 80px;
-    padding-top: 80px;
+    padding-top: 73px;
 }
 
 .beside {
@@ -231,4 +230,10 @@ button:disabled,
 
 .radio-switcher .radio-switcher-container-title {
     font-weight: bold;
+}
+
+#cfgFns {
+    margin-top: 25px;
+    padding: 10px;
+    border: 1px solid black;
 }
