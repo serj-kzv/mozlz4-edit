@@ -1,22 +1,28 @@
 class OptionApi {
-    constructor() {
-        this.CFG = OptionApi.cfg();
-    }
-
     async readOptions() {
-        const stored = await browser.storage.local.get(this.CFG.name);
+        const stored = await browser.storage.local.get('options');
 
         if (typeof stored.options !== 'undefined') {
             return stored.options;
         }
+
+        return await this.saveOptions({});
     }
 
-    async saveOptions(name, data) {
+    async saveOptions(options) {
+        await browser.storage.local.set({options});
+
+        return options;
+    }
+
+    async saveOptionsData(name, data) {
         const options = await this.readOptions();
 
-        options[name] = data;
+        if (options !== undefined) {
+            options[name] = data;
 
-        return await browser.storage.local.set({options});
+            return await browser.storage.local.set({options});
+        }
     }
 
     async readOptionsData(name) {
@@ -40,17 +46,11 @@ class OptionApi {
     }
 
     async saveEngineExamples(engineExamples) {
-        return await this.saveOptions('engineExamples', engineExamples);
+        return await this.saveOptionsData('engineExamples', engineExamples);
     }
 
     async saveDownloadType(downloadType) {
-        return await this.saveOptions('downloadType', downloadType);
-    }
-
-    static cfg() {
-        return Object.freeze({
-            name: 'options'
-        });
+        return await this.saveOptionsData('downloadType', downloadType);
     }
 }
 
