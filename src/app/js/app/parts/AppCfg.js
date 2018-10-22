@@ -48,10 +48,7 @@ export default class AppCfg {
 
     async loadAndSaveDefaultEngineList() {
         await this.initEngineExamples();
-
-        const engineExamples = this.engineExamples;
-
-        await OPTION_API.saveEngineExamples(engineExamples);
+        await OPTION_API.saveEngineExamples(this.engineExamples);
     }
 
     async initDownloadType() {

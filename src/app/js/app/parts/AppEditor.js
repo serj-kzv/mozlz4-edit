@@ -90,9 +90,14 @@ export default class AppEditor {
 
     initSaveAsMozlz4Btn() {
         this.saveAsMozlz4Btn.addEventListener('click', async () => {
-            const
-                fileName = this.fileInfo.value,
-                file = MozLz4Archiver.compress(this.codeMirrorFileContent.getValue(), new MozLz4ArchiverCommandMozLz4());
+            let fileName = this.fileInfo.value;
+            const file = MozLz4Archiver.compress(this.codeMirrorFileContent.getValue(), new MozLz4ArchiverCommandMozLz4());
+
+            if (fileName.length === 0) {
+                fileName = 'file.mozlz4';
+            } else if (!['.lz4', '.mozlz4', '.jsonlz4', '.baklz4'].some(ext => fileName.endsWith(ext))) {
+                fileName = `${fileName}.mozlz4`;
+            }
 
             try {
                 await SaveFileUtil.saveData(file, fileName, APP.ctx.appCfg.downloadType);
@@ -104,14 +109,19 @@ export default class AppEditor {
 
     initSaveAsJsonBtn() {
         this.saveAsJsonBtn.addEventListener('click', async () => {
-            const
-                enginesJSONStr = this.codeMirrorFileContent.getValue(),
-                fileName = `${this.fileInfo.value}.json`;
+            const enginesJSONStr = this.codeMirrorFileContent.getValue();
+            let fileName = this.fileInfo.value;
+
+            if (fileName.length === 0) {
+                fileName = 'file.json';
+            } else if (!fileName.endsWith('.json')) {
+                fileName = `${fileName}.json`;
+            }
 
             try {
                 await SaveFileUtil.saveData(enginesJSONStr, fileName, APP.ctx.appCfg.downloadType);
             } catch (e) {
-                alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
+                alert(`An error! Possibly the file '${fileName}.json' is busy. Close programs that can use the file and try again.`);
             }
         });
     }

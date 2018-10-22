@@ -226,9 +226,7 @@ export default class AppAddEngine {
                         .filter(engine => engine !== null);
 
                 if (existedEngineNames.length > 0) {
-                    const msg = `There are already a engine with names "${existedEngineNames.join('", "')}"!`;
-
-                    alert(msg);
+                    alert(`There are already a engine with names "${existedEngineNames.join('", "')}"!`);
                 } else {
                     appEditor.engines.engines.unshift(...engines);
                     appEditor.updateEditor();
