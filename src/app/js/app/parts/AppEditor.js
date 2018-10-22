@@ -95,7 +95,7 @@ export default class AppEditor {
 
             if (fileName.length === 0) {
                 fileName = 'file.mozlz4';
-            } else if (!['.lz4', '.mozlz4', '.jsonlz4', '.baklz4'].some(ext => fileName.endsWith(ext))) {
+            } else if (['.lz4', '.mozlz4', '.jsonlz4', '.baklz4'].every(ext => !fileName.endsWith(ext))) {
                 fileName = `${fileName}.mozlz4`;
             }
 
