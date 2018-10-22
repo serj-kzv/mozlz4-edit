@@ -243,7 +243,12 @@ export default class AppEditor {
 
     initEditorFormatJsonBtn() {
         document.querySelector('#editorFormatJsonBtn').addEventListener('click', () => {
-            this.setTxtResultField(this.codeMirrorFileContent, this.engines);
+            try {
+                this.updateDataSource();
+                this.setTxtResultField(this.codeMirrorFileContent, this.engines);
+            } catch (e) {
+                alert('Error. JSON is invalid!');
+            }
         });
     }
 }
