@@ -70,6 +70,7 @@ export default class AppEditor {
         this.initOpenFileBtn();
         this.initOpenJSONInNewTabBtn();
         this.initDevToolsBtn();
+        this.initEditorFormatJsonBtn();
     }
 
     initEditor() {
@@ -102,18 +103,17 @@ export default class AppEditor {
     }
 
     initSaveAsJsonBtn() {
-        this.saveAsJsonBtn
-            .addEventListener('click', async () => {
-                const
-                    enginesJSONStr = this.codeMirrorFileContent.getValue(),
-                    fileName = `${this.fileInfo.value}.json`;
+        this.saveAsJsonBtn.addEventListener('click', async () => {
+            const
+                enginesJSONStr = this.codeMirrorFileContent.getValue(),
+                fileName = `${this.fileInfo.value}.json`;
 
-                try {
-                    await SaveFileUtil.saveData(enginesJSONStr, fileName, APP.ctx.appCfg.downloadType);
-                } catch (e) {
-                    alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
-                }
-            });
+            try {
+                await SaveFileUtil.saveData(enginesJSONStr, fileName, APP.ctx.appCfg.downloadType);
+            } catch (e) {
+                alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
+            }
+        });
     }
 
     clrFileInfoBlock() {
@@ -229,5 +229,11 @@ export default class AppEditor {
         } else {
             btn.disabled = true;
         }
+    }
+
+    initEditorFormatJsonBtn() {
+        document.querySelector('#editorFormatJsonBtn').addEventListener('click', evt => {
+            this.setTxtResultField(this.codeMirrorFileContent, this.engines);
+        });
     }
 }

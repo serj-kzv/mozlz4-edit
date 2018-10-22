@@ -1,4 +1,5 @@
 {
+  "defaultEngineListUrl": "https://raw.githubusercontent.com/serj-kzv/mozlz4-edit/master/src/app/resources/engines.json",
   "types": [
     {
       "name": "General",

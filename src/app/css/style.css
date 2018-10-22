@@ -104,12 +104,12 @@ button:not(:disabled):hover,
 .file-label {
 }
 
-#tabContainer2,
+#cfgTabContainer,
 #tabContainer {
     margin-top: 10px;
 }
 
-#tabContainer2 .TabPlugin-tab,
+#cfgTabContainer .TabPlugin-tab,
 #tabContainer .TabPlugin-tab {
     border: 1px solid black;
     padding: 7px;
@@ -236,4 +236,13 @@ button:disabled,
     margin-top: 25px;
     padding: 10px;
     border: 1px solid black;
+}
+
+.btn-block-title {
+    margin-bottom: 10px;
+    padding: 3px;
+    font-weight: bold;
+    text-decoration: underline;
+    background: black;
+    color: white;
 }

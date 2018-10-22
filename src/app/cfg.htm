@@ -3,9 +3,10 @@
         <span class="modal-cls-btn">&times;</span>
         <div>
             <div id="cfgFns">
+                <div class="btn-block-title">Configuration control</div>
                 <button id="fullCfgResetBtn">Full configuration reset</button>
             </div>
-            <div id="tabContainer2">
+            <div id="cfgTabContainer">
                 <div style="height: 70px; overflow-y: auto;">
                     <div style="max-width: 9999px; margin-top: 20px;">
                     <span class="TabPlugin-tab TabPlugin-tab-default TabPlugin-tab-default"
@@ -24,6 +25,12 @@
                             <button id="saveCfgEngineListBtn">Save</button>
                             <button id="resetCfgEngineListBtn">Reset</button>
                             <button id="formatCfgEngineListBtn">Format JSON</button>
+                            <label for="cfgImportEngineListFileBtn" class="file-label open-icon-label">
+                                Import JSON (FILE)
+                                <input id="cfgImportEngineListFileBtn" type="file" accept=".json">
+                            </label>
+                            <button id="cfgImportEngineListUrlBtn">Import JSON (URL)</button>
+                            <button id="cfgExportEngineListBtn">Export JSON</button>
                         </div>
                         <textarea id="cfgEngineList"></textarea>
                     </div>
@@ -45,7 +52,7 @@
                                     <div class="radio-switcher-container-txt">
                                         <div class="radio-switcher-container-title">In-browser (iframe)</div>
                                         <div class="radio-switcher-container-description">
-                                            (works everywhere, BUGGY! Don't use it!)
+                                            (works everywhere, CAN CAUSE MEMORY LEAK but not very serious!)
                                         </div>
                                     </div>
                                 </label>
@@ -54,7 +61,7 @@
                                     <div class="radio-switcher-container-txt">
                                         <div class="radio-switcher-container-title">In-browser (link)</div>
                                         <div class="radio-switcher-container-description">
-                                            (works everywhere, BUGGY! Don't use it!)
+                                            (works everywhere, CAN CAUSE MEMORY LEAK but not very serious!)
                                         </div>
                                     </div>
                                 </label>

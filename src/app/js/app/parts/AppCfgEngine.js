@@ -1,3 +1,5 @@
+import FileUtil from '../../lib/app/fileUtil/FileUtil.js';
+import SaveFileUtil from '../../lib/app/fileUtil/SaveFileUtil.js';
 import ModalPlugin from '../../lib/app/modal/ModalPlugin.js';
 import OPTION_API from '../../lib/app/OptionApi.js';
 import TabPlugin from '../../lib/app/tab/TabPlugin.js';
@@ -23,6 +25,9 @@ export default class AppCfgEngine {
         this.initFormatCfgEngineListBtn();
         await this.initResetCfgEngineListBtn();
         this.initSaveCfgEngineListBtn();
+        this.initcfgImportEngineListFileBtn();
+        this.initCfgExportEngineListBtn();
+        this.initCfgImportEngineListUrlBtn();
     }
 
     initEngineListEditor() {
@@ -47,15 +52,20 @@ export default class AppCfgEngine {
             onClose: () => that.clrCfgEngineList(),
             onOpen: () => that.updCfgEngineList()
         });
-        new TabPlugin('#tabContainer2');
+        new TabPlugin('#cfgTabContainer');
     }
 
     updCfgEngineList(jsonObj) {
+        let formattedJson;
+
         if (jsonObj === undefined) {
-            this.codeMirrorEngineList.setValue(JSON.stringify(APP.ctx.appCfg.engineExamples, null, 4));
+            formattedJson = JSON.stringify(APP.ctx.appCfg.engineExamples, null, 4);
         } else {
-            this.codeMirrorEngineList.setValue(JSON.stringify(jsonObj, null, 4));
+            formattedJson = JSON.stringify(jsonObj, null, 4);
         }
+        this.codeMirrorEngineList.setValue(formattedJson);
+
+        return formattedJson;
     }
 
     clrCfgEngineList() {
@@ -88,11 +98,13 @@ export default class AppCfgEngine {
 
     async initResetCfgEngineListBtn() {
         document.querySelector('#resetCfgEngineListBtn').addEventListener('click', async () => {
-            await APP.ctx.appCfg.initEngineExamples();
-            this.updCfgEngineList();
+            if (window.confirm('Are you sure that you want to reset the engine list?')) {
+                await APP.ctx.appCfg.initEngineExamples();
+                this.updCfgEngineList();
 
-            if (WEB_EXT_API.isWebExt) {
-                await this.saveCfgEngineList();
+                if (WEB_EXT_API.isWebExt) {
+                    await this.saveCfgEngineList();
+                }
             }
         });
     }
@@ -117,5 +129,59 @@ export default class AppCfgEngine {
         } catch (e) {
             alert('Error. JSON is invalid.');
         }
+    }
+
+    initcfgImportEngineListFileBtn() {
+        document.querySelector('#cfgImportEngineListFileBtn').addEventListener('change', async evt => {
+            const fileTxt = await FileUtil.readFileAsTxt(evt.target.files[0]);
+
+            try {
+                APP.ctx.appCfg.engineExamples = JSON.parse(fileTxt);
+                this.updCfgEngineList();
+            } catch (jsonParseEx) {
+                alert('Error. JSON is invalid!');
+            }
+        });
+    }
+
+    initCfgExportEngineListBtn() {
+        document.querySelector('#cfgExportEngineListBtn').addEventListener('click', async () => {
+            const json = this.codeMirrorEngineList.getValue(), fileName = 'engines.json';
+
+            try {
+                await SaveFileUtil.saveData(json, `${fileName}`, APP.ctx.appCfg.downloadType);
+            } catch (e) {
+                alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
+            }
+        });
+    }
+
+    initCfgImportEngineListUrlBtn() {
+        document.querySelector('#cfgImportEngineListUrlBtn').addEventListener('click', async () => {
+            const url = window.prompt(
+                'Enter an URL to json that contains an engine list.',
+                APP.ctx.appCfg.engineExamples.defaultEngineListUrl
+            );
+
+            if (url == null) {
+                return;
+            }
+
+            let txt;
+
+            try {
+                txt = await (await fetch(url)).text();
+
+                try {
+                    const json = JSON.parse(txt);
+
+                    this.updCfgEngineList(json);
+                } catch (e) {
+                    alert('Error. JSON is invalid.');
+                }
+            } catch (e) {
+                alert('Error. Something wrong with an URL!');
+            }
+        });
     }
 }
