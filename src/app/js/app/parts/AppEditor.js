@@ -242,7 +242,7 @@ export default class AppEditor {
     }
 
     initEditorFormatJsonBtn() {
-        document.querySelector('#editorFormatJsonBtn').addEventListener('click', evt => {
+        document.querySelector('#editorFormatJsonBtn').addEventListener('click', () => {
             this.setTxtResultField(this.codeMirrorFileContent, this.engines);
         });
     }
