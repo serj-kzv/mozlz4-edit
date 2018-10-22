@@ -282,7 +282,8 @@ export default class AppAddEngine {
 
                     return filtered;
                 }, []) : options[param.selectedIndex].value,
-                divider: dataset.multiDivider
+                divider: dataset.multiDivider,
+                andOrDivider: dataset.multiAndOrDivider
             };
         });
     }

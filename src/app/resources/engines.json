@@ -379,6 +379,7 @@
               "multiAndDivider": ".",
               "multiOr": true,
               "multiOrDivider": "|",
+              "multiAndOrDivider": "|",
               "values": [
                 {
                   "name": "Arabic",
@@ -529,6 +530,7 @@
               "multiAndDivider": ".",
               "multiOr": true,
               "multiOrDivider": "|",
+              "multiAndOrDivider": "|",
               "values": [
                 {
                   "name": "Afghanistan",

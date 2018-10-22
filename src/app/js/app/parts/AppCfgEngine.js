@@ -175,7 +175,7 @@ export default class AppCfgEngine {
         if (WEB_EXT_API.isWebExt) {
             cfgImportEngineListUrlBtn.addEventListener('click', async () => {
                 const url = window.prompt(
-                    'Enter an URL to json that contains an engine list.',
+                    'Enter an URL to a JSON file that contains an engine list.',
                     APP.ctx.appCfg.engineExamples.defaultEngineListUrl
                 );
 

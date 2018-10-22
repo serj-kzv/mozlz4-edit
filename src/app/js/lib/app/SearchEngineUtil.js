@@ -32,11 +32,6 @@ export default class SearchEngineUtil {
         };
     }
 
-    /**
-     *  Divider between OR and AND parameter strings is OR
-     *  Example (for Google):
-     *      Concatenated string parameters of 'ru.en.it' and 'gr|ch' is 'ru.en.it|gr|ch'
-     */
     static engineParamsToUrlParams(params) {
         return params.reduce((filtered, param) => {
             const
@@ -49,15 +44,11 @@ export default class SearchEngineUtil {
                     filteredParam = filtered.find(p => p.name === name);
 
                 if (filteredParam !== undefined) {
-                    let orDivider = filteredParam.orDivider;
-
-                    orDivider = orDivider === undefined ? param.divider : orDivider;
-                    filteredParam.urlParam = `${filteredParam.urlParam}${orDivider}${urlParamValue}`;
+                    filteredParam.urlParam = `${filteredParam.urlParam}${param.andOrDivider}${urlParamValue}`;
                 } else {
                     filtered.push({
                         name,
-                        urlParam: `${name}=${urlParamValue}`,
-                        orDivider: param.multiType === 'or' ? param.divider : undefined
+                        urlParam: `${name}=${urlParamValue}`
                     });
                 }
             }
