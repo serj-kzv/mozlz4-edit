@@ -95,13 +95,16 @@ button,
 }
 
 button:not(:disabled):hover,
-.file-label:hover {
+.file-label:not(.disabled):hover {
     background: black;
     color: white;
     cursor: pointer;
 }
 
-.file-label {
+.file-label.disabled {
+    background: #cccccc;
+    text-decoration: line-through;
+    cursor: default;
 }
 
 #cfgTabContainer,

@@ -25,7 +25,7 @@ export default class AppCfgEngine {
         this.initFormatCfgEngineListBtn();
         await this.initResetCfgEngineListBtn();
         this.initSaveCfgEngineListBtn();
-        this.initcfgImportEngineListFileBtn();
+        this.initCfgImportEngineListFileBtn();
         this.initCfgExportEngineListBtn();
         this.initCfgImportEngineListUrlBtn();
     }
@@ -131,57 +131,76 @@ export default class AppCfgEngine {
         }
     }
 
-    initcfgImportEngineListFileBtn() {
-        document.querySelector('#cfgImportEngineListFileBtn').addEventListener('change', async evt => {
-            const fileTxt = await FileUtil.readFileAsTxt(evt.target.files[0]);
+    initCfgImportEngineListFileBtn() {
+        const cfgImportEngineListFileBtn = document.querySelector('#cfgImportEngineListFileBtn');
 
-            try {
-                APP.ctx.appCfg.engineExamples = JSON.parse(fileTxt);
-                this.updCfgEngineList();
-            } catch (jsonParseEx) {
-                alert('Error. JSON is invalid!');
-            }
-        });
+        if (WEB_EXT_API.isWebExt) {
+            cfgImportEngineListFileBtn.addEventListener('change', async evt => {
+                const fileTxt = await FileUtil.readFileAsTxt(evt.target.files[0]);
+
+                try {
+                    APP.ctx.appCfg.engineExamples = JSON.parse(fileTxt);
+                    this.updCfgEngineList();
+                } catch (jsonParseEx) {
+                    alert('Error. JSON is invalid!');
+                }
+            });
+        } else {
+            cfgImportEngineListFileBtn.disabled = true;
+            cfgImportEngineListFileBtn.parentElement.classList.add('disabled');
+        }
     }
 
     initCfgExportEngineListBtn() {
-        document.querySelector('#cfgExportEngineListBtn').addEventListener('click', async () => {
-            const json = this.codeMirrorEngineList.getValue(), fileName = 'engines.json';
+        const cfgExportEngineListBtn = document.querySelector('#cfgExportEngineListBtn');
 
-            try {
-                await SaveFileUtil.saveData(json, `${fileName}`, APP.ctx.appCfg.downloadType);
-            } catch (e) {
-                alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
-            }
-        });
+        if (WEB_EXT_API.isWebExt) {
+            cfgExportEngineListBtn.addEventListener('click', async () => {
+                const json = this.codeMirrorEngineList.getValue(), fileName = 'engines.json';
+
+                try {
+                    await SaveFileUtil.saveData(json, `${fileName}`, APP.ctx.appCfg.downloadType);
+                } catch (e) {
+                    alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
+                }
+            });
+        } else {
+            cfgExportEngineListBtn.disabled = true;
+        }
     }
 
     initCfgImportEngineListUrlBtn() {
-        document.querySelector('#cfgImportEngineListUrlBtn').addEventListener('click', async () => {
-            const url = window.prompt(
-                'Enter an URL to json that contains an engine list.',
-                APP.ctx.appCfg.engineExamples.defaultEngineListUrl
-            );
+        const cfgImportEngineListUrlBtn = document.querySelector('#cfgImportEngineListUrlBtn');
 
-            if (url == null) {
-                return;
-            }
+        if (WEB_EXT_API.isWebExt) {
+            cfgImportEngineListUrlBtn.addEventListener('click', async () => {
+                const url = window.prompt(
+                    'Enter an URL to json that contains an engine list.',
+                    APP.ctx.appCfg.engineExamples.defaultEngineListUrl
+                );
 
-            let txt;
+                if (url == null) {
+                    return;
+                }
 
-            try {
-                txt = await (await fetch(url)).text();
+                let txt;
 
                 try {
-                    const json = JSON.parse(txt);
+                    txt = await (await fetch(url)).text();
 
-                    this.updCfgEngineList(json);
+                    try {
+                        const json = JSON.parse(txt);
+
+                        this.updCfgEngineList(json);
+                    } catch (e) {
+                        alert('Error. JSON is invalid.');
+                    }
                 } catch (e) {
-                    alert('Error. JSON is invalid.');
+                    alert('Error. Something wrong with an URL!');
                 }
-            } catch (e) {
-                alert('Error. Something wrong with an URL!');
-            }
-        });
+            });
+        } else {
+            cfgImportEngineListUrlBtn.disabled = true;
+        }
     }
 }
