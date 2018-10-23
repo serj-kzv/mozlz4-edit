@@ -7,6 +7,12 @@ file format is the [Mozilla Firefox](https://www.mozilla.org)-based products' fo
 ##### Installation
 Click a [mozlz4-edit for Firefox](https://addons.mozilla.org/addon/mozlz4-edit/) link to install.
 
+##### Using without the installing
+**The method does not work with Google Chrome!** The method was tested with **Firefox 62**. There is no warranty for older versions.
+1. Download an addon archive on [this link](https://github.com/serj-kzv/mozlz4-edit/archive/master.zip).
+2. Unpack the archive and open a ```src/index.html``` file of the archive as a simple ```html``` page in Firefox.
+3. Result. It works **even faster** then with the installing as an Firefox's addon. But there is no a configuration saving functionality and the addon auto updating.
+
 ##### Description
 
 The mozlz4 is a [lz4](https://lz4.github.io/lz4/) file archive format with Mozilla's "magic" file header.
