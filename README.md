@@ -7,11 +7,11 @@ file format is the [Mozilla Firefox](https://www.mozilla.org)-based products' fo
 ##### Installation
 Click a [mozlz4-edit for Firefox](https://addons.mozilla.org/addon/mozlz4-edit/) link to install.
 
-##### Using without the installing
+##### Using without the installation
 **The method does not work with Google Chrome!** The method was tested with **Firefox 62**. There is no warranty for older versions.
 1. Download an addon archive on [this link](https://github.com/serj-kzv/mozlz4-edit/archive/master.zip).
 2. Unpack the archive and open a ```src/index.html``` file of the archive as a simple ```html``` page in Firefox.
-3. Result. It works **even faster** then with the installing as an Firefox's addon.
+3. Result. It works **even faster** then with the installation as an Firefox's addon.
 But there is no a configuration saving functionality and the addon auto updating.
 In the mode you can manually edit a ```src/app/resources/engines.json``` file of the unpacked archive to change default engine list.
 Don't forget to press ```Control + F5``` hot keys after the addon files are changed to update the addon page with *file cache resetting* in the mode!
@@ -29,7 +29,7 @@ This project uses [node-lz4](https://github.com/pierrec/node-lz4),
 [dustjs](https://github.com/linkedin/dustjs),
 [multi.js](https://github.com/fabianlindfors/multi.js)
 and [CodeMirror](https://github.com/codemirror/CodeMirror) libraries.
-They are inside the source code and no need to advance installing.
+They are inside the source code and no need to advance installation.
 Their licenses inside a ```LICENSES``` source code directory.
 
 ##### TODO
