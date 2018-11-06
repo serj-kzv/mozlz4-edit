@@ -31,8 +31,8 @@ This project uses [node-lz4](https://github.com/pierrec/node-lz4),
 [dustjs](https://github.com/linkedin/dustjs),
 [multi.js](https://github.com/fabianlindfors/multi.js)
 and [CodeMirror](https://github.com/codemirror/CodeMirror) libraries.
-They are inside the source code and no need to advance installation.
-Their licenses inside a ```LICENSES``` source code directory.
+They are inside of the source code and no need to advance installation.
+Their licenses inside of a ```LICENSES``` source code directory.
 
 # TODO
 1. Use [Emscripten](http://kripken.github.io/emscripten-site/)
