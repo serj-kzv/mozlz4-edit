@@ -12,7 +12,7 @@ Click a [mozlz4-edit for Firefox](https://addons.mozilla.org/addon/mozlz4-edit/)
 1. Download an addon archive on [this link](https://github.com/serj-kzv/mozlz4-edit/archive/master.zip).
 2. Unpack the archive and open a ```src/index.html``` file of the archive as a simple ```html``` page in Firefox.
 
-It works **even faster** for **Firefox 62 and older** because in that case the extension is executed as a separate process. There is no such effect for **Firefox 63 and newer** because its extensions are execute in separate process.
+It works **even faster** for **Firefox 62 and older** because in that case the extension is executed as a separate process. There is no such effect for **Firefox 63 and newer** because its extensions are executed in the separate process.
 <br>
 But there is no a configuration saving functionality and the addon auto updating.
 In the mode you can manually edit a ```src/app/resources/engines.json``` file of the unpacked archive to change default engine list.
