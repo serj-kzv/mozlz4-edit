@@ -34,7 +34,7 @@ export default class OpenFileUtil {
 
         // clear memory on a tab is replaced event
         onReplacedListener = (addedTabId, removedTabId) => {
-            const isRunAndCurrent = currentTab != null && currentTab.id === tabId;
+            const isRunAndCurrent = currentTab != null && currentTab.id === removedTabId;
 
             if (isRunAndCurrent) {
                 clearMemory();
