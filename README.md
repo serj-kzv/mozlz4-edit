@@ -7,7 +7,9 @@ file format is the [Mozilla Firefox](https://www.mozilla.org)-based products' fo
 # Installation
 Click a [mozlz4-edit for Firefox](https://addons.mozilla.org/addon/mozlz4-edit/) link to install.
 
-# Using without the installation
+# (The way does not work with new versions of Firefox!) Using without the installation
+**Note.** It seems that the way to run the extension without an installation **does not work anymore** cause new Firefox versions have restrictions to request local JavaScript files. You can still use the way to run the extension with old versions of Firefox or by installing the extension into Firefox.
+
 **The method does not work with Google Chrome!** The method was tested with **Firefox 62**. There is no warranty for older versions.
 1. Download an addon archive on [this link](https://github.com/serj-kzv/mozlz4-edit/archive/master.zip).
 2. Unpack the archive and open a ```src/index.html``` file of the archive as a simple ```html``` page in Firefox.
