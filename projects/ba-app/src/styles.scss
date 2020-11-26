@@ -1,0 +1,253 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: none;
+  border-radius: 0;
+
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 11px;
+}
+
+b {
+  font-weight: bold;
+}
+
+html, body {
+  height: 100%;
+}
+
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+
+#headerMenu {
+  background: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 70px;
+  width: 100%;
+  display: block;
+  z-index: 5;
+}
+
+#txtResultWrapper {
+  padding-top: 73px;
+}
+
+.beside {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.header-menu-field {
+}
+
+.left, .right {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(50% - 10px);
+  height: 100%;
+  padding: 2px;
+  overflow-y: auto;
+}
+
+.left {
+  border-right: 1px solid black;
+}
+
+.right {
+}
+
+.left > div,
+.right > div {
+  padding-bottom: 2px;
+}
+
+input[type="text"] {
+  border-bottom: 1px solid black;
+  line-height: 16px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+select {
+  border-bottom: 1px solid black;
+}
+
+button,
+.file-label {
+  color: black;
+  height: 23px;
+  min-height: 23px;
+  max-height: 23px;
+  background: white;
+  border: 1px solid black;
+  padding: 4px;
+}
+
+button:not(:disabled):hover,
+.file-label:not(.disabled):hover {
+  background: black;
+  color: white;
+  cursor: pointer;
+}
+
+.file-label.disabled {
+  background: #cccccc;
+  text-decoration: line-through;
+  cursor: default;
+}
+
+#cfgTabContainer,
+#tabContainer {
+  margin-top: 10px;
+}
+
+#cfgTabContainer .TabPlugin-tab,
+#tabContainer .TabPlugin-tab {
+  border: 1px solid black;
+  padding: 7px;
+  font-size: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.tabContainer-content {
+  margin-top: 20px;
+}
+
+.engine-add-block:not(:last-child) {
+  margin-bottom: 25px;
+}
+
+.engine-add-block input {
+  width: 100%;
+}
+
+.engine-add-block input,
+.engine-add-block button {
+
+}
+
+.engine-add-block-line:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.engine-add-params-input-label {
+  font-weight: bold;
+}
+
+.engine-add-params-input-select {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.engine-add-block .engine-icon-txt {
+  width: 150px;
+  margin: 0 5px;
+}
+
+.engine-icon-txt,
+.add-engine-btn,
+.open-icon-label,
+.engine-clr-icon-btn {
+  vertical-align: top;
+  display: inline-block;
+}
+
+.open-icon-label {
+  height: 11px;
+  min-height: 11px;
+  max-height: 11px;
+  padding: 5px;
+}
+
+.engine-icon-container {
+  height: 61px;
+  padding: 3px;
+  border: 1px solid transparent;
+  display: inline;
+}
+
+.engine-add-icon-input-img {
+  vertical-align: bottom;
+}
+
+.radio-switcher {
+  border: 1px solid black;
+  padding: 2px;
+
+}
+
+.radio-switcher .radio-switcher-container-txt {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.radio-switcher input {
+  display: none;
+  color: black;
+  background: white;
+}
+
+button:disabled,
+.radio-switcher input:disabled ~ .radio-switcher-container-txt {
+  background: #cccccc;
+  text-decoration: line-through;
+  cursor: default;
+}
+
+.radio-switcher .radio-switcher-head {
+  font-weight: bold;
+  text-decoration: underline;
+  padding: 0 0 4px 0;
+}
+
+.radio-switcher input ~ .radio-switcher-container-txt {
+  padding: 3px;
+}
+
+.radio-switcher input:checked ~ .radio-switcher-container-txt {
+  color: white;
+  background: black;
+}
+
+.radio-switcher .radio-switcher-container {
+  cursor: pointer;
+  display: inline;
+}
+
+.radio-switcher .radio-switcher-container:hover input:not(:disabled):not(:checked) ~ .radio-switcher-container-txt {
+  background: #606060;
+  color: white;
+}
+
+.radio-switcher .radio-switcher-container-title {
+  font-weight: bold;
+}
+
+#cfgFns {
+  margin-top: 25px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.btn-block-title {
+  margin-bottom: 10px;
+  padding: 3px;
+  font-weight: bold;
+  text-decoration: underline;
+  background: black;
+  color: white;
+}

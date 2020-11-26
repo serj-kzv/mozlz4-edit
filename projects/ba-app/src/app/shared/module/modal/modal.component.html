@@ -1,0 +1,13 @@
+<div class="outlet-popup">
+    <div class="overlay">
+        <div class="popup">
+            <h3 class="text-center">Add engines</h3>
+            <a class="close" (click)="modalService.hide(); modalClosed.emit()">&times;</a>
+
+            <div class="content">
+                <ng-content></ng-content>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,60 +1,103 @@
-# What is it?
-**mozlz4-edit** is an addon (extension), which is a file archiver that can open, edit and save text ```mozlz4``` files.
-<br>
-The mozlz4-edit is developed as an WebExtension addon because a ```mozlz4```
-file format is the [Mozilla Firefox](https://www.mozilla.org)-based products' format only.
+# What is this?
+It's a [Angular](https://angular.io/) Web Extension **boilerplate** for [Mozilla Firefox](https://www.mozilla.org/ru/firefox/).
+You can build all parts of an extension with **Angular** by using the boilerplate.
 
-# Installation
-Click a [mozlz4-edit for Firefox](https://addons.mozilla.org/addon/mozlz4-edit/) link to install.
+**Note.** [Content script](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts) has no a `html` page so it is a simple TypeScript code.
 
-# (The way does not work with new versions of Firefox!) Using without the installation
-**Note.** It seems that the way to run the extension without an installation **does not work anymore** cause new Firefox versions have restrictions to request local JavaScript files. You can still use the way to run the extension with old versions of Firefox or by installing the extension into Firefox.
+# Build
+**Build** all parts of the extension
+```sh
+npm run build
+```
 
-**The method does not work with Google Chrome!** The method was tested with **Firefox 62**. There is no warranty for older versions.
-1. Download an addon archive on [this link](https://github.com/serj-kzv/mozlz4-edit/archive/master.zip).
-2. Unpack the archive and open a ```src/index.html``` file of the archive as a simple ```html``` page in Firefox.
+Build all parts of the extension and **watch** (auto update the extension on code is changed)
+```sh
+npm run watch
+```
 
-It works **even faster** for **Firefox 62 and older** because in that case the extension is executed as a separate process. There is no such effect for **Firefox 63 and newer** because its extensions are executed in the separate process.
-<br>
-But there is no a configuration saving functionality and the addon auto updating.
-In the mode you can manually edit a ```src/app/resources/engines.json``` file of the unpacked archive to change default engine list.
-Don't forget to press ```Control + F5``` hot keys after the addon files are changed to update the addon page with **file cache resetting** in the mode!
+Build all parts of the extension for a **production** 
+```sh
+npm run prod
+```
 
-# Description
+# Build separately
 
-The mozlz4 is a [lz4](https://lz4.github.io/lz4/) file archive format with Mozilla's "magic" file header.
-<br>
-mozlz4 is a ```legacy``` variant of lz4 format. If you use [liblz4-tool](https://packages.ubuntu.com/liblz4-tool) then you have to use ```-l```
-flag to compress a file as the ```legacy``` lz4.
+To build **separately** for a **development** with code [source map](https://developer.mozilla.org/en-US/docs/Tools/Debugger/How_to/Use_a_source_map) use commands
+```sh
+npm run build:ba
+npm run build:bg
+npm run build:co
+npm run build:op
+npm run build:pa
+npm run build:sb
+npm run build:dp
+npm run build:nt
+npm run build:dpanel
+```
+To build for a **development** and **auto update** compiled code use commands
+```sh
+npm run watch:ba
+npm run watch:bg
+npm run watch:co
+npm run watch:op
+npm run watch:pa
+npm run watch:sb
+npm run watch:dp
+npm run watch:nt
+npm run watch:dpanel
+```
+To build for a **production** use commands
+```sh
+npm run prod:ba
+npm run prod:bg
+npm run prod:co
+npm run prod:op
+npm run prod:pa
+npm run prod:sb
+npm run prod:dp
+npm run prod:nt
+npm run prod:dpanel
+```
+To update `manifest.json` file use commands
+```sh
+npm run copy-manifest
+```
 
-# Dependencies
+# Abbreviations
 
-This project uses [node-lz4](https://github.com/pierrec/node-lz4),
-[dustjs](https://github.com/linkedin/dustjs),
-[multi.js](https://github.com/fabianlindfors/multi.js)
-and [CodeMirror](https://github.com/codemirror/CodeMirror) libraries.
-They are inside of the source code and no need to advance installation.
-Their licenses inside of a ```LICENSES``` source code directory.
+* **ba** means [browser action](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Browser_actions)
+* **bg** means [background script](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts#Communicating_with_background_scripts)
+* **co** means [content scripts](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts)
+* **op** means [options page](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Implement_a_settings_page)
+* **pa** means [page action](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/pageAction)
+* **sb** means [sidebar page](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/user_interface/Sidebars)
+* **dp** means [devtools page](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Extending_the_developer_tools) (It's not a **devtool panel** that should be created manually. It's a initial page.)
+* **nt** means [new tab page](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/chrome_url_overrides)
+* **dpanel** means [devtools page panel](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Extending_the_developer_tools). You can create as many **devtool page panel**s as you wish.
+
+**Note.** Also it is possible to override **bookmarks page** and **history page** pages for **Google Chrome** but it is not supported by **Mozilla Firefox** yet. See [here](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Extending_the_developer_tools).
+
+# How to add a new devtool page panel
+You can create as many [devtools page panel](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Extending_the_developer_tools) as you wish. Do not forget to create the panel in **dp-app** project with [devtools.panels.create()](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/devtools.panels/create).
+
+**Firstly** generate a new panel. Where `X` is any unique string. And switch on a `template` and `style` files generation.
+```
+ng g application dpanelX-app --style=scss --routing --minimal
+ng config projects.dpanelX-app.schematics.@schematics/angular:component.inlineTemplate false
+ng config projects.dpanelX-app.schematics.@schematics/angular:component.inlineStyle false
+```
+**Secondly** add commands to `package.json` project file to the `"scripts": { ...` section.
+```
+"build:dpanelX": "ng build dpanelX-app --base-href ./",
+"watch:dpanelX": "ng build dpanelX-app --base-href ./ --watch",
+"prod:dpanelX": "ng build dpanelX-app --source-map=false --outputHashing=none --base-href ./ --prod",
+```
+
+# Third party dependencies
+* [npm-run-all](https://github.com/mysticatea/npm-run-all) - to run build in parallel mode
+* [fs-extra](https://github.com/jprichardson/node-fs-extra) - to copy `manifest.json`
 
 # TODO
-1. Use [Emscripten](http://kripken.github.io/emscripten-site/)
-to convert C++ lz4 lib to JS ([asm.js](https://developer.mozilla.org/en-US/docs/Games/Tools/asm.js))
-2. Replace an estimate of uncompressed file size of lz4
-by proper formula
-
-# Links
-1. Format description and lz4 lib list is [here](https://github.com/lz4/lz4)  
-2. lz4 archiver on js is [here](https://github.com/pierrec/node-lz4)
-3. node-mozlz4a is a node.js lib to work with mozlz4 is [here](https://github.com/piroor/node-mozlz4a) (I didn't use it)
-4. mozlz4 format description is [here](https://dxr.mozilla.org/mozilla-central/rev/2535bad09d720e71a982f3f70dd6925f66ab8ec7/toolkit/components/lz4/lz4.js#54)
-5. A good article about lz4 is [LZ4 Data Compression](https://www.brutaldeluxe.fr/products/crossdevtools/lz4/index.html)
-6. Firefox's [Use standard lz4 file format instead of the non-standard jsonlz4/mozlz4](https://bugzilla.mozilla.org/show_bug.cgi?id=1209390) bug
-
-# About lz4
-1. https://github.com/lz4/lz4/issues/276#issuecomment-262789645
-2. https://github.com/lz4/lz4/wiki/lz4_Frame_format.md
-
-# Mozilla specific lz4
-1. https://hg.mozilla.org/mozilla-central/file/a9a24a28013b/toolkit/mozapps/extensions/AddonManagerStartup.cpp
-2. https://hg.mozilla.org/mozilla-central/rev/a9a24a28013b
-3. https://raw.githubusercontent.com/mozilla/gecko-dev/40e8eb46609dcb8780764774ec550afff1eed3a5/toolkit/mozapps/extensions/AddonManagerStartup.cpp
+1. Use [angular-builders](https://github.com/just-jeb/angular-builders) to compile `dp-app/src/assets/devtools-page` code and add TypeScript support.
+2. Create common root `assets` directory. It can be made as a **assets-lib** library with modified `assets : { ...` section in `angular.json` file.
+3. Reduce `bg-app` and `dp-app` by switching off `index.html` dynamic building with `AppComponent` (see `co-app` as an example).

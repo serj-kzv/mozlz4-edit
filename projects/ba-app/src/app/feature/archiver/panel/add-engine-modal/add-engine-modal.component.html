@@ -1,0 +1,5 @@
+<app-modal (modalClosed)="modalClosed()">
+    <div *ngFor="let type of engines.types">
+        <h2>{{type.name}}</h2>
+    </div>
+</app-modal>

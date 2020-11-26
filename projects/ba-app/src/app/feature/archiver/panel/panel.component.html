@@ -1,0 +1,12 @@
+<div id="panel">
+    <label for="openFileBtn" class="file-label open-icon-label">
+        Open file
+        <input id="openFileBtn" (change)="openMozLz4File.emit($event.target)" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4,.json">
+    </label>
+    <button (click)="saveAsMozLz4File.emit()">Save mozlz4 file</button>
+    <button (click)="saveAsJsonFile.emit()">Save as JSON</button>
+    <button (click)="openTxtInNewTab.emit()">Open in a new tab</button>
+    <button (click)="formatJson.emit()">Format JSON</button>
+    <button (click)="modalService.show(addEngineModalName)">Add search engines</button>
+    <button>Options</button>
+</div>
