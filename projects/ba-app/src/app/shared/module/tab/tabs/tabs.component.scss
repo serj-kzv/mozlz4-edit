@@ -1,0 +1,14 @@
+.tab {
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+.tab:hover {
+  color: white;
+  background: black;
+}
+
+.active {
+  color: white;
+  background: black;
+}

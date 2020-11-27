@@ -1,0 +1,12 @@
+<div class="tabs">
+    <div class="tab-list" *ngFor="let tab of tabs" [ngClass]="{'active' : tab.active}">
+        <div class="tab" (click)="pick.next(tab)">{{tab.name}}</div>
+    </div>
+    <div class="tab-content">
+        <ng-container *ngFor="let tab of tabs">
+            <ng-container *ngIf="tab.active">
+                <ng-container *ngTemplateOutlet="tab.templateRef"></ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
