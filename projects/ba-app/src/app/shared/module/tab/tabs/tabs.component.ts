@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ContentChildren, OnDestroy, OnInit, QueryList} from '@angular/core';
+import {AfterContentInit, Component, ContentChildren, OnDestroy, QueryList} from '@angular/core';
 import {TabComponent} from "../tab/tab.component";
 import {ReplaySubject, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
@@ -8,16 +8,10 @@ import {takeUntil} from "rxjs/operators";
     templateUrl: './tabs.component.html',
     styleUrls: ['./tabs.component.scss']
 })
-export class TabsComponent implements OnInit, AfterContentInit, OnDestroy {
+export class TabsComponent implements AfterContentInit, OnDestroy {
     private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     pick = new Subject<TabComponent>();
-    @ContentChildren(TabComponent, {descendants: true}) tabs!: QueryList<TabComponent>;
-
-    constructor() {
-    }
-
-    ngOnInit(): void {
-    }
+    @ContentChildren(TabComponent) tabs!: QueryList<TabComponent>;
 
     ngAfterContentInit() {
         this.pick

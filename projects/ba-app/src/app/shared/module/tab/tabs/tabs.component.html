@@ -1,5 +1,7 @@
 <div class="tabs">
-    <div class="tab-list" *ngFor="let tab of tabs" [ngClass]="{'active' : tab.active}">
+    <div class="tab-list" *ngFor="let tab of tabs" [class.active]="tab.active == true">
+        {{tab.active}}
+        {{tab.active === true}}
         <div class="tab" (click)="pick.next(tab)">{{tab.name}}</div>
     </div>
     <div class="tab-content">

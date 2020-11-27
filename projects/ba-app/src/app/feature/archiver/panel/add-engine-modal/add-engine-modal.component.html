@@ -1,5 +1,8 @@
 <app-modal (modalClosed)="modalClosed()">
     <app-tabs>
-        <app-tab *ngFor="let type of engines.types; index as i" active="{{i === 0}}" name="test">{{type | json}}</app-tab>
+        <app-tab *ngFor="let type of engines.types; index as i" active="{{i === 0}}" name="{{type.name}}">
+            {{i}} {{i == 0}}
+            {{type | json}}
+        </app-tab>
     </app-tabs>
 </app-modal>
