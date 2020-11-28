@@ -1,8 +1,11 @@
 <app-modal (modalClosed)="modalClosed()">
-    <app-tabs>
-        <app-tab *ngFor="let type of engines.types; index as i" active="{{i === 0}}" name="{{type.name}}">
-            {{i}} {{i == 0}}
-            {{type | json}}
-        </app-tab>
-    </app-tabs>
+    <app-header>Add engine</app-header>
+    <app-content>
+        <app-tabs>
+            <app-tab-content *ngFor="let type of engines.types; index as i" [active]="i === 0" name="{{type.name}}">
+                {{i}} {{i == 0}}
+                {{type | json}}
+            </app-tab-content>
+        </app-tabs>
+    </app-content>
 </app-modal>

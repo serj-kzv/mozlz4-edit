@@ -21,6 +21,7 @@ export class AddEngineModalComponent implements OnInit {
   }
 
   async init() {
+    // this.engines.types.push(...await (await fetch('./assets/engines.json')).json());
     this.engines = await (await fetch('./assets/engines.json')).json();
     console.log(this.engines);
   }
