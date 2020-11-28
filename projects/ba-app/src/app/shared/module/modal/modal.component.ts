@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, Output} from '@angular/core';
 import {ModalService} from "./modal.service";
 
 @Component({
@@ -6,9 +6,16 @@ import {ModalService} from "./modal.service";
     templateUrl: './modal.component.html',
     styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent {
+export class ModalComponent implements OnDestroy {
     @Output() modalClosed = new EventEmitter();
+    closed = false;
 
     constructor(public modalService: ModalService) {
+    }
+
+    ngOnDestroy(): void {
+        if (!closed) {
+            this.modalClosed.emit();
+        }
     }
 }
