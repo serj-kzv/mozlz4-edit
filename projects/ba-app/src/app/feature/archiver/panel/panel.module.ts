@@ -7,11 +7,11 @@ import {AddEngineModalModule} from "./add-engine-modal/add-engine-modal.module";
 @NgModule({
     declarations: [PanelComponent],
     exports: [
-        PanelComponent
+        PanelComponent,
     ],
     imports: [
         SharedModule,
-        AddEngineModalModule
+        AddEngineModalModule,
     ]
 })
 export class PanelModule { }

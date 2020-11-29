@@ -1,0 +1,27 @@
+<form [formGroup]="engineForm">
+    <div>
+        <label>
+            Name
+            <input type="text" formControlName="name">
+        </label>
+    </div>
+    <div>
+        <label>
+            URL
+            <input type="text" formControlName="url">
+        </label>
+    </div>
+    <div>
+        <label>
+            Icon
+            <input type="text" formControlName="icon" #iconTxt>
+        </label>
+    </div>
+    <div>
+        <img class="engine-add-icon-input-img" [src]="iconTxt.value" width="23" height="23">
+        <input type="text" formControlName="iconTxt" placeholder="Icon text">
+        <button>Clear icon</button>
+        <button>Pick icon</button>
+        <button (click)="add()">Add</button>
+    </div>
+</form>
