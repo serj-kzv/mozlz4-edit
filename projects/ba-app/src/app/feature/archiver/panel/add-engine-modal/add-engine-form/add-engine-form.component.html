@@ -14,14 +14,20 @@
     <div>
         <label>
             Icon
-            <input type="text" formControlName="icon" #iconTxt>
+            <input type="text" formControlName="icon" #icon>
         </label>
     </div>
     <div>
-        <img class="engine-add-icon-input-img" [src]="iconTxt.value" width="23" height="23">
+        <img class="engine-add-icon-input-img"
+             [src]="domSanitizer.bypassSecurityTrustResourceUrl(engineForm.controls['icon'].value)" width="23"
+             height="23" #engineIcon>
         <input type="text" formControlName="iconTxt" placeholder="Icon text">
-        <button>Clear icon</button>
-        <button>Pick icon</button>
+        <button (click)="engineForm.patchValue({icon:'', iconTxt: ''})">Clear icon</button>
+        <label for="pickFileBtn" class="file-label open-icon-label">
+            Pick icon
+            <input id="pickFileBtn" (change)="pickIcon($event.target)" type="file"
+                   accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm">
+        </label>
         <button (click)="add()">Add</button>
     </div>
 </form>

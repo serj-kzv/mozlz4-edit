@@ -1,5 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
+import readFileAsBase64Fn from '../../../../../util/file/readFileAsBase64Fn.js'
+import IconUtil from '../../../../../util/IconUtil.js'
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-add-engine-form',
@@ -15,15 +18,28 @@ export class AddEngineFormComponent implements OnInit {
         iconTxt: [''],
     });
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, public domSanitizer: DomSanitizer) {
     }
 
     ngOnInit(): void {
-        console.log(this.engine)
         this.engineForm.patchValue(this.engine);
+        this.engineForm.controls['iconTxt'].valueChanges.subscribe(async value => {
+            console.log(value);
+            const icon = await readFileAsBase64Fn(new Blob(
+                [IconUtil.txtToSvg(value, 23, 23)],
+                {type: 'image/svg+xml'}
+            ));
+            this.engineForm.patchValue({icon});
+        });
     }
 
     add() {
         console.log(this.engineForm.controls['name'].value)
+    }
+
+    async pickIcon(target) {
+        const icon = await readFileAsBase64Fn(target.files[0]);
+
+        this.engineForm.patchValue({icon, iconTxt: ''});
     }
 }
