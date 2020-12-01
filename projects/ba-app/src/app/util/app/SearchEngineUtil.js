@@ -56,4 +56,28 @@ export default class SearchEngineUtil {
             return filtered;
         }, []);
     }
+
+    static collectEngineParams(paramSelects) {
+        return paramSelects.map(param => {
+            const
+                isMulti = param.multiple,
+                dataset = param.dataset,
+                options = param.options;
+
+            return {
+                name: param.name,
+                multi: isMulti,
+                multiType: dataset.multiOr ? 'or' : dataset.multiAnd ? 'and' : undefined,
+                value: isMulti ? Array.from(options).reduce((filtered, opt) => {
+                    if (opt.selected) {
+                        filtered.push(opt.value);
+                    }
+
+                    return filtered;
+                }, []) : options[param.selectedIndex].value,
+                divider: dataset.multiDivider,
+                andOrDivider: dataset.multiAndOrDivider
+            };
+        });
+    }
 }

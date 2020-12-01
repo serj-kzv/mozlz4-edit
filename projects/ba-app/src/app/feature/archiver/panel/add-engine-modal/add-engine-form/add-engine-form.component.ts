@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import readFileAsBase64Fn from '../../../../../util/file/readFileAsBase64Fn.js'
 import IconUtil from '../../../../../util/IconUtil.js'
+import SearchEngineUtil from '../../../../../util/app/SearchEngineUtil.js'
 import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
