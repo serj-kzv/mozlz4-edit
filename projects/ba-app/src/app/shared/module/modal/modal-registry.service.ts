@@ -7,15 +7,16 @@ import {ModalService} from "./modal.service";
 })
 export class ModalRegistryService {
   constructor(public router: Router) {
-    this.init();
+    this.initEager();
+    this.initLazy();
   }
 
-  init(components = []): void {
+  initEager(components = []): void {
     components.forEach(component => this.register(component));
   }
 
   register({path, component}): void {
-    this.router.config.unshift({path, outlet: ModalService.outletName, component});
+    this.router.config.unshift({path, outlet: ModalService.eagerOutletName, component});
   }
 
   initLazy(loadChildren = []) {
@@ -23,6 +24,6 @@ export class ModalRegistryService {
   }
 
   registerLazy({path, loadChildren}): void {
-    this.router.config.unshift({path, outlet: ModalService.outletName, loadChildren});
+    this.router.config.unshift({path, outlet: ModalService.lazyOutletName, loadChildren});
   }
 }

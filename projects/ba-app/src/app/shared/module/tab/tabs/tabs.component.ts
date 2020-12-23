@@ -2,11 +2,24 @@ import {AfterContentInit, Component, ContentChildren, OnDestroy, QueryList} from
 import {TabContentComponent} from "../tab/tab-content.component";
 import {ReplaySubject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+import {animate, keyframes, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
     selector: 'app-tabs',
     templateUrl: './tabs.component.html',
-    styleUrls: ['./tabs.component.scss']
+    styleUrls: ['./tabs.component.scss'],
+    animations: [
+        trigger('EnterLeave', [
+            state('flyIn', style({ transform: 'translateX(0)' })),
+            transition(':enter', [
+                style({ transform: 'translateX(-100%)' }),
+                animate('0.5s 300ms ease-in')
+            ]),
+            transition(':leave', [
+                animate('0.3s ease-out', style({ transform: 'translateX(100%)' }))
+            ])
+        ])
+    ]
 })
 export class TabsComponent implements AfterContentInit, OnDestroy {
     private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);

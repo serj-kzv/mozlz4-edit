@@ -52,6 +52,7 @@
               "projects/bg-app/src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/bg-app/src/styles.scss"
             ],
             "scripts": []

@@ -1,33 +1,35 @@
 <form [formGroup]="engineForm">
-    <div>
+    <div class="add-engine-sub-block">
         <label>
             Name
             <input type="text" formControlName="name">
         </label>
     </div>
-    <div>
+    <div class="add-engine-sub-block">
         <label>
-            URL
+            <div>URL</div>
             <input type="text" formControlName="url">
         </label>
     </div>
-    <div>
-        <label>
-            Icon
-            <input type="text" formControlName="icon" #icon>
-        </label>
-    </div>
-    <div>
-        <img class="engine-add-icon-input-img"
-             [src]="domSanitizer.bypassSecurityTrustResourceUrl(engineForm.controls['icon'].value)" width="23"
-             height="23" #engineIcon>
-        <input type="text" formControlName="iconTxt" placeholder="Icon text">
-        <button (click)="engineForm.patchValue({icon:'', iconTxt: ''})">Clear icon</button>
-        <label for="pickFileBtn" class="file-label open-icon-label">
-            Pick icon
-            <input id="pickFileBtn" (change)="pickIcon($event.target)" type="file"
-                   accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm">
-        </label>
-        <button (click)="add()">Add</button>
+    <div class="add-engine-sub-block">
+        <div>
+            <label>
+                <div>Icon</div>
+                <input type="text" formControlName="icon" #icon>
+            </label>
+        </div>
+        <div>
+            <img class="engine-add-icon-input-img"
+                 [src]="domSanitizer.bypassSecurityTrustResourceUrl(engineForm.controls['icon'].value)" width="23"
+                 height="23" #engineIcon>
+            <input type="text" formControlName="iconTxt" placeholder="Icon text">
+            <button (click)="engineForm.patchValue({icon:'', iconTxt: ''})">Clear icon</button>
+            <label class="file-label">
+                <span>Pick icon</span>
+                <input (change)="pickIcon($event.target)" type="file"
+                       accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm">
+            </label>
+            <button (click)="add()">Add</button>
+        </div>
     </div>
 </form>

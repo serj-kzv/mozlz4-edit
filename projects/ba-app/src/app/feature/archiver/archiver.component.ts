@@ -6,12 +6,26 @@ import saveAsDataFn from '../../util/ext/file/saveAsDataFn.js';
 import openAsJsonFn from '../../util/ext/file/openAsJsonFn.js';
 import MozLz4ArchiverCommandType from '../../util/app/mz4-archiver/command/MozLz4ArchiverCommandType.js';
 
+export interface Tile {
+    color: string;
+    cols: number;
+    rows: number;
+    text: string;
+}
+
 @Component({
     selector: 'app-archiver',
     templateUrl: './archiver.component.html',
     styleUrls: ['./archiver.component.scss']
 })
 export class ArchiverComponent implements OnInit {
+
+    tiles: Tile[] = [
+        {text: 'One', cols: 3, rows: 1, color: 'lightblue'},
+        {text: 'Two', cols: 1, rows: 2, color: 'lightgreen'},
+        {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
+        {text: 'Four', cols: 2, rows: 1, color: '#DDBDF1'},
+    ];
 
     @Input() engines: string = '';
     private fileInfo = {

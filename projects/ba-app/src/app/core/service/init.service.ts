@@ -12,7 +12,7 @@ export class InitService {
     }
 
     init(): void {
-        this.modalRegistryService.init([{
+        this.modalRegistryService.initEager([{
             path: AddEngineModalComponent.componentName,
             component: AddEngineModalComponent
         }]);

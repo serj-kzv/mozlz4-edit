@@ -4,6 +4,7 @@ import {PageNotFoundComponent} from './component/page-not-found/page-not-found.c
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ModalModule} from "./module/modal/modal.module";
 import {TabModule} from "./module/tab/tab.module";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {TabModule} from "./module/tab/tab.module";
     TabModule,
 
     // Angular Material Modules
+    MatGridListModule,
   ],
   exports: [
     // Angular Modules
@@ -36,11 +38,12 @@ import {TabModule} from "./module/tab/tab.module";
     TabModule,
 
     // Components
-    PageNotFoundComponent
+    PageNotFoundComponent,
 
     // Directives
 
     // Angular Material Modules
+    MatGridListModule,
 
     // Covalent Modules
   ]

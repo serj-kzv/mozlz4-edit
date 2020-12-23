@@ -1,25 +1,31 @@
 import {Injectable} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ModalService {
-  public static outletName = 'modal';
+    public static eagerOutletName = 'modal';
+    public static lazyOutletName = 'modal-lazy';
 
-  protected constructor(public router: Router) {
-  }
+    protected constructor(public router: Router) {
+    }
 
-  async show(name: string): Promise<boolean> {
-    await this.hide();
-    const route = [{ outlets: {}}];
-    route[0].outlets[`${ModalService.outletName}`] = [name];
-    return await this.router.navigate(route);
-  }
+    async show(name: string, relativeTo: ActivatedRoute | null = undefined): Promise<boolean> {
+        await this.hide();
 
-  hide(): Promise<boolean> {
-    const route = [{ outlets: {}}];
-    route[0].outlets[`${ModalService.outletName}`] = null;
-    return this.router.navigate(route);
-  }
+        const route = [{outlets: {}}];
+
+        route[0].outlets[`${ModalService.eagerOutletName}`] = [name];
+
+        return await this.router.navigate(route, {relativeTo});
+    }
+
+    hide(): Promise<boolean> {
+        const route = [{outlets: {}}];
+
+        route[0].outlets[`${ModalService.eagerOutletName}`] = null;
+
+        return this.router.navigate(route);
+    }
 }
