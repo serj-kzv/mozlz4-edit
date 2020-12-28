@@ -1,6 +1,36 @@
 @import '~normalize.css';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-html, body {
-  height: 100vh;
+html,
+body,
+.container,
+#archiver {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#archiver {
+  display: flex;
+  flex-direction: column;
+}
+
+#editor {
+  height: 100%;
+}
+
+#editorTextarea {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  border: 0;
+
+  white-space: pre;
+}
+
+.menu {
+}
+
+.content {
+  flex-grow: 1;
 }
