@@ -4,10 +4,12 @@
   "scripts": {
     "ng": "ng",
     "build:ba": "ng build ba-app --base-href ./",
+    "build:bg": "ng build bg-app --base-href ./",
     "watch:ba": "ng build ba-app --base-href ./ --watch",
+    "watch:bg": "ng build bg-app --base-href ./ --watch",
     "watch:dpanel": "ng build dpanel-app --base-href ./ --watch",
     "prod:ba": "ng build ba-app --source-map=false --outputHashing=none --base-href ./ --prod",
-    "prod:dpanel": "ng build dpanel-app --source-map=false --outputHashing=none --base-href ./ --prod",
+    "prod:bg": "ng build bg-app --source-map=false --outputHashing=none --base-href ./ --prod",
     "copy-manifest": "node copy-manifest.js",
     "build": "npm run copy-manifest && run-p --aggregate-output -l -c build:*",
     "watch": "npm run copy-manifest && run-p --aggregate-output -l -c watch:*",

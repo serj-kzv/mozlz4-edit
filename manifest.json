@@ -7,29 +7,13 @@
   "version": "1",
   "homepage_url": "https://github.com/serj-kzv/mozlz4-edit",
   "browser_action": {
-    "default_icon": "ba-app/favicon.ico",
     "browser_style": false,
+    "default_icon": "ba-app/favicon.ico",
     "default_title": "mozlz4-edit"
   },
-  "sidebar_action": {
-    "browser_style": false,
-    "default_icon": "ba-app/favicon.ico",
-    "default_title": "mozlz4-edit",
-    "default_panel": "/ba-app/index.html"
-  },
-  "options_ui": {
-    "page": "/ba-app/index.html",
-    "browser_style": false,
-    "open_in_tab": false
-  },
-  "page_action": {
-    "browser_style": false,
-    "default_icon": "ba-app/favicon.ico",
-    "default_title": "ba-app",
-    "default_popup": "/ba-app/index.html",
-    "show_matches": [
-      "<all_urls>"
-    ]
+  "background": {
+    "persistent": true,
+    "page": "/bg-app/index.html"
   },
   "permissions": [
     "<all_urls>",
