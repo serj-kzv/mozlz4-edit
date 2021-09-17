@@ -16,6 +16,7 @@ export class PanelComponent implements OnInit {
   @Output() saveAsMozLz4File = new EventEmitter();
   @Output() saveAsMozLz4FileWithDialogue = new EventEmitter();
   @Output() saveAsJsonFile = new EventEmitter();
+  @Output() saveAsJsonFileWithDialogue = new EventEmitter();
   @Output() formatJson = new EventEmitter();
 
   constructor(public modalService: ModalService) { }

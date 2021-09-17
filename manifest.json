@@ -1,20 +1,20 @@
 {
   "manifest_version": 2,
-  "name": "ext-app",
-  "description": "ext-app",
-  "short_name": "ext-app",
+  "name": "mozlz4-edit",
+  "description": "mozlz4-edit",
+  "short_name": "mozlz4-edit",
   "author": "serj-kzv",
   "version": "1",
-  "homepage_url": "https://github.com/serj-kzv/ext-app",
+  "homepage_url": "https://github.com/serj-kzv/mozlz4-edit",
   "browser_action": {
     "default_icon": "ba-app/favicon.ico",
     "browser_style": false,
-    "default_title": "ext-app"
+    "default_title": "mozlz4-edit"
   },
   "sidebar_action": {
     "browser_style": false,
     "default_icon": "ba-app/favicon.ico",
-    "default_title": "ext-app",
+    "default_title": "mozlz4-edit",
     "default_panel": "/ba-app/index.html"
   },
   "options_ui": {
@@ -30,10 +30,6 @@
     "show_matches": [
       "<all_urls>"
     ]
-  },
-  "background": {
-    "persistent": true,
-    "page": "/ba-app/index.html"
   },
   "permissions": [
     "<all_urls>",

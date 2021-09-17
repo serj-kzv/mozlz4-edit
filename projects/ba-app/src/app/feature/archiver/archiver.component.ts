@@ -3,6 +3,7 @@ import decompressFn from '../../util/app/mz4-archiver/decompressFn.js';
 import compressAsMozlz4Fn from '../../util/app/mz4-archiver/compressAsMozlz4Fn.js';
 import readFileAsTxtFn from '../../util/file/readFileAsTxtFn.js';
 import saveAsDataFn from '../../util/ext/file/saveAsDataFn.js';
+import saveAsDataLinkFn from '../../util/ext/file/saveAsDataLinkFn.js';
 import openAsJsonFn from '../../util/ext/file/openAsJsonFn.js';
 import MozLz4ArchiverCommandType from '../../util/app/mz4-archiver/command/MozLz4ArchiverCommandType.js';
 
@@ -106,5 +107,38 @@ export class ArchiverComponent implements OnInit {
 
     openTxtInNewTab() {
         openAsJsonFn(this.engines);
+    }
+
+    async saveAsMozLz4FileWithDialogue() {
+        let {name: fileName} = this.fileInfo;
+        const file = compressAsMozlz4Fn(this.engines);
+
+        if (fileName.length === 0) {
+            fileName = 'file.mozlz4';
+        } else if (['.lz4', '.mozlz4', '.jsonlz4', '.baklz4'].every(ext => !fileName.endsWith(ext))) {
+            fileName = `${fileName}.mozlz4`;
+        }
+
+        try {
+            await saveAsDataLinkFn(file, 'octet/stream', false, fileName);
+        } catch (e) {
+            alert(`An error! Possibly the file '${fileName}' is busy. Close programs that can use the file and try again.`);
+        }
+    }
+
+    async saveAsJsonFileWithDialogue() {
+        let {name: fileName} = this.fileInfo;
+
+        if (fileName.length === 0) {
+            fileName = 'file.json';
+        } else if (!fileName.endsWith('.json')) {
+            fileName = `${fileName}.json`;
+        }
+
+        try {
+            await saveAsDataLinkFn(this.engines, 'octet/stream', false, fileName);
+        } catch (e) {
+            alert(`An error! Possibly the file '${fileName}.json' is busy. Close programs that can use the file and try again.`);
+        }
     }
 }
