@@ -13,45 +13,27 @@
   },
   "sidebar_action": {
     "browser_style": false,
-    "default_icon": "sb-app/favicon.ico",
+    "default_icon": "ba-app/favicon.ico",
     "default_title": "ext-app",
-    "default_panel": "/sb-app/index.html"
+    "default_panel": "/ba-app/index.html"
   },
   "options_ui": {
-    "page": "/op-app/index.html",
+    "page": "/ba-app/index.html",
     "browser_style": false,
     "open_in_tab": false
   },
   "page_action": {
     "browser_style": false,
-    "default_icon": "pa-app/favicon.ico",
-    "default_title": "pa-app",
-    "default_popup": "/pa-app/index.html",
+    "default_icon": "ba-app/favicon.ico",
+    "default_title": "ba-app",
+    "default_popup": "/ba-app/index.html",
     "show_matches": [
       "<all_urls>"
     ]
   },
-  "devtools_page": "dp-app/index.html",
   "background": {
     "persistent": true,
-    "page": "/bg-app/index.html"
-  },
-  "content_scripts": [
-    {
-      "js": [
-        "/co-app/runtime.js",
-        "/co-app/main.js"
-      ],
-      "matches": [
-        "<all_urls>"
-      ],
-      "match_about_blank": true,
-      "all_frames": true,
-      "run_at": "document_start"
-    }
-  ],
-  "chrome_url_overrides": {
-    "newtab": "/nt-app/index.html"
+    "page": "/ba-app/index.html"
   },
   "permissions": [
     "<all_urls>",

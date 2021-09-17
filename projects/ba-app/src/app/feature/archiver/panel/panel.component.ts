@@ -14,6 +14,7 @@ export class PanelComponent implements OnInit {
   @Output() openMozLz4File = new EventEmitter<any>();
   @Output() openTxtInNewTab = new EventEmitter();
   @Output() saveAsMozLz4File = new EventEmitter();
+  @Output() saveAsMozLz4FileWithDialogue = new EventEmitter();
   @Output() saveAsJsonFile = new EventEmitter();
   @Output() formatJson = new EventEmitter();
 

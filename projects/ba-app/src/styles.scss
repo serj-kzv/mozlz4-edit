@@ -26,9 +26,25 @@ body,
   border: 0;
 
   white-space: pre;
+  outline: none;
+  background-color: black;
+  color: white;
 }
 
 .menu {
+  background-color: black;
+  color: white;
+  border-bottom: white 1px solid;
+}
+
+.menu button {
+  background: black;
+  color: white;
+}
+
+.menu button:hover {
+  background: white;
+  color: black;
 }
 
 .content {
