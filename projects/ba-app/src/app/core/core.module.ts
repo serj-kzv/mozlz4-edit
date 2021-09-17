@@ -5,7 +5,6 @@ import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-b
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {ModalModule} from "../shared/module/modal/modal.module";
-import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
     declarations: [],

@@ -8,7 +8,6 @@ import {ModalService} from "./modal.service";
 export class ModalRegistryService {
   constructor(public router: Router) {
     this.initEager();
-    this.initLazy();
   }
 
   initEager(components = []): void {
@@ -19,11 +18,4 @@ export class ModalRegistryService {
     this.router.config.unshift({path, outlet: ModalService.eagerOutletName, component});
   }
 
-  initLazy(loadChildren = []) {
-    loadChildren.forEach(loadChildren => this.registerLazy(loadChildren));
-  }
-
-  registerLazy({path, loadChildren}): void {
-    this.router.config.unshift({path, outlet: ModalService.lazyOutletName, loadChildren});
-  }
 }

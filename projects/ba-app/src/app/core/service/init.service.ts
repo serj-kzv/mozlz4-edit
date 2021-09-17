@@ -16,17 +16,5 @@ export class InitService {
             path: AddEngineModalComponent.componentName,
             component: AddEngineModalComponent
         }]);
-        // this.modalRegistryService.initLazy([
-        //     {
-        //         path: AddEngineModalComponent.componentName,
-        //         outlet: ModalService.outletName,
-        //         children: [
-        //             {
-        //                 path: 'view-stuff',
-        //                 loadChildren: () => import('./core/component/add-engine-modal/add-engine-modal.module').then(m => m.AddEngineModalModule)
-        //             }
-        //         ]
-        //     },
-        // ]);
     }
 }
