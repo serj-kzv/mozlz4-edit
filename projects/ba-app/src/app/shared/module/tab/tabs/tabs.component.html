@@ -1,14 +1,13 @@
 <div class="tabs">
     <div class="tab-list">
-        <div class="tab" *ngFor="let tab of tabs" [class.active]="tab.active" (click)="pick$.next(tab)"
-             [@EnterLeave]="'flyIn'">
+        <div class="tab" *ngFor="let tab of tabs" [class.active]="tab.active" (click)="pick$.next(tab)">
             {{tab.name}}
         </div>
     </div>
     <div class="tab-content">
         <div *ngFor="let tab of tabs">
             <ng-container *ngIf="tab.active">
-                <div [@EnterLeave]="'flyIn'">
+                <div>
                     <ng-container *ngTemplateOutlet="tab.templateRef"></ng-container>
                 </div>
             </ng-container>
