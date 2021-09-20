@@ -1,5 +1,5 @@
-<div class="outlet-popup">
-    <div class="overlay">
+<div class="outlet-popup" (click)="closed = true; modalClosed.emit(); modalService.hide()">
+    <div class="overlay" (click)="$event.stopPropagation()">
         <div class="popup">
             <div class="title">
                 <ng-content select="app-title"></ng-content>

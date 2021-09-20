@@ -6,7 +6,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ModalService {
     public static eagerOutletName = 'modal';
-    public static lazyOutletName = 'modal-lazy';
 
     protected constructor(public router: Router) {
     }
