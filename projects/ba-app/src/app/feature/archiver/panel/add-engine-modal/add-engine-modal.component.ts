@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalService} from "../../../../shared/module/modal/modal.service";
 import Type from "../../../../model/Type";
 
 @Component({
@@ -12,7 +11,7 @@ export class AddEngineModalComponent implements OnInit {
     public static componentName = 'app-add-engine-modal';
     engines: { types: Type[] } = {types: []};
 
-    constructor(public modalService: ModalService) {
+    constructor() {
 
     }
 

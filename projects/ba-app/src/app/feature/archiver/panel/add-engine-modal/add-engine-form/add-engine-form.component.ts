@@ -4,6 +4,7 @@ import readFileAsBase64Fn from '../../../../../util/file/readFileAsBase64Fn.js'
 import IconUtil from '../../../../../util/IconUtil.js'
 import SearchEngineUtil from '../../../../../util/app/SearchEngineUtil.js'
 import {DomSanitizer} from "@angular/platform-browser";
+import {EngineService} from "../../../../../core/service/engine.service";
 
 @Component({
     selector: 'app-add-engine-form',
@@ -19,7 +20,9 @@ export class AddEngineFormComponent implements OnInit {
         iconTxt: [''],
     });
 
-    constructor(private fb: FormBuilder, public domSanitizer: DomSanitizer) {
+    constructor(private fb: FormBuilder,
+                public domSanitizer: DomSanitizer,
+                public engineService: EngineService) {
     }
 
     ngOnInit(): void {
@@ -36,6 +39,14 @@ export class AddEngineFormComponent implements OnInit {
 
     add() {
         console.log(this.engineForm.controls['name'].value)
+        const engine = SearchEngineUtil.createEngine(
+            {
+                name: this.engineForm.controls['name'].value,
+                url: this.engineForm.controls['name'].value,
+                icon: this.engineForm.controls['name'].value
+            }
+        )
+        this.engineService.add(engine);
     }
 
     async pickIcon(target) {
