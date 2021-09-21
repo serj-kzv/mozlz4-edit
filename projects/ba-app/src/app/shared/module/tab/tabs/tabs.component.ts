@@ -2,7 +2,7 @@ import {AfterContentInit, Component, ContentChildren, OnDestroy, QueryList} from
 import {TabContentComponent} from "../tab/tab-content.component";
 import {ReplaySubject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
-import {animate, keyframes, state, style, transition, trigger} from "@angular/animations";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
     selector: 'app-tabs',

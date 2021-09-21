@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {EngineService} from "../../../core/service/engine.service";
 
 @Component({
     selector: 'app-editor',
@@ -11,7 +10,7 @@ export class EditorComponent implements OnInit {
     @Input() engines: string = '';
     @Output() enginesChange = new EventEmitter<string>();
 
-    constructor(public engineService: EngineService) {
+    constructor() {
     }
 
     ngOnInit(): void {

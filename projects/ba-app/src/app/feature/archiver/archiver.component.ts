@@ -6,6 +6,9 @@ import saveAsDataFn from '../../util/ext/file/saveAsDataFn.js';
 import saveAsDataLinkFn from '../../util/ext/file/saveAsDataLinkFn.js';
 import openAsJsonFn from '../../util/ext/file/openAsJsonFn.js';
 import MozLz4ArchiverCommandType from '../../util/app/mz4-archiver/command/MozLz4ArchiverCommandType.js';
+import {EngineBridgeService} from "../../core/service/engine-bridge.service";
+import {ReplaySubject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
     selector: 'app-archiver',
@@ -13,17 +16,38 @@ import MozLz4ArchiverCommandType from '../../util/app/mz4-archiver/command/MozLz
     styleUrls: ['./archiver.component.scss']
 })
 export class ArchiverComponent implements OnInit {
-
+    private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     @Input() engines: string = '';
-    private fileInfo = {
+    private readonly fileInfo = {
         name: 'file.mozlz4',
         size: -1
     };
 
-    constructor() {
+    constructor(public engineBridgeService: EngineBridgeService) {
     }
 
     ngOnInit(): void {
+        this.engineBridgeService.addEngine$
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe(engine => {
+                try {
+                    const editorEngines = JSON.parse(this.engines);
+
+                    if (editorEngines.engines) {
+                        editorEngines.engines.push(engine);
+                        this.engines = JSON.stringify(editorEngines, null, 4);
+                    } else {
+                        alert('Error. No engine list in editor!');
+                    }
+                } catch (e) {
+                    alert('Error. JSON is invalid!');
+                }
+            })
+    }
+
+    ngOnDestroy() {
+        this.destroyed$.next(true);
+        this.destroyed$.complete();
     }
 
     async openMozLz4File($event) {

@@ -7,12 +7,10 @@ import Type from "../../../../model/Type";
     styleUrls: ['./add-engine-modal.component.scss']
 })
 export class AddEngineModalComponent implements OnInit {
-
     public static componentName = 'app-add-engine-modal';
     engines: { types: Type[] } = {types: []};
 
     constructor() {
-
     }
 
     ngOnInit(): void {
@@ -22,7 +20,6 @@ export class AddEngineModalComponent implements OnInit {
 
     async init() {
         this.engines = await (await fetch('./assets/engines.json')).json();
-        console.log(this.engines);
     }
 
     modalClosed() {
