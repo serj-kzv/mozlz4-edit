@@ -42,7 +42,7 @@ export class AddEngineFormComponent implements OnInit {
         this.engineForm.controls['iconTxt'].valueChanges
             .pipe(
                 takeUntil(this.destroyed$),
-                debounceTime(500)
+                debounceTime(50)
             )
             .subscribe(async value => {
                 console.log(value);

@@ -7,7 +7,7 @@ import Type from "../../../../model/Type";
     styleUrls: ['./add-engine-modal.component.scss']
 })
 export class AddEngineModalComponent implements OnInit {
-    public static componentName = 'app-add-engine-modal';
+    public static readonly componentName = 'app-add-engine-modal';
     engines: { types: Type[] } = {types: []};
 
     constructor() {

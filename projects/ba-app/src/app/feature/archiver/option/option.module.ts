@@ -10,6 +10,9 @@ import {SharedModule} from "../../../shared/shared.module";
   imports: [
     SharedModule,
     OptionRoutingModule
+  ],
+  exports: [
+    OptionComponent
   ]
 })
 export class OptionModule { }

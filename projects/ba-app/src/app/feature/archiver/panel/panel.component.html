@@ -10,5 +10,5 @@
     <button (click)="openTxtInNewTab.emit()">Open in a new tab</button>
     <button (click)="formatJson.emit()">Format JSON</button>
     <button (click)="modalService.show(addEngineModalName)">Add search engines</button>
-    <button>Options</button>
+    <button (click)="modalService.show(optionModalName)">Options</button>
 </div>

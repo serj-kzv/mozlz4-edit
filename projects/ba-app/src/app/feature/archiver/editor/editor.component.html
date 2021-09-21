@@ -2,5 +2,6 @@
     <textarea id="editorTextarea"
               [ngModel]="engines"
               (ngModelChange)="enginesChange.emit($event)"
-              spellcheck="false"></textarea>
+              spellcheck="false"
+              [placeholder]="placeholder"></textarea>
 </div>

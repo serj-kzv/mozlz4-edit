@@ -1,5 +1,10 @@
-<p>option works!</p>
-<button [routerLinkActiveOptions]="{ exact: true }" routerLink="./" routerLinkActive="active">Home</button>
-<button routerLink="./engine-tab">Engine options</button>
-<button routerLink="./download-tab">Download types</button>
-<router-outlet></router-outlet>
+<app-modal (modalClosed)="test()">
+    <app-header>Options</app-header>
+    <app-content>
+        <div>
+            <textarea id="engineListTextarea"
+                      [ngModel]="engines"
+                      spellcheck="false"></textarea>
+        </div>
+    </app-content>
+</app-modal>
