@@ -25,5 +25,4 @@ export class AddEngineModalComponent implements OnInit {
     modalClosed() {
         console.log('modal closed');
     }
-
 }

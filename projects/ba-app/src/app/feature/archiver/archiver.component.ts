@@ -34,8 +34,14 @@ export class ArchiverComponent implements OnInit {
                     const editorEngines = JSON.parse(this.engines);
 
                     if (editorEngines.engines) {
-                        editorEngines.engines.push(engine);
-                        this.engines = JSON.stringify(editorEngines, null, 4);
+                        const names = editorEngines.engines.map(engine => engine['_name']);
+
+                        if (names.includes(engine['_name'])) {
+                            alert('Error. The engine name is existed. Rename the engine and try again!');
+                        } else {
+                            editorEngines.engines.push(engine);
+                            this.engines = JSON.stringify(editorEngines, null, 4);
+                        }
                     } else {
                         alert('Error. No engine list in editor!');
                     }
