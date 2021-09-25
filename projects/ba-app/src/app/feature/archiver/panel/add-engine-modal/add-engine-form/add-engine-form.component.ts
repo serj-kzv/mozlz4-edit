@@ -7,6 +7,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {EngineBridgeService} from "../../../../../core/service/engine-bridge.service";
 import {ReplaySubject} from "rxjs";
 import {debounceTime, takeUntil} from "rxjs/operators";
+import multi from '../../../../../../assets/lib/multijs/multi-es6.min';
 
 @Component({
     selector: 'app-add-engine-form',
@@ -51,6 +52,7 @@ export class AddEngineFormComponent implements OnInit {
                 ));
                 this.engineForm.patchValue({icon});
             });
+        // multi('[id^="multiSelectIdx0"]');
     }
 
     add() {

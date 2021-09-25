@@ -21,7 +21,7 @@
         <div>
             <img class="engine-add-icon-input-img"
                  [src]="domSanitizer.bypassSecurityTrustResourceUrl(engineForm.controls['icon'].value)" width="23"
-                 height="23" #engineIcon>
+                 height="23">
             <input type="text" formControlName="iconTxt" placeholder="Icon text">
             <button (click)="engineForm.patchValue({icon:'', iconTxt: ''})">Clear icon</button>
             <label class="file-label">
@@ -30,6 +30,14 @@
                        accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm">
             </label>
             <button (click)="add()">Add</button>
+        </div>
+    </div>
+    <div *ngIf="engine.params" class="add-engine-param-block">
+        <div *ngFor="let param of engine.params; index as i">
+            {{param.name}} {{param.param}}
+            <select id="multiSelectIdx{{i}}" multiple="multiple" name="multi_select{{i}}" data-multijs="true">
+                <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
+            </select>
         </div>
     </div>
 </form>
