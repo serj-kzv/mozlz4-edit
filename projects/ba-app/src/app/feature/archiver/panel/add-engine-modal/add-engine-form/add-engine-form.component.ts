@@ -69,7 +69,10 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
         console.log('multi', multi);
         this.multiSelects.forEach(({nativeElement}) => {
             multi(nativeElement, {
-                search_placeholder: 'Search fruits...',
+                "enable_search": true,
+                "search_placeholder": "Search...",
+                "limit": -1,
+                "limit_reached": function () {}
             });
             console.log(nativeElement);
         });
