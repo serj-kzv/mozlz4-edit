@@ -11,16 +11,7 @@ body,
   overflow: hidden;
 }
 
-#archiver {
-  display: flex;
-  flex-direction: column;
-}
-
-#editor {
-  height: 100%;
-}
-
-#editorTextarea {
+textarea {
   height: 100%;
   width: 100%;
   padding: 0;
@@ -30,6 +21,15 @@ body,
   outline: none;
   background-color: black;
   color: white;
+}
+
+#archiver {
+  display: flex;
+  flex-direction: column;
+}
+
+#editor {
+  height: 100%;
 }
 
 .menu {

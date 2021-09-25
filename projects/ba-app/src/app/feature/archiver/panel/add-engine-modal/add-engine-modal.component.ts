@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import Type from "../../../../model/Type";
+import {EngineService} from "../../../../core/service/engine.service";
 
 @Component({
     selector: 'app-add-engine-modal',
@@ -10,16 +11,15 @@ export class AddEngineModalComponent implements OnInit {
     public static readonly componentName = 'app-add-engine-modal';
     engines: { types: Type[] } = {types: []};
 
-    constructor() {
+    constructor(public engineService: EngineService) {
     }
 
     ngOnInit(): void {
-        console.log('init');
         this.init();
     }
 
     async init() {
-        this.engines = await (await fetch('./assets/engines.json')).json();
+        this.engines = await this.engineService.load();
     }
 
     modalClosed() {

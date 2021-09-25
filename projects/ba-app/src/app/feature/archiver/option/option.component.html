@@ -1,10 +1,19 @@
-<app-modal (modalClosed)="test()">
+<app-modal>
     <app-header>Options</app-header>
     <app-content>
         <div>
+            <button (click)="save()">Accept (save)</button>
+            <button (click)="reset()">Reset</button>
+            <button (click)="formatJson()">Format JSON</button>
+            <button (click)="export()">Export (unload)</button>
+            <button (click)="importByFile()">Import (load by file)</button>
+            <button (click)="importByUrl()">Import by URL (load by URL)</button>
+        </div>
+        <div id="engineListTextareaWrapper">
             <textarea id="engineListTextarea"
-                      [ngModel]="engines"
-                      spellcheck="false"></textarea>
+                      [(ngModel)]="engines"
+                      spellcheck="false"
+                      [readOnly]="optionReadonly"></textarea>
         </div>
     </app-content>
 </app-modal>
