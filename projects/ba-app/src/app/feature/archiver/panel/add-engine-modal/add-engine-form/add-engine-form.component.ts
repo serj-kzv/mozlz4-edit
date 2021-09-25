@@ -45,7 +45,6 @@ export class AddEngineFormComponent implements OnInit {
                 debounceTime(50)
             )
             .subscribe(async value => {
-                console.log(value);
                 const icon = await readFileAsBase64Fn(new Blob(
                     [IconUtil.txtToSvg(value, 23, 23)],
                     {type: 'image/svg+xml'}
@@ -55,7 +54,6 @@ export class AddEngineFormComponent implements OnInit {
     }
 
     add() {
-        console.log(this.engineForm.controls['name'].value)
         const engine = SearchEngineUtil.createEngine(
             {
                 name: this.engineForm.controls['name'].value,
@@ -63,7 +61,7 @@ export class AddEngineFormComponent implements OnInit {
                 icon: this.engineForm.controls['icon'].value
             }
         )
-        this.engineBridgeService.addEngine$.next(engine);
+        this.engineBridgeService.add$.next(engine);
     }
 
     async pickIcon(target) {

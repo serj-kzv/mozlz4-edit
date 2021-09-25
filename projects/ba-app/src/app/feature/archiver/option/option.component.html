@@ -5,9 +5,15 @@
             <button (click)="save()">Accept (save)</button>
             <button (click)="reset()">Reset</button>
             <button (click)="formatJson()">Format JSON</button>
-            <button (click)="export()">Export (unload)</button>
-            <button (click)="importByFile()">Import (load by file)</button>
+            <button (click)="exportAsJson()">Export (unload)</button>
+            <button (click)="exportAsJsonWithDialogue()">Export (unload with dialogue)</button>
             <button (click)="importByUrl()">Import by URL (load by URL)</button>
+            <div>
+                <label for="openEngineOptionFileBtn" class="file-label open-icon-label">
+                    Import (load by file)
+                    <input id="openEngineOptionFileBtn" (change)="importByFile($event.target)" type="file" accept=".json">
+                </label>
+            </div>
         </div>
         <div id="engineListTextareaWrapper">
             <textarea id="engineListTextarea"

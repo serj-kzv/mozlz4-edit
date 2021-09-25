@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {EngineService} from "../../../core/service/engine.service";
+import {EngineOptionService} from "../../../core/service/engine-option.service";
+import saveAsDataFn from '../../../util/ext/file/saveAsDataFn.js';
+import saveAsDataLinkFn from '../../../util/ext/file/saveAsDataLinkFn.js';
+import readFileAsTxtFn from '../../../util/file/readFileAsTxtFn.js';
 
 @Component({
     selector: 'app-option',
@@ -11,7 +14,7 @@ export class OptionComponent implements OnInit {
     public static componentName = 'option-modal';
     engines = '{}';
 
-    constructor(public engineService: EngineService) {
+    constructor(public engineService: EngineOptionService) {
     }
 
     lockTextarea() {
@@ -27,9 +30,7 @@ export class OptionComponent implements OnInit {
     }
 
     async init() {
-        console.log('OptionComponent start')
         this.engines = await this.engineService.loadAsTxt();
-        console.log('OptionComponent', this.engines)
     }
 
     async save() {
@@ -45,22 +46,92 @@ export class OptionComponent implements OnInit {
     }
 
     formatJson() {
+        this.lockTextarea();
         try {
             this.engines = JSON.stringify(JSON.parse(this.engines), null, 4);
         } catch (e) {
             alert('Error. JSON is invalid!');
+            this.unlockTextarea();
         }
+        this.unlockTextarea();
     }
 
-    export() {
+    async exportAsJson() {
+        this.lockTextarea();
+        let fileName = 'engine.list';
 
+        if (fileName.length === 0) {
+            fileName = 'file.json';
+        } else if (!fileName.endsWith('.json')) {
+            fileName = `${fileName}.json`;
+        }
+
+        try {
+            await saveAsDataFn(this.engines, 'octet/stream', false, fileName);
+        } catch (e) {
+            alert(`An error! Possibly the file '${fileName}.json' is busy. Close programs that can use the file and try again.`);
+            this.unlockTextarea();
+        }
+        this.unlockTextarea();
     }
 
-    importByFile() {
+    async importByFile($event) {
+        this.lockTextarea();
+        this.engines = 'Loading... Wait.';
 
+        const sourceFile = $event.files[0];
+
+        this.engines = await readFileAsTxtFn(sourceFile);
+        this.unlockTextarea();
     }
 
-    importByUrl() {
+    async importByUrl() {
+        this.lockTextarea();
 
+        const {defaultEngineListUrl: defaultUrl} = await this.engineService.load();
+        const url = window.prompt('Enter an URL to a JSON file that contains an engine list.', defaultUrl);
+
+        if (url == null) {
+            return;
+        }
+
+        let txt;
+
+        try {
+            txt = await (await fetch(url)).text();
+
+            try {
+                const json = JSON.parse(txt);
+
+                await this.engineService.save(json);
+                this.engines = await this.engineService.loadSavedAsTxt();
+            } catch (e) {
+                alert('Error. JSON is invalid.');
+                this.unlockTextarea();
+            }
+        } catch (e) {
+            alert('Error. Something wrong with an URL!');
+            this.unlockTextarea();
+        }
+        this.unlockTextarea();
+    }
+
+    async exportAsJsonWithDialogue() {
+        this.lockTextarea();
+        let fileName = 'engine.list';
+
+        if (fileName.length === 0) {
+            fileName = 'file.json';
+        } else if (!fileName.endsWith('.json')) {
+            fileName = `${fileName}.json`;
+        }
+
+        try {
+            await saveAsDataLinkFn(this.engines, 'octet/stream', false, fileName);
+        } catch (e) {
+            alert(`An error! Possibly the file '${fileName}.json' is busy. Close programs that can use the file and try again.`);
+            this.unlockTextarea();
+        }
+        this.unlockTextarea();
     }
 }

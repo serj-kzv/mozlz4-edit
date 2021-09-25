@@ -5,5 +5,5 @@ import {Subject} from "rxjs";
     providedIn: 'root'
 })
 export class EngineBridgeService {
-    public readonly addEngine$: Subject<any> = new Subject();
+    public readonly add$: Subject<any> = new Subject();
 }

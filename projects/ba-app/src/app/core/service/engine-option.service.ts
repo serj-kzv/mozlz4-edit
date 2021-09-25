@@ -4,7 +4,7 @@ import {Constants} from "../../util/Constants";
 @Injectable({
     providedIn: 'root'
 })
-export class EngineService {
+export class EngineOptionService {
 
     private storage = browser.storage.local;
 
@@ -19,18 +19,20 @@ export class EngineService {
         return await this.storage.get(Constants.LOCAL_STORAGE_ENGINE_KEY);
     }
 
+    async loadSavedAsTxt() {
+        return JSON.stringify(await this.storage.get(Constants.LOCAL_STORAGE_ENGINE_KEY), null, 4);
+    }
+
     async load() {
         const engines = await this.loadSaved();
-        console.log('loaded saved', engines);
 
         if (Object.keys(engines).length === 0) {
-            console.log('load default', await this.loadDefault());
             await this.save(await this.loadDefault());
 
-            return await this.loadSaved();
+            return (await this.loadSaved())[Constants.LOCAL_STORAGE_ENGINE_KEY];
         }
 
-        return engines;
+        return engines[Constants.LOCAL_STORAGE_ENGINE_KEY];
     }
 
     async loadAsTxt() {

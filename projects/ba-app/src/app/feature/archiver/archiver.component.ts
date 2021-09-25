@@ -27,7 +27,7 @@ export class ArchiverComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.engineBridgeService.addEngine$
+        this.engineBridgeService.add$
             .pipe(takeUntil(this.destroyed$))
             .subscribe(engine => {
                 try {
