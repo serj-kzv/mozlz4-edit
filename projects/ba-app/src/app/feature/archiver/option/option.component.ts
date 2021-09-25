@@ -3,6 +3,7 @@ import {EngineOptionService} from "../../../core/service/option/engine-option.se
 import saveAsDataFn from '../../../util/ext/file/saveAsDataFn.js';
 import saveAsDataLinkFn from '../../../util/ext/file/saveAsDataLinkFn.js';
 import readFileAsTxtFn from '../../../util/file/readFileAsTxtFn.js';
+import openAsJsonFn from '../../../util/ext/file/openAsJsonFn.js';
 import {OptionService} from "../../../core/service/option/option.service";
 
 @Component({
@@ -137,5 +138,9 @@ export class OptionComponent implements OnInit {
             this.unlockTextarea();
         }
         this.unlockTextarea();
+    }
+
+    openInNewTab() {
+        openAsJsonFn(this.engines);
     }
 }
