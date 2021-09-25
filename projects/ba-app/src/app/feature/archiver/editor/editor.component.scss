@@ -9,3 +9,8 @@
   background-color: black;
   color: white;
 }
+
+textarea::placeholder {
+  color: white;
+  opacity: 1
+}

@@ -1,6 +1,6 @@
 <div id="panel">
     <label for="openFileBtn" class="file-label open-icon-label">
-        Open file
+        Open mozlz4 file
         <input id="openFileBtn" (change)="openMozLz4File.emit($event.target)" type="file" accept=".lz4,.mozlz4,.jsonlz4,.baklz4,.json">
     </label>
     <button (click)="saveAsMozLz4File.emit()">Save as mozlz4</button>

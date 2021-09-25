@@ -24,11 +24,13 @@ export class EngineOptionService implements Option {
     }
 
     async load(): Promise<any> {
+        console.log('load config in engines', await this.optionService.load());
         return (await this.optionService.load())[Constants.LOCAL_STORAGE_ENGINE_KEY];
     }
 
     async loadAsTxt(): Promise<string> {
-        return (await this.optionService.loadAsTxt())[Constants.LOCAL_STORAGE_ENGINE_KEY];
+        console.log('loadAsTxt ', await this.load());
+        return JSON.stringify(await this.load(), null, 4);
     }
 
     async resetDefault(): Promise<any> {
@@ -39,17 +41,26 @@ export class EngineOptionService implements Option {
     }
 
     async save(engines): Promise<any> {
-        const config = (await this.optionService.load())[Constants.LOCAL_STORAGE_ENGINE_KEY] = engines;
+        const config = (await this.optionService.load());
+
+        config[Constants.LOCAL_STORAGE_ENGINE_KEY] = engines;
+        console.log('new engines in config load', await this.optionService.load());
+        console.log('new engines in config', config);
+        console.log('saved new engines in config', await this.optionService.save(config));
 
         return (await this.optionService.save(config))[Constants.LOCAL_STORAGE_ENGINE_KEY];
     }
 
-    async saveTxtAndGetAsJson(engines): Promise<any> {
-        return await this.save(JSON.parse(engines));
+    async saveTxt(payload: string): Promise<any> {
+        return await this.save(JSON.parse(payload));
+    }
+
+    async saveTxtAndGetAsJson(engines: string): Promise<any> {
+        return JSON.stringify(await this.saveTxt(engines), null, 4);
     }
 
     async resetDefaultAndGetAsTxt(): Promise<string> {
-        return (await this.optionService.resetDefaultAndGetAsTxt())[Constants.LOCAL_STORAGE_ENGINE_KEY];
+        return JSON.stringify(await this.resetDefault(), null, 4);
     }
 
 }

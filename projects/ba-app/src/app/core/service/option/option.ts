@@ -16,6 +16,8 @@ export interface Option {
 
     save(payload): Promise<any>;
 
-    saveTxtAndGetAsJson(payload): Promise<any>;
+    saveTxt(payload: string): Promise<any>;
+
+    saveTxtAndGetAsJson(payload: string): Promise<any>;
 
 }

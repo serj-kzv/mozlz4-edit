@@ -13,11 +13,19 @@ export class OptionService implements Option {
     }
 
     async loadDefault(): Promise<any> {
+        console.log('loadDefault', await (await fetch(Constants.DEFAULT_CONFIG_FILE_PATH)).json());
         return await (await fetch(Constants.DEFAULT_CONFIG_FILE_PATH)).json();
     }
 
     async loadSaved(): Promise<any> {
-        return await this.storage.get(Constants.LOCAL_STORAGE_CONFIG_KEY);
+        const option = await this.storage.get(Constants.LOCAL_STORAGE_CONFIG_KEY);
+        const config = option[Constants.LOCAL_STORAGE_CONFIG_KEY];
+
+        if (config) {
+            return config;
+        }
+
+        return option;
     }
 
     async loadSavedAsTxt(): Promise<string> {
@@ -26,17 +34,19 @@ export class OptionService implements Option {
 
     async load(): Promise<any> {
         const config = await this.loadSaved();
+        console.log('config', config);
 
         if (Object.keys(config).length === 0) {
-            await this.save(await this.loadDefault());
+            console.log('load saved', await this.save(await this.loadDefault()))
 
-            return (await this.loadSaved())[Constants.LOCAL_STORAGE_CONFIG_KEY];
+            return (await this.save(await this.loadDefault()));
         }
 
-        return config[Constants.LOCAL_STORAGE_CONFIG_KEY];
+        return config;
     }
 
     async loadAsTxt(): Promise<string> {
+        console.log('loadAsTxt', await this.load());
         return JSON.stringify(await this.load(), null, 4);
     }
 
@@ -52,14 +62,22 @@ export class OptionService implements Option {
 
     async save(payload): Promise<any> {
         const name = Constants.LOCAL_STORAGE_CONFIG_KEY;
+        const config = Object.create(null);
 
-        await this.storage.set({name, payload});
+        config[name] = payload;
+        await this.storage.set(config);
+        console.log('saved payload', {name, payload});
+        console.log('saved', await this.storage.get(name));
 
-        return await this.load();
+        return await this.loadSaved();
     }
 
-    async saveTxtAndGetAsJson(payload): Promise<any> {
+    async saveTxt(payload: string): Promise<any> {
         return await this.save(JSON.parse(payload));
+    }
+
+    async saveTxtAndGetAsJson(payload: string): Promise<any> {
+        return JSON.stringify(await this.saveTxt(payload), null, 4);
     }
 
 }

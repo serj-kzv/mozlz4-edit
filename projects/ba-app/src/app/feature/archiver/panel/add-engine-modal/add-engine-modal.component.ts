@@ -11,7 +11,7 @@ export class AddEngineModalComponent implements OnInit {
     public static readonly componentName = 'app-add-engine-modal';
     engines: { types: Type[] } = {types: []};
 
-    constructor(public engineService: EngineOptionService) {
+    constructor(public engineOptionService: EngineOptionService) {
     }
 
     ngOnInit(): void {
@@ -19,11 +19,7 @@ export class AddEngineModalComponent implements OnInit {
     }
 
     async init() {
-        this.engines = await this.engineService.load();
+        this.engines = await this.engineOptionService.load();
         console.log('AddEngineModalComponent engines', this.engines);
-    }
-
-    modalClosed() {
-        console.log('modal closed');
     }
 }

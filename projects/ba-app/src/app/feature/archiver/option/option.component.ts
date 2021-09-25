@@ -3,6 +3,7 @@ import {EngineOptionService} from "../../../core/service/option/engine-option.se
 import saveAsDataFn from '../../../util/ext/file/saveAsDataFn.js';
 import saveAsDataLinkFn from '../../../util/ext/file/saveAsDataLinkFn.js';
 import readFileAsTxtFn from '../../../util/file/readFileAsTxtFn.js';
+import {OptionService} from "../../../core/service/option/option.service";
 
 @Component({
     selector: 'app-option',
@@ -14,7 +15,12 @@ export class OptionComponent implements OnInit {
     public static componentName = 'option-modal';
     engines = '{}';
 
-    constructor(public engineService: EngineOptionService) {
+    constructor(public optionService: OptionService,
+                public engineOptionService: EngineOptionService) {
+    }
+
+    ngOnInit(): void {
+        this.init();
     }
 
     lockTextarea() {
@@ -25,23 +31,21 @@ export class OptionComponent implements OnInit {
         this.optionReadonly = false;
     }
 
-    ngOnInit(): void {
-        this.init();
-    }
-
     async init() {
-        this.engines = await this.engineService.loadAsTxt();
+        console.log('init', await this.engineOptionService.loadAsTxt());
+        this.engines = await this.engineOptionService.loadAsTxt();
     }
 
     async save() {
         this.lockTextarea();
-        await this.engineService.saveTxtAndGetAsJson(this.engines);
+        await this.engineOptionService.saveTxtAndGetAsJson(this.engines);
         this.unlockTextarea();
     }
 
     async reset() {
         this.lockTextarea();
-        this.engines = await this.engineService.resetDefault();
+        await this.optionService.resetDefault();
+        this.engines = await this.engineOptionService.loadAsTxt();
         this.unlockTextarea();
     }
 
@@ -88,7 +92,7 @@ export class OptionComponent implements OnInit {
     async importByUrl() {
         this.lockTextarea();
 
-        const {defaultEngineListUrl: defaultUrl} = await this.engineService.load();
+        const {defaultEngineListUrl: defaultUrl} = await this.engineOptionService.load();
         const url = window.prompt('Enter an URL to a JSON file that contains an engine list.', defaultUrl);
 
         if (url == null) {
@@ -103,8 +107,8 @@ export class OptionComponent implements OnInit {
             try {
                 const json = JSON.parse(txt);
 
-                await this.engineService.save(json);
-                this.engines = await this.engineService.loadSavedAsTxt();
+                await this.engineOptionService.save(json);
+                this.engines = await this.engineOptionService.loadSavedAsTxt();
             } catch (e) {
                 alert('Error. JSON is invalid.');
                 this.unlockTextarea();
