@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Constants} from "../../util/Constants";
+import {Constants} from "../../../util/Constants";
 import {Option} from "./option";
 
 @Injectable({

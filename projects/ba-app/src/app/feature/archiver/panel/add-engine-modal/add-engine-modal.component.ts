@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import Type from "../../../../model/Type";
-import {EngineOptionService} from "../../../../core/service/engine-option.service";
+import {EngineOptionService} from "../../../../core/service/option/engine-option.service";
 
 @Component({
     selector: 'app-add-engine-modal',

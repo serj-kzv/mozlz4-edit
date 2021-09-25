@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EngineOptionService} from "../../../core/service/engine-option.service";
+import {EngineOptionService} from "../../../core/service/option/engine-option.service";
 import saveAsDataFn from '../../../util/ext/file/saveAsDataFn.js';
 import saveAsDataLinkFn from '../../../util/ext/file/saveAsDataLinkFn.js';
 import readFileAsTxtFn from '../../../util/file/readFileAsTxtFn.js';
