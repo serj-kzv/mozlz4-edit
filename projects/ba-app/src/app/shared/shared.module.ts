@@ -6,46 +6,46 @@ import {ModalModule} from "./module/modal/modal.module";
 import {TabModule} from "./module/tab/tab.module";
 import {MatGridListModule} from "@angular/material/grid-list";
 
-
 @NgModule({
-  declarations: [
-    // Components
-    PageNotFoundComponent,
+    declarations: [
+        // Components
+        PageNotFoundComponent,
 
-    // Directives
-  ],
-  imports: [
-    // Angular
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
+        // Directives
+    ],
+    imports: [
+        // Angular Modules
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
 
-    // Shared Modules
-    ModalModule,
-    TabModule,
+        // Shared Modules
+        ModalModule,
+        TabModule,
 
-    // Angular Material Modules
-    MatGridListModule,
-  ],
-  exports: [
-    // Angular Modules
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
+        // Angular Material Modules
+        MatGridListModule,
+    ],
+    exports: [
+        // Angular Modules
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
 
-    // Shared Modules
-    ModalModule,
-    TabModule,
+        // Shared Modules
+        ModalModule,
+        TabModule,
 
-    // Components
-    PageNotFoundComponent,
+        // Components
+        PageNotFoundComponent,
 
-    // Directives
+        // Directives
 
-    // Angular Material Modules
-    MatGridListModule,
+        // Angular Material Modules
+        MatGridListModule,
 
-    // Covalent Modules
-  ]
+        // Covalent Modules
+    ]
 })
-export class SharedModule { }
+export class SharedModule {
+}

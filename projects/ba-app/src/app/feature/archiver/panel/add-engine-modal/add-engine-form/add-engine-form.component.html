@@ -35,9 +35,35 @@
     <div *ngIf="engine.params" class="add-engine-param-block">
         <div *ngFor="let param of engine.params; index as i">
             {{param.name}} {{param.param}}
-            <select id="multiSelectIdx{{i}}" multiple="multiple" name="multi_select{{i}}" data-multijs="true">
-                <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
+            <select multiple="multiple" name="favorite_fruits" id="fruit_select" style="display: none;" data-multijs="true">
+                <option>Apple</option>
+                <option>Banana</option>
+                <option>Blueberry</option>
+                <option>Cherry</option>
+                <option>Coconut</option>
+                <option>Grapefruit</option>
+                <option>Kiwi</option>
+                <option>Lemon</option>
+                <option>Lime</option>
+                <option>Mango</option>
+                <option>Orange</option>
+                <option>Papaya</option>
             </select>
+            <div *ngIf="!param.multiAnd && !param.multiOr">
+                <select #multiSelect id="multiSelectIdx{{i}}" multiple="multiple" name="multi_select{{i}}">
+                    <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
+                </select>
+            </div>
+            <div *ngIf="param.multiAnd">
+                <select #multiSelect id="multiSelectAndIdx{{i}}" multiple="multiple" name="multi_select_and{{i}}">
+                    <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
+                </select>
+            </div>
+            <div *ngIf="param.multiOr">
+                <select #multiSelect id="multiSelectOrIdx{{i}}" multiple="multiple" name="multi_select_or{{i}}">
+                    <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
+                </select>
+            </div>
         </div>
     </div>
 </form>

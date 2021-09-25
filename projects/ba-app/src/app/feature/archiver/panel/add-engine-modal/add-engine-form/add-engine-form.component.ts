@@ -1,4 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Input,
+    OnDestroy,
+    OnInit,
+    QueryList,
+    ViewChild,
+    ViewChildren
+} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import readFileAsBase64Fn from '../../../../../util/file/readFileAsBase64Fn.js'
 import IconUtil from '../../../../../util/IconUtil.js'
@@ -14,7 +24,7 @@ import multi from '../../../../../../assets/lib/multijs/multi-es6.min';
     templateUrl: './add-engine-form.component.html',
     styleUrls: ['./add-engine-form.component.scss']
 })
-export class AddEngineFormComponent implements OnInit {
+export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit {
     private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     @Input() engine;
     engineForm = this.fb.group({
@@ -23,6 +33,7 @@ export class AddEngineFormComponent implements OnInit {
         icon: [''],
         iconTxt: [''],
     });
+    @ViewChildren('multiSelect') multiSelects !: QueryList<ElementRef>;
 
     constructor(private fb: FormBuilder,
                 public domSanitizer: DomSanitizer,
@@ -52,7 +63,16 @@ export class AddEngineFormComponent implements OnInit {
                 ));
                 this.engineForm.patchValue({icon});
             });
-        // multi('[id^="multiSelectIdx0"]');
+    }
+
+    ngAfterViewInit() {
+        console.log('multi', multi);
+        this.multiSelects.forEach(({nativeElement}) => {
+            multi(nativeElement, {
+                search_placeholder: 'Search fruits...',
+            });
+            console.log(nativeElement);
+        });
     }
 
     add() {
