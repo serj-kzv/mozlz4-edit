@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Constants} from "../../../util/Constants";
-import {Option} from "./option";
+import {Option} from "./base/option";
 
 @Injectable({
     providedIn: 'root'
