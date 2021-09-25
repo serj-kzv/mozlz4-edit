@@ -1,57 +1,55 @@
 import {Injectable} from '@angular/core';
 import {Constants} from "../../util/Constants";
+import {OptionService} from "./option.service";
+import {Option} from "./option";
 
 @Injectable({
     providedIn: 'root'
 })
-export class EngineOptionService {
+export class EngineOptionService implements Option {
 
-    private storage = browser.storage.local;
-
-    constructor() {
+    constructor(public optionService: OptionService) {
     }
 
-    async loadDefault() {
-        return await (await fetch(Constants.DEFAULT_ENGINES_FILE_PATH)).json();
+    async loadDefault(): Promise<any> {
+        return (await this.optionService.loadDefault())[Constants.LOCAL_STORAGE_ENGINE_KEY];
     }
 
-    async loadSaved() {
-        return await this.storage.get(Constants.LOCAL_STORAGE_ENGINE_KEY);
+    async loadSaved(): Promise<any> {
+        return (await this.optionService.loadSaved())[Constants.LOCAL_STORAGE_ENGINE_KEY];
     }
 
-    async loadSavedAsTxt() {
-        return JSON.stringify(await this.storage.get(Constants.LOCAL_STORAGE_ENGINE_KEY), null, 4);
+    async loadSavedAsTxt(): Promise<string> {
+        return JSON.stringify(await this.loadSaved(), null, 4);
     }
 
-    async load() {
-        const engines = await this.loadSaved();
-
-        if (Object.keys(engines).length === 0) {
-            await this.save(await this.loadDefault());
-
-            return (await this.loadSaved())[Constants.LOCAL_STORAGE_ENGINE_KEY];
-        }
-
-        return engines[Constants.LOCAL_STORAGE_ENGINE_KEY];
+    async load(): Promise<any> {
+        return (await this.optionService.load())[Constants.LOCAL_STORAGE_ENGINE_KEY];
     }
 
-    async loadAsTxt() {
-        return JSON.stringify(await this.load(), null, 4);
+    async loadAsTxt(): Promise<string> {
+        return (await this.optionService.loadAsTxt())[Constants.LOCAL_STORAGE_ENGINE_KEY];
     }
 
-    async resetDefault() {
-        await this.storage.remove(Constants.LOCAL_STORAGE_ENGINE_KEY);
+    async resetDefault(): Promise<any> {
+        const engines = (await this.optionService.loadDefault())[Constants.LOCAL_STORAGE_ENGINE_KEY];
+        const config = (await this.optionService.load())[Constants.LOCAL_STORAGE_ENGINE_KEY] = engines;
 
-        return await this.loadAsTxt();
+        return (await this.optionService.save(config))[Constants.LOCAL_STORAGE_ENGINE_KEY];
     }
 
-    async save(engines) {
-        const name = Constants.LOCAL_STORAGE_ENGINE_KEY;
+    async save(engines): Promise<any> {
+        const config = (await this.optionService.load())[Constants.LOCAL_STORAGE_ENGINE_KEY] = engines;
 
-        return await this.storage.set({name, engines});
+        return (await this.optionService.save(config))[Constants.LOCAL_STORAGE_ENGINE_KEY];
     }
 
-    async saveTxtAsJson(engines) {
+    async saveTxtAndGetAsJson(engines): Promise<any> {
         return await this.save(JSON.parse(engines));
     }
+
+    async resetDefaultAndGetAsTxt(): Promise<string> {
+        return (await this.optionService.resetDefaultAndGetAsTxt())[Constants.LOCAL_STORAGE_ENGINE_KEY];
+    }
+
 }

@@ -35,7 +35,7 @@ export class OptionComponent implements OnInit {
 
     async save() {
         this.lockTextarea();
-        await this.engineService.saveTxtAsJson(this.engines);
+        await this.engineService.saveTxtAndGetAsJson(this.engines);
         this.unlockTextarea();
     }
 
