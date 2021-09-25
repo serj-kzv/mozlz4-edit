@@ -36,17 +36,17 @@
         <div *ngFor="let param of engine.params; index as i">
             {{param.name}} {{param.param}}
             <div *ngIf="!param.multiAnd && !param.multiOr">
-                <select #multiSelect id="multiSelectIdx{{i}}" multiple="multiple" name="multi_select{{i}}">
+                <select #multiSelect [attr.data-multi]="false" id="multiSelectIdx{{i}}" multiple="multiple" name="multi_select{{i}}">
                     <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
                 </select>
             </div>
             <div *ngIf="param.multiAnd">
-                <select #multiSelect id="multiSelectAndIdx{{i}}" multiple="multiple" name="multi_select_and{{i}}">
+                <select #multiSelect [attr.data-multi]="true" id="multiSelectAndIdx{{i}}" multiple="multiple" name="multi_select_and{{i}}">
                     <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
                 </select>
             </div>
             <div *ngIf="param.multiOr">
-                <select #multiSelect id="multiSelectOrIdx{{i}}" multiple="multiple" name="multi_select_or{{i}}">
+                <select #multiSelect [attr.data-multi]="true" id="multiSelectOrIdx{{i}}" multiple="multiple" name="multi_select_or{{i}}">
                     <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
                 </select>
             </div>

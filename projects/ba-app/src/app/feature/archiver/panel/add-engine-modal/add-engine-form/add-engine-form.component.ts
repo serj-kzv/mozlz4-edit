@@ -1,14 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    Input,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    ViewChild,
-    ViewChildren
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import readFileAsBase64Fn from '../../../../../util/file/readFileAsBase64Fn.js'
 import IconUtil from '../../../../../util/IconUtil.js'
@@ -71,10 +61,10 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
             multi(nativeElement, {
                 "enable_search": true,
                 "search_placeholder": "Search...",
-                "limit": -1,
-                "limit_reached": function () {}
+                limit: nativeElement.dataset.multi === 'true' ? -1 : 1
             });
             console.log(nativeElement);
+            console.log(nativeElement.dataset.multi);
         });
     }
 
