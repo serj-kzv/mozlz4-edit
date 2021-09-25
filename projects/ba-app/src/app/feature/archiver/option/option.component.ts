@@ -33,7 +33,6 @@ export class OptionComponent implements OnInit {
     }
 
     async init() {
-        console.log('init', await this.engineOptionService.loadAsTxt());
         this.engines = await this.engineOptionService.loadAsTxt();
     }
 

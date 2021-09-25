@@ -20,6 +20,5 @@ export class AddEngineModalComponent implements OnInit {
 
     async init() {
         this.engines = await this.engineOptionService.load();
-        console.log('AddEngineModalComponent engines', this.engines);
     }
 }

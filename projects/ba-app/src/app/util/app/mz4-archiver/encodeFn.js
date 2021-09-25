@@ -1,3 +1,5 @@
+import LZ4 from './../../../../assets/lib/lz4';
+
 const encodeFn = file => {
     const Buffer = LZ4('buffer').Buffer;
     let input = new Buffer(file);

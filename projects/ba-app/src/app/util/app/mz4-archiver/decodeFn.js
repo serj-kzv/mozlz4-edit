@@ -1,6 +1,7 @@
 import uInt8sToUInt32sFn from "../../bitwise-operation/uInt8sToUInt32sFn";
 import isEqualFn from "../../file/isEqualFn";
 import readFileAsUint8ArrayFn from "../../file/readFileAsUint8ArrayFn";
+import LZ4 from './../../../../assets/lib/lz4';
 
 const decodeFn = async (sourceFile, command) => {
     const sourceFileUint8Array = await readFileAsUint8ArrayFn(sourceFile);

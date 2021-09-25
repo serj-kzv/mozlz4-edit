@@ -13,7 +13,6 @@ export class OptionService implements Option {
     }
 
     async loadDefault(): Promise<any> {
-        console.log('loadDefault', await (await fetch(Constants.DEFAULT_CONFIG_FILE_PATH)).json());
         return await (await fetch(Constants.DEFAULT_CONFIG_FILE_PATH)).json();
     }
 
@@ -34,11 +33,8 @@ export class OptionService implements Option {
 
     async load(): Promise<any> {
         const config = await this.loadSaved();
-        console.log('config', config);
 
         if (Object.keys(config).length === 0) {
-            console.log('load saved', await this.save(await this.loadDefault()))
-
             return (await this.save(await this.loadDefault()));
         }
 
@@ -46,7 +42,6 @@ export class OptionService implements Option {
     }
 
     async loadAsTxt(): Promise<string> {
-        console.log('loadAsTxt', await this.load());
         return JSON.stringify(await this.load(), null, 4);
     }
 
@@ -66,8 +61,6 @@ export class OptionService implements Option {
 
         config[name] = payload;
         await this.storage.set(config);
-        console.log('saved payload', {name, payload});
-        console.log('saved', await this.storage.get(name));
 
         return await this.loadSaved();
     }

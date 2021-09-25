@@ -19,12 +19,10 @@ export abstract class OptionBase implements Option {
     }
 
     async load(): Promise<any> {
-        console.log('load config in engines', await this.optionService.load());
         return (await this.optionService.load())[this.name];
     }
 
     async loadAsTxt(): Promise<string> {
-        console.log('loadAsTxt ', await this.load());
         return JSON.stringify(await this.load(), null, 4);
     }
 
@@ -39,9 +37,6 @@ export abstract class OptionBase implements Option {
         const config = (await this.optionService.load());
 
         config[this.name] = payload;
-        console.log('new engines in config load', await this.optionService.load());
-        console.log('new engines in config', config);
-        console.log('saved new engines in config', await this.optionService.save(config));
 
         return (await this.optionService.save(config))[this.name];
     }
