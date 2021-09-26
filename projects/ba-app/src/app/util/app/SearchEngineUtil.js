@@ -33,6 +33,7 @@ export default class SearchEngineUtil {
     }
 
     static engineParamsToUrlParams(params) {
+        console.log(params)
         return params.reduce((filtered, param) => {
             console.log(param)
             const {name, value, multi, divider, andOrDivider} = param;

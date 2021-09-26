@@ -47,7 +47,6 @@
                         [attr.data-control]="'oneMultiSelect'"
                         [attr.data-multi]="false"
                         [attr.data-name]="param.param"
-                        [attr.data-divider]="param.multiOrDivider"
                         [attr.data-and-or-divider]="param.multiAndOrDivider"
                 >
                     <option *ngFor="let value of param.values" [value]="value.value">{{value.name}} ({{value.value}})
@@ -59,7 +58,7 @@
                         [attr.data-control]="'andMultiSelect'"
                         [attr.data-multi]="true"
                         [attr.data-name]="param.param"
-                        [attr.data-divider]="param.multiOrDivider"
+                        [attr.data-divider]="param.multiAndDivider"
                         [attr.data-and-or-divider]="param.multiAndOrDivider"
                 >
                     <option *ngFor="let value of param.values" [value]="value.value">{{value.name}} ({{value.value}})
@@ -69,7 +68,7 @@
             <div *ngIf="param.multiOr">
                 <select (change)="updUrlWithParams()" #multiSelect formControlName="orMultiSelect" multiple="multiple"
                         [attr.data-control]="'orMultiSelect'"
-                        [attr.data-multi]="false"
+                        [attr.data-multi]="true"
                         [attr.data-name]="param.param"
                         [attr.data-divider]="param.multiOrDivider"
                         [attr.data-and-or-divider]="param.multiAndOrDivider"
