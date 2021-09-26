@@ -34,17 +34,16 @@ export default class SearchEngineUtil {
 
     static engineParamsToUrlParams(params) {
         return params.reduce((filtered, param) => {
-            const
-                name = param.name,
-                value = param.value;
+            console.log(param)
+            const {name, value, multi, divider, andOrDivider} = param;
 
             if (value.length > 0) {
                 const
-                    urlParamValue = param.multi ? `${value.join(param.divider)}` : `${value}`,
+                    urlParamValue = multi ? `${value.join(divider)}` : `${value}`,
                     filteredParam = filtered.find(p => p.name === name);
 
                 if (filteredParam !== undefined) {
-                    filteredParam.urlParam = `${filteredParam.urlParam}${param.andOrDivider}${urlParamValue}`;
+                    filteredParam.urlParam = `${filteredParam.urlParam}${andOrDivider}${urlParamValue}`;
                 } else {
                     filtered.push({
                         name,

@@ -15,12 +15,13 @@
         <div>
             <label>
                 <div>Icon</div>
-                <input type="text" formControlName="icon" #icon>
+                <input type="text" formControlName="icon">
             </label>
         </div>
         <div>
             <img class="engine-add-icon-input-img"
-                 [src]="domSanitizer.bypassSecurityTrustResourceUrl(engineForm.controls['icon'].value)" width="23"
+                 [src]="domSanitizer.bypassSecurityTrustResourceUrl(engineForm.controls['icon'].value)"
+                 width="23"
                  height="23">
             <input type="text" formControlName="iconTxt" placeholder="Icon text">
             <button (click)="engineForm.patchValue({icon:'', iconTxt: ''})">Clear icon</button>
@@ -34,20 +35,47 @@
     </div>
     <div *ngIf="engine.params" class="add-engine-param-block">
         <div *ngFor="let param of engine.params; index as i">
+            <div class="add-engine-param-block-name">
+                <span class="add-engine-param-block-name-title-key">Name:</span>
+                <span class="add-engine-param-block-name-title-value">{{param.name}}</span>
+                <span class="add-engine-param-block-name-param-key">Parameter:</span>
+                <span class="add-engine-param-block-name-param-value">Parameter: {{param.param}}</span>
+            </div>
             {{param.name}} {{param.param}}
             <div *ngIf="!param.multiAnd && !param.multiOr">
-                <select #multiSelect [attr.data-multi]="false" id="multiSelectIdx{{i}}" multiple="multiple" name="multi_select{{i}}">
-                    <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
+                <select (change)="updUrlWithParams()" #multiSelect formControlName="oneMultiSelect" multiple="multiple"
+                        [attr.data-control]="'oneMultiSelect'"
+                        [attr.data-multi]="false"
+                        [attr.data-name]="param.param"
+                        [attr.data-divider]="param.multiOrDivider"
+                        [attr.data-and-or-divider]="param.multiAndOrDivider"
+                >
+                    <option *ngFor="let value of param.values" [value]="value.value">{{value.name}} ({{value.value}})
+                    </option>
                 </select>
             </div>
             <div *ngIf="param.multiAnd">
-                <select #multiSelect [attr.data-multi]="true" id="multiSelectAndIdx{{i}}" multiple="multiple" name="multi_select_and{{i}}">
-                    <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
+                <select (change)="updUrlWithParams()" #multiSelect formControlName="andMultiSelect" multiple="multiple"
+                        [attr.data-control]="'andMultiSelect'"
+                        [attr.data-multi]="true"
+                        [attr.data-name]="param.param"
+                        [attr.data-divider]="param.multiOrDivider"
+                        [attr.data-and-or-divider]="param.multiAndOrDivider"
+                >
+                    <option *ngFor="let value of param.values" [value]="value.value">{{value.name}} ({{value.value}})
+                    </option>
                 </select>
             </div>
             <div *ngIf="param.multiOr">
-                <select #multiSelect [attr.data-multi]="true" id="multiSelectOrIdx{{i}}" multiple="multiple" name="multi_select_or{{i}}">
-                    <option *ngFor="let value of param.values; index as i" value="{{value.value}}">{{value.name}}</option>
+                <select (change)="updUrlWithParams()" #multiSelect formControlName="orMultiSelect" multiple="multiple"
+                        [attr.data-control]="'orMultiSelect'"
+                        [attr.data-multi]="false"
+                        [attr.data-name]="param.param"
+                        [attr.data-divider]="param.multiOrDivider"
+                        [attr.data-and-or-divider]="param.multiAndOrDivider"
+                >
+                    <option *ngFor="let value of param.values" [value]="value.value">{{value.name}} ({{value.value}})
+                    </option>
                 </select>
             </div>
         </div>

@@ -22,6 +22,9 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
         url: [''],
         icon: [''],
         iconTxt: [''],
+        oneMultiSelect: [[]],
+        andMultiSelect: [[]],
+        orMultiSelect: [[]]
     });
     @ViewChildren('multiSelect') multiSelects !: QueryList<ElementRef>;
 
@@ -47,24 +50,24 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
                 debounceTime(50)
             )
             .subscribe(async value => {
+                console.log(value);
+
                 const icon = await readFileAsBase64Fn(new Blob(
                     [IconUtil.txtToSvg(value, 23, 23)],
                     {type: 'image/svg+xml'}
                 ));
+
                 this.engineForm.patchValue({icon});
             });
     }
 
     ngAfterViewInit() {
-        console.log('multi', multi);
         this.multiSelects.forEach(({nativeElement}) => {
             multi(nativeElement, {
-                "enable_search": true,
-                "search_placeholder": "Search...",
+                enable_search: true,
+                search_placeholder: "Search...",
                 limit: nativeElement.dataset.multi === 'true' ? -1 : 1
             });
-            console.log(nativeElement);
-            console.log(nativeElement.dataset.multi);
         });
     }
 
@@ -83,5 +86,17 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
         const icon = await readFileAsBase64Fn(target.files[0]);
 
         this.engineForm.patchValue({icon, iconTxt: ''});
+    }
+
+    updUrlWithParams() {
+        const params = this.multiSelects.map(({nativeElement}) => {
+            const {control, multi, name, divider, andOrDivider} = nativeElement.dataset;
+            const {value} = this.engineForm.controls[control];
+
+            return {name, value, multi, divider, andOrDivider};
+        });
+
+        const r = SearchEngineUtil.engineParamsToUrlParams(params);
+        console.log('r', r)
     }
 }
