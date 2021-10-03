@@ -99,4 +99,12 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
         const r = SearchEngineUtil.engineParamsToUrlParams(params);
         console.log('r', r)
     }
+
+    selected(values) {
+        console.log(values);
+    }
+
+    convertParamsToEntries(params) {
+        return params.map(({name, param: value}) => ({name, value}));
+    }
 }

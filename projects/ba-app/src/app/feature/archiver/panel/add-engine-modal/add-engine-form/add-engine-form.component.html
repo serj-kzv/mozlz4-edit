@@ -35,6 +35,8 @@
     </div>
     <div *ngIf="engine.params" class="add-engine-param-block">
         <div *ngFor="let param of engine.params; index as i">
+            <app-multi-select (selected)="selected($event)" [entries]="param.values"></app-multi-select>
+
             <div class="add-engine-param-block-name">
                 <span class="add-engine-param-block-name-title-key">Name:</span>
                 <span class="add-engine-param-block-name-title-value">{{param.name}}</span>

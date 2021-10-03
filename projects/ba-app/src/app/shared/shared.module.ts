@@ -4,12 +4,13 @@ import {PageNotFoundComponent} from './component/page-not-found/page-not-found.c
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ModalModule} from "./module/modal/modal.module";
 import {TabModule} from "./module/tab/tab.module";
-import {MatGridListModule} from "@angular/material/grid-list";
+import {MultiSelectComponent} from './component/multi-select/multi-select.component';
 
 @NgModule({
     declarations: [
         // Components
         PageNotFoundComponent,
+        MultiSelectComponent,
 
         // Directives
     ],
@@ -24,7 +25,6 @@ import {MatGridListModule} from "@angular/material/grid-list";
         TabModule,
 
         // Angular Material Modules
-        MatGridListModule,
     ],
     exports: [
         // Angular Modules
@@ -38,11 +38,11 @@ import {MatGridListModule} from "@angular/material/grid-list";
 
         // Components
         PageNotFoundComponent,
+        MultiSelectComponent,
 
         // Directives
 
         // Angular Material Modules
-        MatGridListModule,
 
         // Covalent Modules
     ]

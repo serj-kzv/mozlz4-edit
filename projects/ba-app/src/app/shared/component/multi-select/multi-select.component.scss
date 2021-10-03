@@ -1,0 +1,12 @@
+.multi-select-search {
+  width: 100%;
+}
+
+.multi-select-container {
+  display: flex;
+}
+
+.multi-select-container > .multi-select-entries-panel,
+.multi-select > .multi-select-search {
+  flex: 1;
+}
