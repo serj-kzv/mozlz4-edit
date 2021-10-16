@@ -7,7 +7,6 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {EngineBridgeService} from "../../../../../core/service/engine-bridge.service";
 import {ReplaySubject} from "rxjs";
 import {debounceTime, takeUntil} from "rxjs/operators";
-import multi from '../../../../../../assets/lib/multijs/multi-es6.min';
 
 @Component({
     selector: 'app-add-engine-form',
@@ -62,13 +61,7 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     ngAfterViewInit() {
-        this.multiSelects.forEach(({nativeElement}) => {
-            multi(nativeElement, {
-                enable_search: true,
-                search_placeholder: "Search...",
-                limit: nativeElement.dataset.multi === 'true' ? -1 : 1
-            });
-        });
+
     }
 
     add() {
@@ -107,4 +100,11 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
     convertParamsToEntries(params) {
         return params.map(({name, param: value}) => ({name, value}));
     }
+
+    prepareSelectEntries(values) {
+        const selected = false;
+
+        return values.map(value => ({...value, selected}));
+    }
+
 }

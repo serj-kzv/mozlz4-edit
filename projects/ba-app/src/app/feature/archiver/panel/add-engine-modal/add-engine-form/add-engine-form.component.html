@@ -35,7 +35,8 @@
     </div>
     <div *ngIf="engine.params" class="add-engine-param-block">
         <div *ngFor="let param of engine.params; index as i">
-            <app-multi-select (selected)="selected($event)" [entries]="param.values"></app-multi-select>
+            <app-multi-select (targetSelected)="selected($event)" [sourceEntries]="param.values"></app-multi-select>
+
 
             <div class="add-engine-param-block-name">
                 <span class="add-engine-param-block-name-title-key">Name:</span>
@@ -45,39 +46,13 @@
             </div>
             {{param.name}} {{param.param}}
             <div *ngIf="!param.multiAnd && !param.multiOr">
-                <select (change)="updUrlWithParams()" #multiSelect formControlName="oneMultiSelect" multiple="multiple"
-                        [attr.data-control]="'oneMultiSelect'"
-                        [attr.data-multi]="false"
-                        [attr.data-name]="param.param"
-                        [attr.data-and-or-divider]="param.multiAndOrDivider"
-                >
-                    <option *ngFor="let value of param.values" [value]="value.value">{{value.name}} ({{value.value}})
-                    </option>
-                </select>
+
             </div>
             <div *ngIf="param.multiAnd">
-                <select (change)="updUrlWithParams()" #multiSelect formControlName="andMultiSelect" multiple="multiple"
-                        [attr.data-control]="'andMultiSelect'"
-                        [attr.data-multi]="true"
-                        [attr.data-name]="param.param"
-                        [attr.data-divider]="param.multiAndDivider"
-                        [attr.data-and-or-divider]="param.multiAndOrDivider"
-                >
-                    <option *ngFor="let value of param.values" [value]="value.value">{{value.name}} ({{value.value}})
-                    </option>
-                </select>
+
             </div>
             <div *ngIf="param.multiOr">
-                <select (change)="updUrlWithParams()" #multiSelect formControlName="orMultiSelect" multiple="multiple"
-                        [attr.data-control]="'orMultiSelect'"
-                        [attr.data-multi]="true"
-                        [attr.data-name]="param.param"
-                        [attr.data-divider]="param.multiOrDivider"
-                        [attr.data-and-or-divider]="param.multiAndOrDivider"
-                >
-                    <option *ngFor="let value of param.values" [value]="value.value">{{value.name}} ({{value.value}})
-                    </option>
-                </select>
+
             </div>
         </div>
     </div>

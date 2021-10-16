@@ -1,12 +1,23 @@
 <div class="multi-select">
-    <input type="text" class="multi-select-search">
+    <input [(ngModel)]="searchQuery" type="text" class="multi-select-search">
     <div class="multi-select-container">
-        <select [(ngModel)]="selected" (change)="select($event)" multiple class="multi-select-entries-panel multi-select-entries-panel1">
-            <option *ngFor="let entry of entries" value="{{entry.value}}"
-                    class="multi-select-entry">{{entry.name}} ({{entry.value}})</option>
+        <select [(ngModel)]="sourceSelected"
+                (ngModelChange)="sourceSelect()"
+                multiple class="multi-select-entries-panel multi-select-entries-panel-source">
+            <ng-container *ngFor="let entry of sourceEntries">
+                <ng-container *ngIf="searchPredicate(entry)">
+                    <option [value]="entry"
+                            [disabled]="entry.selected"
+                            [attr.selected]="entry.selected ? 'selected' : null"
+                            [ngClass]="{'multi-select-selected': entry.selected}"
+                            class="multi-select-entry">{{entry.name}} ({{entry.value}})</option>
+                </ng-container>
+            </ng-container>
         </select>
-        <select multiple class="multi-select-entries-panel multi-select-entries-panel2">
-            <option *ngFor="let entry of entries" value="{{entry.value}}"
+        <select [(ngModel)]="targetSelected" (ngModelChange)="targetSelect()" multiple
+                class="multi-select-entries-panel multi-select-entries-panel-target">
+            <option *ngFor="let entry of targetEntries"
+                    [value]="entry"
                     class="multi-select-entry">{{entry.name}} ({{entry.value}})</option>
         </select>
     </div>
