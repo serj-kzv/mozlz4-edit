@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Entry} from "./Entry";
-import {removeFn} from '../../../util/arr/removeFn';
 
 @Component({
     selector: 'app-multi-select',
@@ -46,7 +45,7 @@ export class MultiSelectComponent implements OnInit {
                     // break;
                 }
             }
-            removeFn(this.targetEntries, lastSelect);
+
         }
     }
 }
