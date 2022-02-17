@@ -8,7 +8,6 @@ import {Entry} from "./Entry";
 })
 export class MultiSelectComponent implements OnInit {
     @Input() sourceEntries: Entry[] = [];
-    @Input() targetEntries: Entry[] = [];
     @Output() sourceSelected = new EventEmitter<Entry[]>();
     @Output() targetSelected = new EventEmitter<Entry[]>();
     @Input() searchQuery = '';
@@ -28,8 +27,6 @@ export class MultiSelectComponent implements OnInit {
         const lastSelect = selects[selects.length - 1] as Entry;
 
         lastSelect.selected = true;
-        this.targetEntries = [...this.targetEntries, lastSelect] as any[];
-        this.targetSelected.emit(this.targetEntries);
     }
 
     targetSelect() {
@@ -47,5 +44,9 @@ export class MultiSelectComponent implements OnInit {
             }
 
         }
+    }
+
+    unpick(entry: Entry) {
+        entry.selected = false;
     }
 }

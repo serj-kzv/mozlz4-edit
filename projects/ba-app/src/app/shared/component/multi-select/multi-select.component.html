@@ -14,10 +14,13 @@
                 </ng-container>
             </ng-container>
         </select>
-        <select [(ngModel)]="targetSelected" (ngModelChange)="targetSelect()" multiple
+        <select multiple
                 class="multi-select-entries-panel multi-select-entries-panel-target">
-            <option *ngFor="let entry of targetEntries"
+            <option *ngFor="let entry of sourceEntries"
+                    (click)="unpick(entry)"
                     [value]="entry"
+                    [hidden]="!entry.selected"
+                    [attr.selected]="entry.selected ? null : 'selected'"
                     class="multi-select-entry">{{entry.name}} ({{entry.value}})</option>
         </select>
     </div>
