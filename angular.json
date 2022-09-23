@@ -3,12 +3,10 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bg-app": {
+    "mzlz4ed-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "inlineTemplate": false,
-          "inlineStyle": false,
           "style": "scss",
           "skipTests": true
         },
@@ -24,207 +22,90 @@
         "@schematics/angular:interceptor": {
           "skipTests": true
         },
-        "@schematics/angular:module": {
+        "@schematics/angular:pipe": {
           "skipTests": true
         },
-        "@schematics/angular:pipe": {
+        "@schematics/angular:resolver": {
           "skipTests": true
         },
         "@schematics/angular:service": {
           "skipTests": true
         }
       },
-      "root": "projects/bg-app",
-      "sourceRoot": "projects/bg-app/src",
+      "root": "",
+      "sourceRoot": "src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/bg-app",
-            "index": "projects/bg-app/src/index.html",
-            "main": "projects/bg-app/src/main.ts",
-            "polyfills": "projects/bg-app/src/polyfills.ts",
-            "tsConfig": "projects/bg-app/tsconfig.app.json",
-            "aot": true,
+            "outputPath": "dist/mzlz4ed-app",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/bg-app/src/favicon.ico",
-              "projects/bg-app/src/assets"
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
-              "projects/bg-app/src/styles.scss"
+              "src/styles.scss"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/bg-app/src/environments/environment.ts",
-                  "with": "projects/bg-app/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
-              ]
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "bg-app:build"
-          },
           "configurations": {
             "production": {
-              "browserTarget": "bg-app:build:production"
+              "browserTarget": "mzlz4ed-app:build:production"
+            },
+            "development": {
+              "browserTarget": "mzlz4ed-app:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bg-app:build"
-          }
-        }
-      }
-    },
-    "ba-app": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "inlineTemplate": false,
-          "inlineStyle": false,
-          "style": "scss",
-          "skipTests": true
-        },
-        "@schematics/angular:class": {
-          "skipTests": true
-        },
-        "@schematics/angular:directive": {
-          "skipTests": true
-        },
-        "@schematics/angular:guard": {
-          "skipTests": true
-        },
-        "@schematics/angular:interceptor": {
-          "skipTests": true
-        },
-        "@schematics/angular:module": {
-          "skipTests": true
-        },
-        "@schematics/angular:pipe": {
-          "skipTests": true
-        },
-        "@schematics/angular:service": {
-          "skipTests": true
-        }
-      },
-      "root": "projects/ba-app",
-      "sourceRoot": "projects/ba-app/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/ba-app",
-            "index": "projects/ba-app/src/index.html",
-            "main": "projects/ba-app/src/main.ts",
-            "polyfills": "projects/ba-app/src/polyfills.ts",
-            "tsConfig": "projects/ba-app/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "projects/ba-app/src/favicon.ico",
-              "projects/ba-app/src/assets"
-            ],
-            "styles": [
-              "projects/ba-app/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/ba-app/src/environments/environment.ts",
-                  "with": "projects/ba-app/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "ba-app:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ba-app:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "ba-app:build"
+            "browserTarget": "mzlz4ed-app:build"
           }
         }
       }
     }
-  },
-  "schematics": {
-    "@schematics/angular": {
-      "component": {
-        "spec": false
-      },
-      "module": {
-        "spec": false
-      },
-      "service": {
-        "spec": false
-      },
-      "directive": {
-        "spec": false
-      }
-    }
-  },
-  "defaultProject": "ba-app"
+  }
 }
