@@ -8,16 +8,17 @@ import {FooterComponent} from './footer/footer.component';
 
 
 @NgModule({
-  declarations: [ModalComponent, TitleComponent, HeaderComponent, ContentComponent, FooterComponent],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    ModalComponent,
-    TitleComponent,
-    HeaderComponent,
-    ContentComponent,
-    FooterComponent,
-  ],
+    declarations: [ModalComponent, TitleComponent, HeaderComponent, ContentComponent, FooterComponent],
+    imports: [
+        CommonModule
+    ],
+    exports: [
+        ModalComponent,
+        TitleComponent,
+        HeaderComponent,
+        ContentComponent,
+        FooterComponent,
+    ],
 })
-export class ModalModule { }
+export class ModalModule {
+}

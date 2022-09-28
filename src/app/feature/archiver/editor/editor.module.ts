@@ -4,12 +4,13 @@ import {SharedModule} from "../../../shared/shared.module";
 
 
 @NgModule({
-  declarations: [EditorComponent],
-  exports: [
-    EditorComponent
-  ],
-  imports: [
-    SharedModule
-  ]
+    declarations: [EditorComponent],
+    exports: [
+        EditorComponent
+    ],
+    imports: [
+        SharedModule
+    ]
 })
-export class EditorModule { }
+export class EditorModule {
+}

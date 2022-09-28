@@ -6,13 +6,14 @@ import {SharedModule} from "../../../shared/shared.module";
 
 
 @NgModule({
-  declarations: [OptionComponent],
-  imports: [
-    SharedModule,
-    OptionRoutingModule
-  ],
-  exports: [
-    OptionComponent
-  ]
+    declarations: [OptionComponent],
+    imports: [
+        SharedModule,
+        OptionRoutingModule
+    ],
+    exports: [
+        OptionComponent
+    ]
 })
-export class OptionModule { }
+export class OptionModule {
+}

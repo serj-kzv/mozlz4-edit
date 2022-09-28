@@ -17,7 +17,11 @@ const decompressFn = async file => {
         }
     }
 
-    return {file, command: {typeName: MozLz4ArchiverCommandType.NONE, header: null, decompressSize: -1}, decompressSize: -1};
+    return {
+        file,
+        command: {typeName: MozLz4ArchiverCommandType.NONE, header: null, decompressSize: -1},
+        decompressSize: -1
+    };
 };
 
 export default decompressFn;

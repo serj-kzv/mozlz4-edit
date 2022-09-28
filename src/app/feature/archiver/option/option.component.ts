@@ -12,8 +12,8 @@ import {OptionService} from "../../../core/service/option/option.service";
     styleUrls: ['./option.component.scss']
 })
 export class OptionComponent implements OnInit {
-    public optionReadonly = false;
     public static componentName = 'option-modal';
+    public optionReadonly = false;
     engines = '{}';
 
     constructor(public optionService: OptionService,

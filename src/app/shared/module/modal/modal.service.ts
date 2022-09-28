@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
     providedIn: 'root'
 })
 export class ModalService {
-    public static eagerOutletName = 'modal';
+    public static eagerOutletName: any = 'modal';
 
     protected constructor(public router: Router) {
     }
@@ -13,7 +13,7 @@ export class ModalService {
     async show(name: string, relativeTo: ActivatedRoute | null = null): Promise<boolean> {
         await this.hide();
 
-        const route = [{outlets: {}}];
+        const route: any = [{outlets: {}}];
 
         route[0].outlets[`${ModalService.eagerOutletName}`] = [name];
 
@@ -21,7 +21,7 @@ export class ModalService {
     }
 
     hide(): Promise<boolean> {
-        const route = [{outlets: {}}];
+        const route: any = [{outlets: {}}];
 
         route[0].outlets[`${ModalService.eagerOutletName}`] = null;
 

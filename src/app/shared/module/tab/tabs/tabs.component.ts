@@ -10,21 +10,21 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
     styleUrls: ['./tabs.component.scss'],
     animations: [
         trigger('EnterLeave', [
-            state('flyIn', style({ transform: 'translateX(0)' })),
+            state('flyIn', style({transform: 'translateX(0)'})),
             transition(':enter', [
-                style({ transform: 'translateX(-100%)' }),
+                style({transform: 'translateX(-100%)'}),
                 animate('0.5s 300ms ease-in')
             ]),
             transition(':leave', [
-                animate('0.3s ease-out', style({ transform: 'translateX(100%)' }))
+                animate('0.3s ease-out', style({transform: 'translateX(100%)'}))
             ])
         ])
     ]
 })
 export class TabsComponent implements AfterContentInit, OnDestroy {
-    private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     pick$ = new ReplaySubject<TabContentComponent>(1);
     @ContentChildren(TabContentComponent) tabs!: QueryList<TabContentComponent>;
+    private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
     ngAfterContentInit() {
         this.pick$

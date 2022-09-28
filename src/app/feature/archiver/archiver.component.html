@@ -1,11 +1,11 @@
 <div id="archiver">
-    <app-panel (openMozLz4File)=openMozLz4File($event)
-               (saveAsMozLz4File)="saveAsMozLz4File()"
-               (saveAsMozLz4FileWithDialogue)="saveAsMozLz4FileWithDialogue()"
+    <app-panel (formatJson)="formatJson()"
+               (openMozLz4File)=openMozLz4File($event)
+               (openTxtInNewTab)="openTxtInNewTab()"
                (saveAsJsonFile)="saveAsJsonFile()"
                (saveAsJsonFileWithDialogue)="saveAsJsonFileWithDialogue()"
-               (formatJson)="formatJson()"
-               (openTxtInNewTab)="openTxtInNewTab()"
+               (saveAsMozLz4File)="saveAsMozLz4File()"
+               (saveAsMozLz4FileWithDialogue)="saveAsMozLz4FileWithDialogue()"
                class="menu"></app-panel>
     <app-editor [(engines)]="engines" class="content"></app-editor>
 </div>

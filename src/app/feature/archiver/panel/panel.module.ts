@@ -16,4 +16,5 @@ import {OptionModule} from "../option/option.module";
         OptionModule
     ]
 })
-export class PanelModule { }
+export class PanelModule {
+}

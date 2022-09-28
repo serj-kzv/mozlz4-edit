@@ -10,17 +10,18 @@
             <button (click)="importByUrl()">Import by URL (load by URL)</button>
             <button (click)="openInNewTab()">Open in new tab</button>
             <div>
-                <label for="openEngineOptionFileBtn" class="file-label open-icon-label">
+                <label class="file-label open-icon-label" for="openEngineOptionFileBtn">
                     Import (load by file)
-                    <input id="openEngineOptionFileBtn" (change)="importByFile($event.target)" type="file" accept=".json">
+                    <input (change)="importByFile($event.target)" accept=".json" id="openEngineOptionFileBtn"
+                           type="file">
                 </label>
             </div>
         </div>
         <div id="engineListTextareaWrapper">
-            <textarea id="engineListTextarea"
-                      [(ngModel)]="engines"
-                      spellcheck="false"
-                      [readOnly]="optionReadonly"></textarea>
+            <textarea [(ngModel)]="engines"
+                      [readOnly]="optionReadonly"
+                      id="engineListTextarea"
+                      spellcheck="false"></textarea>
         </div>
     </app-content>
 </app-modal>

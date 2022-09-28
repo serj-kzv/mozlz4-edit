@@ -1,7 +1,7 @@
 <div id="editor">
-    <textarea id="editorTextarea"
+    <textarea (ngModelChange)="enginesChange.emit($event)"
               [ngModel]="engines"
-              (ngModelChange)="enginesChange.emit($event)"
-              spellcheck="false"
-              [placeholder]="placeholder"></textarea>
+              [placeholder]="placeholder"
+              id="editorTextarea"
+              spellcheck="false"></textarea>
 </div>

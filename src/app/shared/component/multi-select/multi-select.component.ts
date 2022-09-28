@@ -11,12 +11,13 @@ export class MultiSelectComponent implements OnInit {
     @Output() sourceSelected = new EventEmitter<Entry[]>();
     @Output() targetSelected = new EventEmitter<Entry[]>();
     @Input() searchQuery = '';
-    searchPredicate = (entry: Entry) => !this.searchQuery
-        || this.searchQuery.length === 0
-        || entry.name.toLocaleLowerCase().indexOf(this.searchQuery.toLocaleLowerCase()) > -1;
 
     constructor() {
     }
+
+    searchPredicate = (entry: Entry) => !this.searchQuery
+        || this.searchQuery.length === 0
+        || entry.name.toLocaleLowerCase().indexOf(this.searchQuery.toLocaleLowerCase()) > -1;
 
     ngOnInit(): void {
         console.log(this.sourceEntries);

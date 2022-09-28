@@ -6,18 +6,18 @@ import {CoreModule} from "./core/core.module";
 import {Router} from "@angular/router";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    CoreModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        CoreModule,
+        AppRoutingModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(router: Router) {
-    console.debug('Routes: ', JSON.stringify(router.config, undefined, 2)); // <-- debugging purposes only
-  }
+    constructor(router: Router) {
+        console.debug('Routes: ', JSON.stringify(router.config, null, 2)); // <-- debugging purposes only
+    }
 }

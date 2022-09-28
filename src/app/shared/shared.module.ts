@@ -5,7 +5,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ModalModule} from "./module/modal/modal.module";
 import {TabModule} from "./module/tab/tab.module";
 import {MultiSelectComponent} from './component/multi-select/multi-select.component';
-import { FilterPipe } from './pipe/filter.pipe';
+import {FilterPipe} from './pipe/filter.pipe';
 
 @NgModule({
     declarations: [

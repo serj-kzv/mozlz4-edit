@@ -1,27 +1,29 @@
 <div class="multi-select">
-    <input [(ngModel)]="searchQuery" type="text" class="multi-select-search">
+    <input [(ngModel)]="searchQuery" class="multi-select-search" type="text">
     <div class="multi-select-container">
-        <select [(ngModel)]="sourceSelected"
-                (ngModelChange)="sourceSelect()"
-                multiple class="multi-select-entries-panel multi-select-entries-panel-source">
+        <select (ngModelChange)="sourceSelect()"
+                [(ngModel)]="sourceSelected"
+                class="multi-select-entries-panel multi-select-entries-panel-source" multiple>
             <ng-container *ngFor="let entry of sourceEntries">
                 <ng-container *ngIf="searchPredicate(entry)">
-                    <option [value]="entry"
+                    <option [attr.selected]="entry.selected ? 'selected' : null"
                             [disabled]="entry.selected"
-                            [attr.selected]="entry.selected ? 'selected' : null"
                             [ngClass]="{'multi-select-selected': entry.selected}"
-                            class="multi-select-entry">{{entry.name}} ({{entry.value}})</option>
+                            [value]="entry"
+                            class="multi-select-entry">{{entry.name}} ({{entry.value}})
+                    </option>
                 </ng-container>
             </ng-container>
         </select>
-        <select multiple
-                class="multi-select-entries-panel multi-select-entries-panel-target">
-            <option *ngFor="let entry of sourceEntries"
-                    (click)="unpick(entry)"
-                    [value]="entry"
-                    [hidden]="!entry.selected"
+        <select class="multi-select-entries-panel multi-select-entries-panel-target"
+                multiple>
+            <option (click)="unpick(entry)"
+                    *ngFor="let entry of sourceEntries"
                     [attr.selected]="entry.selected ? null : 'selected'"
-                    class="multi-select-entry">{{entry.name}} ({{entry.value}})</option>
+                    [hidden]="!entry.selected"
+                    [value]="entry"
+                    class="multi-select-entry">{{entry.name}} ({{entry.value}})
+            </option>
         </select>
     </div>
 </div>

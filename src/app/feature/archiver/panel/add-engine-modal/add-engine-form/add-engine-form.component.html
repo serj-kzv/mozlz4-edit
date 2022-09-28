@@ -2,33 +2,33 @@
     <div class="add-engine-sub-block">
         <label>
             Name
-            <input type="text" formControlName="name">
+            <input formControlName="name" type="text">
         </label>
     </div>
     <div class="add-engine-sub-block">
         <label>
             <div>URL</div>
-            <input type="text" formControlName="url">
+            <input formControlName="url" type="text">
         </label>
     </div>
     <div class="add-engine-sub-block">
         <div>
             <label>
                 <div>Icon</div>
-                <input type="text" formControlName="icon">
+                <input formControlName="icon" type="text">
             </label>
         </div>
         <div>
-            <img class="engine-add-icon-input-img"
-                 [src]="domSanitizer.bypassSecurityTrustResourceUrl(engineForm.controls['icon'].value)"
-                 width="23"
-                 height="23">
-            <input type="text" formControlName="iconTxt" placeholder="Icon text">
+            <img [src]="domSanitizer.bypassSecurityTrustResourceUrl(engineForm.controls['icon'].value)"
+                 class="engine-add-icon-input-img"
+                 height="23"
+                 width="23">
+            <input formControlName="iconTxt" placeholder="Icon text" type="text">
             <button (click)="engineForm.patchValue({icon:'', iconTxt: ''})">Clear icon</button>
             <label class="file-label">
                 <span>Pick icon</span>
-                <input (change)="pickIcon($event.target)" type="file"
-                       accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm">
+                <input (change)="pickIcon($event.target)" accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm"
+                       type="file">
             </label>
             <button (click)="add()">Add</button>
         </div>

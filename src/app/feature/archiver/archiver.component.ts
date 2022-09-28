@@ -16,8 +16,8 @@ import {takeUntil} from "rxjs/operators";
     styleUrls: ['./archiver.component.scss']
 })
 export class ArchiverComponent implements OnInit {
-    private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     @Input() engines: string = '';
+    private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     private readonly fileInfo = {
         name: 'file.mozlz4',
         size: -1

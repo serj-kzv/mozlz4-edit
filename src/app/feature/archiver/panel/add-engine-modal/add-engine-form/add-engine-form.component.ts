@@ -14,7 +14,6 @@ import {debounceTime, takeUntil} from "rxjs/operators";
     styleUrls: ['./add-engine-form.component.scss']
 })
 export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit {
-    private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
     @Input() engine;
     engineForm = this.fb.group({
         name: [''],
@@ -26,6 +25,7 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
         orMultiSelect: [[]]
     });
     @ViewChildren('multiSelect') multiSelects !: QueryList<ElementRef>;
+    private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
 
     constructor(private fb: FormBuilder,
                 public domSanitizer: DomSanitizer,
