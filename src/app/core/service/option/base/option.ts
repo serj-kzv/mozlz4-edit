@@ -14,7 +14,7 @@ export interface Option {
 
     resetDefaultAndGetAsTxt(): Promise<string>;
 
-    save(payload): Promise<any>;
+    save(payload: any): Promise<any>;
 
     saveTxt(payload: string): Promise<any>;
 

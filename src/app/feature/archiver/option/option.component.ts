@@ -79,7 +79,7 @@ export class OptionComponent implements OnInit {
         this.unlockTextarea();
     }
 
-    async importByFile($event) {
+    async importByFile($event: any) {
         this.lockTextarea();
         this.engines = 'Loading... Wait.';
 

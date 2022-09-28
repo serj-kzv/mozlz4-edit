@@ -14,7 +14,7 @@ import {debounceTime, takeUntil} from "rxjs/operators";
     styleUrls: ['./add-engine-form.component.scss']
 })
 export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit {
-    @Input() engine;
+    @Input() engine: any;
     engineForm = this.fb.group({
         name: [''],
         url: [''],
@@ -75,7 +75,7 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
         this.engineBridgeService.add$.next(engine);
     }
 
-    async pickIcon(target) {
+    async pickIcon(target: any) {
         const icon = await readFileAsBase64Fn(target.files[0]);
 
         this.engineForm.patchValue({icon, iconTxt: ''});
@@ -84,7 +84,7 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
     updUrlWithParams() {
         const params = this.multiSelects.map(({nativeElement}) => {
             const {control, multi, name, divider, andOrDivider} = nativeElement.dataset;
-            const {value} = this.engineForm.controls[control];
+            const {value}: {value: any} = this.engineForm.controls[control];
 
             return {name, value, multi, divider, andOrDivider};
         });
@@ -93,18 +93,18 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
         console.log('r', r)
     }
 
-    selected(values) {
+    selected(values: any) {
         console.log(values);
     }
 
-    convertParamsToEntries(params) {
-        return params.map(({name, param: value}) => ({name, value}));
+    convertParamsToEntries(params: any) {
+        return params.map(({name, param: value}: {name: any, param: any}) => ({name, value}));
     }
 
-    prepareSelectEntries(values) {
+    prepareSelectEntries(values: any) {
         const selected = false;
 
-        return values.map(value => ({...value, selected}));
+        return values.map((value: any) => ({...value, selected}));
     }
 
 }

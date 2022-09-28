@@ -31,20 +31,20 @@ export class MultiSelectComponent implements OnInit {
     }
 
     targetSelect() {
-        console.log('test');
-        const selects = Array.from(this.targetSelected as any);
-
-        if (selects.length > 0) {
-            const lastSelect = selects[selects.length - 1] as Entry;
-
-            for (const entry of this.sourceEntries) {
-                if (name !== lastSelect.name) {
-                    entry.selected = false;
-                    // break;
-                }
-            }
-
-        }
+        // console.log('test');
+        // const selects = Array.from(this.targetSelected as any);
+        //
+        // if (selects.length > 0) {
+        //     const lastSelect = selects[selects.length - 1] as Entry;
+        //
+        //     for (const entry of this.sourceEntries) {
+        //         if (name !== lastSelect.name) {
+        //             entry.selected = false;
+        //             // break;
+        //         }
+        //     }
+        //
+        // }
     }
 
     unpick(entry: Entry) {

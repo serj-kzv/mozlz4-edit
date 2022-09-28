@@ -10,11 +10,11 @@ export class ModalRegistryService {
         this.initEager();
     }
 
-    initEager(components = []): void {
+    initEager(components: Array<{ path: any, component: any }> = []): void {
         components.forEach(component => this.register(component));
     }
 
-    register({path, component}): void {
+    register({path, component}: { path: any, component: any }): void {
         this.router.config.unshift({path, outlet: ModalService.eagerOutletName, component});
     }
 

@@ -34,7 +34,7 @@ export class ArchiverComponent implements OnInit {
                     const editorEngines = JSON.parse(this.engines);
 
                     if (editorEngines.engines) {
-                        if (editorEngines.engines.some(engineItem => engineItem['_name'] === engine['_name'])) {
+                        if (editorEngines.engines.some((engineItem: any) => engineItem['_name'] === engine['_name'])) {
                             alert('Error. The engine name is existed. Rename the engine and try again!');
                         } else {
                             editorEngines.engines.push(engine);
@@ -54,7 +54,7 @@ export class ArchiverComponent implements OnInit {
         this.destroyed$.complete();
     }
 
-    async openMozLz4File($event) {
+    async openMozLz4File($event: any) {
         this.engines = 'Loading... Wait.';
 
         const sourceFile = $event.files[0];
