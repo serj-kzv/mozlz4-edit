@@ -84,7 +84,7 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
     updUrlWithParams() {
         const params = this.multiSelects.map(({nativeElement}) => {
             const {control, multi, name, divider, andOrDivider} = nativeElement.dataset;
-            const {value}: {value: any} = this.engineForm.controls[control];
+            const {value}: { value: any } = this.engineForm.controls[control];
 
             return {name, value, multi, divider, andOrDivider};
         });
@@ -98,7 +98,7 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     convertParamsToEntries(params: any) {
-        return params.map(({name, param: value}: {name: any, param: any}) => ({name, value}));
+        return params.map(({name, param: value}: { name: any, param: any }) => ({name, value}));
     }
 
     prepareSelectEntries(values: any) {
