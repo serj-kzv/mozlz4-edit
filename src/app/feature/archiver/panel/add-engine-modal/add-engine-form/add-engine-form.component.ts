@@ -15,7 +15,7 @@ import {debounceTime, takeUntil} from "rxjs/operators";
 })
 export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() engine: any;
-    engineForm = this.fb.group({
+    engineForm: any = this.fb.group({
         name: [''],
         url: [''],
         icon: [''],
@@ -48,7 +48,7 @@ export class AddEngineFormComponent implements OnInit, OnDestroy, AfterViewInit 
                 takeUntil(this.destroyed$),
                 debounceTime(50)
             )
-            .subscribe(async value => {
+            .subscribe(async (value: any) => {
                 console.log(value);
 
                 const icon = await readFileAsBase64Fn(new Blob(
