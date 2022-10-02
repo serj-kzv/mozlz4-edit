@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "start": "ng serve --output-hashing=none --base-href ./",
+    "build": "ng build --output-hashing=none --base-href ./",
+    "watch": "ng build --watch --configuration development --output-hashing=none --base-href ./"
   },
   "private": true,
   "dependencies": {
