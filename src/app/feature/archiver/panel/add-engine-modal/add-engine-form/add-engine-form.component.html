@@ -1,17 +1,17 @@
 <form [formGroup]="engineForm">
-    <div class="add-engine-sub-block">
+    <div>
         <label>
             Name
             <input formControlName="name" type="text">
         </label>
     </div>
-    <div class="add-engine-sub-block">
+    <div>
         <label>
             <div>URL</div>
             <input formControlName="url" type="text">
         </label>
     </div>
-    <div class="add-engine-sub-block">
+    <div>
         <div>
             <label>
                 <div>Icon</div>
@@ -20,12 +20,11 @@
         </div>
         <div>
             <img [src]="domSanitizer.bypassSecurityTrustResourceUrl(engineForm.controls['icon'].value)"
-                 class="engine-add-icon-input-img"
                  height="23"
                  width="23">
             <input formControlName="iconTxt" placeholder="Icon text" type="text">
             <button (click)="engineForm.patchValue({icon:'', iconTxt: ''})">Clear icon</button>
-            <label class="file-label">
+            <label>
                 <span>Pick icon</span>
                 <input (change)="pickIcon($event.target)" accept=".png,.icon,.ico,.svg,.jpg,.jpeg,.bpm,.gif,.xpm"
                        type="file">
@@ -33,16 +32,16 @@
             <button (click)="add()">Add</button>
         </div>
     </div>
-    <div *ngIf="engine.params" class="add-engine-param-block">
+    <div *ngIf="engine.params">
         <div *ngFor="let param of engine.params; index as i">
             <app-multi-select (targetSelected)="selected($event)" [sourceEntries]="param.values"></app-multi-select>
 
 
-            <div class="add-engine-param-block-name">
-                <span class="add-engine-param-block-name-title-key">Name:</span>
-                <span class="add-engine-param-block-name-title-value">{{param.name}}</span>
-                <span class="add-engine-param-block-name-param-key">Parameter:</span>
-                <span class="add-engine-param-block-name-param-value">Parameter: {{param.param}}</span>
+            <div>
+                <span>Name:</span>
+                <span>{{param.name}}</span>
+                <span>Parameter:</span>
+                <span>Parameter: {{param.param}}</span>
             </div>
             {{param.name}} {{param.param}}
             <div *ngIf="!param.multiAnd && !param.multiOr">
