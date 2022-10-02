@@ -3,7 +3,8 @@
     <app-content>
         <app-tabs>
             <app-tab-content *ngFor="let type of engines.types; index as i" [active]="i === 0" name="{{type.name}}">
-                <app-add-engine-form *ngFor="let engine of type.engines; index as i" [engine]="engine"></app-add-engine-form>
+                <app-add-engine-form *ngFor="let engine of type.engines; index as i"
+                                     [engine]="engine"></app-add-engine-form>
             </app-tab-content>
         </app-tabs>
     </app-content>
