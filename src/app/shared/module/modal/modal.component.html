@@ -1,13 +1,13 @@
 <div (click)="closed = true; modalClosed.emit(); modalService.hide()" class="outlet-popup">
     <div (click)="$event.stopPropagation()" class="overlay">
         <div class="popup">
+            <a (click)="closed = true; modalClosed.emit(); modalService.hide()" class="close">&times;</a>
             <div class="title">
                 <ng-content select="app-title"></ng-content>
             </div>
             <h3 class="text-center">
                 <ng-content select="app-header"></ng-content>
             </h3>
-            <a (click)="closed = true; modalClosed.emit(); modalService.hide()" class="close">&times;</a>
             <div class="content">
                 <ng-content select="app-content"></ng-content>
             </div>
