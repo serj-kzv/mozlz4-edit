@@ -13,12 +13,12 @@
   "homepage_url": "https://github.com/serj-kzv/mozlz4-edit",
   "browser_action": {
     "browser_style": false,
-    "default_icon": "ba-app/favicon.ico",
+    "default_icon": "favicon.ico",
     "default_title": "mozlz4-edit"
   },
   "background": {
     "persistent": true,
-    "page": "/bg-app/index.html"
+    "scripts": ["background.js"]
   },
   "permissions": [
     "<all_urls>",
