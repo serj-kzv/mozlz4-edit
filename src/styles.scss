@@ -1,50 +1,16 @@
 @import '~normalize.css';
 
+//* {
+//  border: 2px red solid !important;
+//}
+
 html,
 body,
-.container,
-#archiver {
+.container {
   height: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
-}
-
-textarea {
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  border: 0;
-
-  white-space: pre;
-  outline: none;
-  background-color: black;
-  color: white;
-}
-
-#archiver {
-  display: flex;
-  flex-direction: column;
-}
-
-#editor {
-  height: 100%;
-}
-
-.menu {
-  background-color: black;
-  color: white;
-  border-bottom: white 1px solid;
-}
-
-.menu button {
-  background: black;
-  color: white;
-}
-
-.menu button:hover {
-  background: white;
-  color: black;
 }
 
 .content {
