@@ -1,10 +1,8 @@
-<div>
-    <app-panel (formatJson)="formatJson()"
-               (openMozLz4File)=openMozLz4File($event)
-               (openTxtInNewTab)="openTxtInNewTab()"
-               (saveAsJsonFile)="saveAsJsonFile()"
-               (saveAsJsonFileWithDialogue)="saveAsJsonFileWithDialogue()"
-               (saveAsMozLz4File)="saveAsMozLz4File()"
-               (saveAsMozLz4FileWithDialogue)="saveAsMozLz4FileWithDialogue()"></app-panel>
-    <app-editor [(engines)]="engines"></app-editor>
-</div>
+<app-panel (formatJson)="formatJson()"
+           (openMozLz4File)=openMozLz4File($event)
+           (openTxtInNewTab)="openTxtInNewTab()"
+           (saveAsJsonFile)="saveAsJsonFile()"
+           (saveAsJsonFileWithDialogue)="saveAsJsonFileWithDialogue()"
+           (saveAsMozLz4File)="saveAsMozLz4File()"
+           (saveAsMozLz4FileWithDialogue)="saveAsMozLz4FileWithDialogue()"></app-panel>
+<app-editor [(engines)]="engines"></app-editor>
