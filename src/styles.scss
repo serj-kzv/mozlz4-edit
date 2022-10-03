@@ -1,1 +1,29 @@
 @import '~normalize.css';
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
+}
+
+.flex-item-stretch-flex-grow-0 {
+  flex: 0 1 auto;
+  align-self: stretch;
+}
+
+.flex-item-stretch-flex-grow-1 {
+  flex: 1 1 auto;
+  align-self: stretch;
+}
+
+html,
+body,
+.flex-container {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
